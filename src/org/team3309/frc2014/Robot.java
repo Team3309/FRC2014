@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.team3309.frc2014.commands.CommandBase;
-import org.team3309.frc2014.commands.ExampleCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,7 +31,6 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
         // instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
 
         // Initialize all subsystems
         CommandBase.init();
