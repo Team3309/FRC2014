@@ -1,0 +1,3 @@
+[submodule "frc-build"]
+	path = frc-build
+	url = git@github.com:Team3309/frc-build.git
