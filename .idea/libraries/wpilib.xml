@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="wpilib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/networktables-crio.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/squawk.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/wpilibj.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
