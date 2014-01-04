@@ -1,0 +1,3 @@
+<project name="frc2014">
+    <import file="/Users/vmagro/frc/frc-build/build.xml"/>
+</project>
