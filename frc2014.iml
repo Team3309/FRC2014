@@ -8,6 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="wpilib" level="project" />
+    <orderEntry type="module" module-name="FriarLib" />
   </component>
 </module>
 

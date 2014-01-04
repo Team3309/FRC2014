@@ -1,3 +1,6 @@
 [submodule "frc-build"]
 	path = frc-build
 	url = git@github.com:Team3309/frc-build.git
+[submodule "FriarLib"]
+	path = FriarLib
+	url = git@github.com:Team3309/FriarLib.git
