@@ -1,5 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="">
-    <module2copyright />
+  <settings default="Team 3309">
+    <module2copyright>
+      <element module="All" copyright="Team 3309" />
+    </module2copyright>
   </settings>
 </component>
