@@ -85,7 +85,7 @@ public class OctanumModule implements Runnable {
                 double err = current - setpoint;
                 integral += err;
 
-                double output = err * configP.getDouble() + integral * configI.getDouble() + (current - lastRate) / DELTA_T;
+                double output = err * configP.getDouble() + integral * configI.getDouble() + ((current - lastRate) / DELTA_T) * configD.getDouble();
                 set(output);
             }
 

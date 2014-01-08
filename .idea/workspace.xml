@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="93f3878d-4ade-4116-8ef1-4379bd6bb266" name="Default" comment="Add copyright notice to files">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/team3309/frc2014/OctanumModule.java" />
+    <list default="true" id="93f3878d-4ade-4116-8ef1-4379bd6bb266" name="Default" comment="Add OctanumModule class to handle engaging/disengaging mecanum for each module and PID with encoders for each module">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FriarLib" afterPath="$PROJECT_DIR$/FriarLib" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/team3309/frc2014/subsystems/Drive.java" afterPath="$PROJECT_DIR$/src/org/team3309/frc2014/subsystems/Drive.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/team3309/frc2014/OctanumModule.java" afterPath="$PROJECT_DIR$/src/org/team3309/frc2014/OctanumModule.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="frc2014.iws" />
@@ -83,7 +82,7 @@
       <file leaf-file-name="OctanumModule.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/OctanumModule.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="82" selection-start="2275" selection-end="2275" vertical-scroll-proportion="0.5177994" vertical-offset="0" max-vertical-offset="1260">
+            <state line="87" column="147" selection-start="3131" selection-end="3131" vertical-scroll-proportion="0.70873785" vertical-offset="333" max-vertical-offset="1260">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -103,7 +102,7 @@
       <file leaf-file-name="Drive.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/subsystems/Drive.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="132" column="25" selection-start="5360" selection-end="5360" vertical-scroll-proportion="0.0" vertical-offset="1140" max-vertical-offset="3495">
+            <state line="132" column="25" selection-start="5348" selection-end="5348" vertical-scroll-proportion="0.0" vertical-offset="1140" max-vertical-offset="3495">
               <folding />
             </state>
           </provider>
@@ -162,8 +161,8 @@
         <option value="$PROJECT_DIR$/src/org/team3309/frc2014/commands/CommandBase.java" />
         <option value="$PROJECT_DIR$/src/org/team3309/frc2014/RobotMap.java" />
         <option value="$PROJECT_DIR$/src/org/team3309/frc2014/Robot.java" />
-        <option value="$PROJECT_DIR$/src/org/team3309/frc2014/OctanumModule.java" />
         <option value="$PROJECT_DIR$/src/org/team3309/frc2014/subsystems/Drive.java" />
+        <option value="$PROJECT_DIR$/src/org/team3309/frc2014/OctanumModule.java" />
       </list>
     </option>
   </component>
@@ -473,7 +472,11 @@
       <created>1389116929534</created>
       <updated>1389116929534</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add OctanumModule class to handle engaging/disengaging mecanum for each module and PID with encoders for each module">
+      <created>1389219655987</created>
+      <updated>1389219655987</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -490,6 +493,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984293" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -500,7 +504,6 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984293" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984293" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -520,7 +523,8 @@
     <MESSAGE value="Delete ExampleSubsystem" />
     <MESSAGE value="More drive code" />
     <MESSAGE value="Add copyright notice to files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add copyright notice to files" />
+    <MESSAGE value="Add OctanumModule class to handle engaging/disengaging mecanum for each module and PID with encoders for each module" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add OctanumModule class to handle engaging/disengaging mecanum for each module and PID with encoders for each module" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -735,14 +739,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/subsystems/Drive.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="132" column="25" selection-start="5360" selection-end="5360" vertical-scroll-proportion="0.0" vertical-offset="1140" max-vertical-offset="3495">
+        <state line="132" column="25" selection-start="5348" selection-end="5348" vertical-scroll-proportion="0.0" vertical-offset="1140" max-vertical-offset="3495">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/OctanumModule.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="82" selection-start="2275" selection-end="2275" vertical-scroll-proportion="0.5177994" vertical-offset="0" max-vertical-offset="1260">
+        <state line="87" column="147" selection-start="3131" selection-end="3131" vertical-scroll-proportion="0.70873785" vertical-offset="333" max-vertical-offset="1260">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
