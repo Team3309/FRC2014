@@ -23,9 +23,11 @@
 
 package org.team3309.frc2014.subsystems;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.team3309.frc2014.OctanumModule;
 import org.team3309.friarlib.FriarGyro;
 import org.team3309.friarlib.constants.Constant;
 
@@ -34,13 +36,21 @@ import org.team3309.friarlib.constants.Constant;
  */
 public class Drive extends Subsystem {
 
-    private Constant configMecanumSolenoid = new Constant("drive.mecanum", true);
     private Constant configMecanumSolenoidPort = new Constant("solenoid.mecanum", 1);
 
     private Constant configLeftFrontPort = new Constant("drive.left.front", 1);
     private Constant configLeftBackPort = new Constant("drive.left.back", 2);
     private Constant configFrontRightPort = new Constant("drive.right.front", 3);
     private Constant configRightBackPort = new Constant("drive.right.back", 4);
+
+    private Constant configLeftFrontEncoderA = new Constant("drive.encoder.left.front.a", 1);
+    private Constant configLeftBackEncoderA = new Constant("drive.encoder.left.back.a", 1);
+    private Constant configRightFrontEncoderA = new Constant("drive.encoder.right.front.a", 1);
+    private Constant configRightBackEncoderA = new Constant("drive.encoder.right.back.a", 1);
+    private Constant configLeftFrontEncoderB = new Constant("drive.encoder.left.front.b", 1);
+    private Constant configLeftBackEncoderB = new Constant("drive.encoder.left.back.b", 1);
+    private Constant configRightFrontEncoderB = new Constant("drive.encoder.right.front.b", 1);
+    private Constant configRightBackEncoderB = new Constant("drive.encoder.right.back.b", 1);
 
     private Constant configGyroPort = new Constant("drive.gyro.port", 1);
 
@@ -64,17 +74,21 @@ public class Drive extends Subsystem {
 
     private boolean isMecanum = false;
 
-    private Victor leftFront, leftBack, rightFront, rightBack;
+    private OctanumModule leftFront, leftBack, rightFront, rightBack;
 
     private FriarGyro gyro;
 
     private Drive() {
         extender = new Solenoid(configMecanumSolenoidPort.getInt());
 
-        leftFront = new Victor(configLeftFrontPort.getInt());
-        leftBack = new Victor(configLeftBackPort.getInt());
-        rightFront = new Victor(configFrontRightPort.getInt());
-        rightBack = new Victor(configRightBackPort.getInt());
+        leftFront = new OctanumModule(new Victor(configLeftFrontPort.getInt()), extender,
+                new Encoder(configLeftFrontEncoderA.getInt(), configLeftFrontEncoderB.getInt()));
+        leftBack = new OctanumModule(new Victor(configLeftBackPort.getInt()), extender,
+                new Encoder(configLeftBackEncoderA.getInt(), configLeftBackEncoderB.getInt()));
+        rightFront = new OctanumModule(new Victor(configFrontRightPort.getInt()), extender,
+                new Encoder(configRightFrontEncoderA.getInt(), configRightFrontEncoderB.getInt()));
+        rightBack = new OctanumModule(new Victor(configRightBackPort.getInt()), extender,
+                new Encoder(configRightBackEncoderA.getInt(), configRightBackEncoderB.getInt()));
 
         gyro = new FriarGyro(configGyroPort.getInt());
     }
@@ -85,14 +99,22 @@ public class Drive extends Subsystem {
 
     public void enableMecanum() {
         if (!isMecanum) {
-            extender.set(configMecanumSolenoid.getBoolean());
+            leftFront.engageMecanum();
+            leftBack.engageMecanum();
+            rightFront.engageMecanum();
+            rightBack.engageMecanum();
+
             isMecanum = true;
         }
     }
 
     public void disableMecanum() {
         if (isMecanum) {
-            extender.set(!configMecanumSolenoid.getBoolean());
+            leftFront.disengageMecanum();
+            leftBack.disengageMecanum();
+            rightFront.disengageMecanum();
+            rightBack.disengageMecanum();
+
             isMecanum = false;
         }
     }
