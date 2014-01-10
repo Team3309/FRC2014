@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="93f3878d-4ade-4116-8ef1-4379bd6bb266" name="Default" comment="Change SDK to a FRC-only sdk which only contains">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/team3309/friarlib/constants/ConstantsManager.java" afterPath="$PROJECT_DIR$/src/org/team3309/friarlib/constants/ConstantsManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="frc2014.iws" />
@@ -493,7 +492,11 @@
       <created>1389386913894</created>
       <updated>1389386913894</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Change SDK to a FRC-only sdk which only contains the squawk libraries">
+      <created>1389387469420</created>
+      <updated>1389387469420</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -534,6 +537,7 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
@@ -546,7 +550,8 @@
     <MESSAGE value="Fix errors, change JDK level to 1.3" />
     <MESSAGE value="IntelliJ keeps saying stuff has changed" />
     <MESSAGE value="Delete Friarlib.jar" />
-    <option name="LAST_COMMIT_MESSAGE" value="Delete Friarlib.jar" />
+    <MESSAGE value="Change SDK to a FRC-only sdk which only contains the squawk libraries" />
+    <option name="LAST_COMMIT_MESSAGE" value="Change SDK to a FRC-only sdk which only contains the squawk libraries" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

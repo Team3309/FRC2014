@@ -23,12 +23,14 @@
 
 package org.team3309.friarlib.constants;
 
+import com.sun.squawk.io.BufferedReader;
 import com.sun.squawk.microedition.io.FileConnection;
 import org.team3309.friarlib.util.Util;
 
 import javax.microedition.io.Connector;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Hashtable;
 import java.util.Vector;
 
@@ -65,20 +67,11 @@ public class ConstantsManager {
     }
 
     public static void loadConstants(InputStream inputStream) throws IOException {
-        byte[] buffer = new byte[255];
-        String content = "";
-
         try {
-            // Read everything from the file into one string.
-            while (inputStream.read(buffer) != -1) {
-                content += new String(buffer);
-            }
-            inputStream.close();
-
-            // Extract each line separately.
-            String[] lines = split(content, "\n");
-            for (int j = 0; j < lines.length; j++) {
-                String line = lines[j].trim();
+            String line = null;
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            while ((line = reader.readLine()) != null) {
+                line = line.trim();
                 line = Util.remove(line, ' ');
                 line = Util.remove(line, '\t');
                 if (line.startsWith("#") || line.startsWith("//") || line.equals("")) {
