@@ -48,11 +48,9 @@ public class TeleopDrive extends CommandBase {
         requires(drive);
     }
 
-    @Override
     protected void initialize() {
     }
 
-    @Override
     protected void execute() {
         double leftX = controls.driver.getLeftX();
         double leftY = controls.driver.getLeftY();
@@ -80,17 +78,14 @@ public class TeleopDrive extends CommandBase {
         }
     }
 
-    @Override
     protected boolean isFinished() {
         return false;
     }
 
-    @Override
     protected void end() {
 
     }
 
-    @Override
     protected void interrupted() {
 
     }

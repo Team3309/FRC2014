@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project basedir="." default="help" name="frc2014">
+<project basedir="." default="deploy" name="frc2014">
 
     <!-- You may freely edit this file. See commented blocks below for -->
     <!-- some examples of how to customize the build. -->

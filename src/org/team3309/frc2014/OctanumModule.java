@@ -77,7 +77,6 @@ public class OctanumModule implements Runnable {
         motor.set(x);
     }
 
-    @Override
     public void run() {
         while (true) {
             if (enabled) {
