@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="93f3878d-4ade-4116-8ef1-4379bd6bb266" name="Default" comment="It compiles now">
+    <list default="true" id="93f3878d-4ade-4116-8ef1-4379bd6bb266" name="Default" comment="Fix errors, change JDK level to 1.3">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/team3309/friarlib/motors/BangBangController.java" afterPath="$PROJECT_DIR$/src/org/team3309/friarlib/motors/BangBangController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/team3309/friarlib/filter/Filter.java" afterPath="$PROJECT_DIR$/src/org/team3309/friarlib/filter/Filter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/team3309/friarlib/motors/FilterableSpeedController.java" afterPath="$PROJECT_DIR$/src/org/team3309/friarlib/motors/FilterableSpeedController.java" />
@@ -12,7 +12,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/team3309/friarlib/filter/MovingAverageFilter.java" afterPath="$PROJECT_DIR$/src/org/team3309/friarlib/filter/MovingAverageFilter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/team3309/friarlib/exception/NotInitializedException.java" afterPath="$PROJECT_DIR$/src/org/team3309/friarlib/exception/NotInitializedException.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/team3309/friarlib/XboxController.java" afterPath="$PROJECT_DIR$/src/org/team3309/friarlib/XboxController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="frc2014.iws" />
@@ -89,7 +88,7 @@
       <file leaf-file-name="BangBangController.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/motors/BangBangController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="119" column="37" selection-start="4523" selection-end="4523" vertical-scroll-proportion="0.5631068" vertical-offset="903" max-vertical-offset="1830">
+            <state line="117" column="0" selection-start="4442" selection-end="4442" vertical-scroll-proportion="0.5307443" vertical-offset="903" max-vertical-offset="1830">
               <folding />
             </state>
           </provider>
@@ -638,7 +637,11 @@
       <created>1389317068995</created>
       <updated>1389317068995</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Fix errors, change JDK level to 1.3">
+      <created>1389386599935</created>
+      <updated>1389386599935</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -688,7 +691,8 @@
     <MESSAGE value="Add OctanumModule class to handle engaging/disengaging mecanum for each module and PID with encoders for each module" />
     <MESSAGE value="Forgot the kD constant" />
     <MESSAGE value="It compiles now" />
-    <option name="LAST_COMMIT_MESSAGE" value="It compiles now" />
+    <MESSAGE value="Fix errors, change JDK level to 1.3" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix errors, change JDK level to 1.3" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
@@ -1052,7 +1056,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/motors/BangBangController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="119" column="37" selection-start="4523" selection-end="4523" vertical-scroll-proportion="0.5631068" vertical-offset="903" max-vertical-offset="1830">
+        <state line="117" column="0" selection-start="4442" selection-end="4442" vertical-scroll-proportion="0.5307443" vertical-offset="903" max-vertical-offset="1830">
           <folding />
         </state>
       </provider>
