@@ -38,7 +38,7 @@ import java.io.InputStreamReader;
  */
 public class Vision {
 
-    public VisionTarget[] getTargets() {
+    public static VisionTarget[] getTargets() {
         try {
             HttpConnection conn = (HttpConnection) Connector.open("http://10.33.9.12/result");
             BufferedReader reader = new BufferedReader(new InputStreamReader(conn.openInputStream()));
