@@ -32,7 +32,7 @@ import org.team3309.friarlib.constants.Constant;
 /**
  * Created by vmagro on 1/16/14.
  */
-public class SetRobotAngle extends PIDCommand {
+public class ChangeRobotAngle extends PIDCommand {
 
     private static Constant configKp = new Constant("pid.setrobotangle.p", 1);
     private static Constant configKi = new Constant("pid.setrobotangle.i", 0);
@@ -40,20 +40,20 @@ public class SetRobotAngle extends PIDCommand {
 
     private Drive drive;
 
-    public static SetRobotAngle create(double angle) {
-        return new SetRobotAngle(configKp.getDouble(), configKi.getDouble(), configKd.getDouble(), angle);
+    public static ChangeRobotAngle create(double angle) {
+        return new ChangeRobotAngle(configKp.getDouble(), configKi.getDouble(), configKd.getDouble(), angle);
     }
 
-    public SetRobotAngle(double p, double i, double d, double angle) {
+    public ChangeRobotAngle(double p, double i, double d, double angle) {
         super(p, i, d);
         drive = drive.getInstance();
         requires(drive);
-        setSetpoint(angle);
+        changeAngle(angle);
         SmartDashboard.putData(this);
     }
 
-    public void setAngle(double angle) {
-        setSetpoint(angle);
+    public void changeAngle(double delta) {
+        setSetpointRelative(delta);
     }
 
     protected double returnPIDInput() {
@@ -65,7 +65,7 @@ public class SetRobotAngle extends PIDCommand {
     }
 
     protected void initialize() {
-
+        setSetpoint(returnPIDInput());
     }
 
     protected void execute() {
