@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="93f3878d-4ade-4116-8ef1-4379bd6bb266" name="Default" comment="Change SDK to a FRC-only sdk which only contains">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/team3309/friarlib/constants/ConstantsManager.java" afterPath="$PROJECT_DIR$/src/org/team3309/friarlib/constants/ConstantsManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/team3309/frc2014/Sensors.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/team3309/frc2014/commands/SingleBallAuto.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/org/team3309/frc2014/commands/CommandBase.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/team3309/frc2014/Robot.java" afterPath="$PROJECT_DIR$/src/org/team3309/frc2014/Robot.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/team3309/frc2014/commands/TeleopDrive.java" afterPath="$PROJECT_DIR$/src/org/team3309/frc2014/commands/TeleopDrive.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="frc2014.iws" />
@@ -67,10 +72,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ConstantsManager.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ConstantsManager.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/constants/ConstantsManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="56" selection-start="2791" selection-end="2791" vertical-scroll-proportion="1.25" vertical-offset="0" max-vertical-offset="2025">
+            <state line="42" column="32" selection-start="1891" selection-end="1891" vertical-scroll-proportion="0.0" vertical-offset="630" max-vertical-offset="2340">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SingleBallAuto.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/commands/SingleBallAuto.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="36" column="0" selection-start="1637" selection-end="1637" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -78,10 +92,48 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="SetRobotAngle.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/commands/SetRobotAngle.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="31" column="13" selection-start="1543" selection-end="1543" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="915">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Sensors.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/Sensors.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="12" selection-start="1631" selection-end="1631" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Robot.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/Robot.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="44" column="29" selection-start="2114" selection-end="2114" vertical-scroll-proportion="0.27439025" vertical-offset="120" max-vertical-offset="960">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TeleopDrive.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/commands/TeleopDrive.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="55" column="5" selection-start="2185" selection-end="2185" vertical-scroll-proportion="0.0" vertical-offset="825" max-vertical-offset="1530">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Util.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/util/Util.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="25" selection-start="2448" selection-end="2448" vertical-scroll-proportion="-22.8" vertical-offset="0" max-vertical-offset="795">
+            <state line="59" column="25" selection-start="2448" selection-end="2448" vertical-scroll-proportion="0.0" vertical-offset="885" max-vertical-offset="1110">
               <folding />
             </state>
           </provider>
@@ -109,10 +161,8 @@
         <option value="$PROJECT_DIR$/src/org/team3309/frc2014/OI.java" />
         <option value="$PROJECT_DIR$/src/org/team3309/frc2014/commands/CommandBase.java" />
         <option value="$PROJECT_DIR$/src/org/team3309/frc2014/RobotMap.java" />
-        <option value="$PROJECT_DIR$/src/org/team3309/frc2014/Robot.java" />
         <option value="$PROJECT_DIR$/src/org/team3309/frc2014/subsystems/Drive.java" />
         <option value="$PROJECT_DIR$/src/org/team3309/frc2014/OctanumModule.java" />
-        <option value="$PROJECT_DIR$/src/org/team3309/frc2014/commands/TeleopDrive.java" />
         <option value="$PROJECT_DIR$/src/friarlib/util/LookupTable.java" />
         <option value="$PROJECT_DIR$/build.properties" />
         <option value="$PROJECT_DIR$/build.xml" />
@@ -128,19 +178,24 @@
         <option value="$PROJECT_DIR$/src/org/team3309/friarlib/util/LookupTable.java" />
         <option value="$PROJECT_DIR$/src/org/team3309/friarlib/util/Util.java" />
         <option value="$PROJECT_DIR$/src/org/team3309/friarlib/constants/ConstantsManager.java" />
+        <option value="$PROJECT_DIR$/src/org/team3309/frc2014/commands/TeleopDrive.java" />
+        <option value="$PROJECT_DIR$/src/org/team3309/frc2014/commands/SingleBallAuto.java" />
+        <option value="$PROJECT_DIR$/src/org/team3309/frc2014/Sensors.java" />
+        <option value="$PROJECT_DIR$/src/org/team3309/frc2014/Robot.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="22" />
-    <option name="width" value="1680" />
-    <option name="height" value="1024" />
+    <option name="x" value="64" />
+    <option name="y" value="-4" />
+    <option name="width" value="1857" />
+    <option name="height" value="1085" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
-    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="false" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
     <ConfirmationsSetting value="0" id="Add" />
@@ -162,8 +217,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -258,6 +313,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="team3309" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="frc2014" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="commands" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="frc2014" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="frc2014" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="lib" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -273,12 +354,12 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="options.lastSelected" value="reference.settingsdialog.project.gant" />
+    <property name="options.lastSelected" value="editor" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/networktables-crio.jar!/" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/wpilibj.jar!/" />
+    <property name="project.structure.last.edited" value="SDKs" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="OverrideImplement.combined" value="true" />
@@ -292,6 +373,7 @@
     <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="false" />
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="build" />
     <property name="SearchEverywhereHistory" value="@Override" />
+    <property name="LayoutCode.rearrangeEntriesJava" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -299,92 +381,12 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin" singleton="true">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-      <option name="PROGRAM_PARAMETERS" />
-      <method />
-    </configuration>
-    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
-      <module name="" />
-      <option name="TESTING_TYPE" value="0" />
-      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
-      <option name="PREFERRED_AVD" value="" />
-      <option name="USE_COMMAND_LINE" value="true" />
-      <option name="COMMAND_LINE" value="" />
-      <option name="WIPE_USER_DATA" value="false" />
-      <option name="DISABLE_BOOT_ANIMATION" value="false" />
-      <option name="NETWORK_SPEED" value="full" />
-      <option name="NETWORK_LATENCY" value="none" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
-      <method />
-    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
-      <method />
-    </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
-      <envs />
-      <properties />
-      <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
@@ -424,6 +426,86 @@
       <option name="NETWORK_LATENCY" value="none" />
       <option name="CLEAR_LOGCAT" value="false" />
       <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin" singleton="true">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
       <method />
     </configuration>
     <list size="0" />
@@ -500,32 +582,32 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1680" height="1024" extended-state="6" />
+    <frame x="64" y="-4" width="1857" height="1085" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32984293" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30870447" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32939914" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15687332" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984293" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17380953" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984293" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984293" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32984293" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -588,21 +670,39 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/commands/TeleopDrive.java">
+    <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/constants/ConstantsManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="5" selection-start="1851" selection-end="1851" vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="1140" />
+        <state line="42" column="32" selection-start="1891" selection-end="1891" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2340">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/commands/CommandBase.java">
+    <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/commands/SingleBallAuto.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="0" selection-start="1916" selection-end="1916" vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="870" />
+        <state line="39" column="1" selection-start="1646" selection-end="1646" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="375">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/commands/TeleopDrive.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="5" selection-start="2185" selection-end="2185" vertical-scroll-proportion="0.0" vertical-offset="825" max-vertical-offset="1530">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/util/Util.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="25" selection-start="2448" selection-end="2448" vertical-scroll-proportion="0.0" vertical-offset="885" max-vertical-offset="1110">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/ControlBoard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="5" selection-start="2113" selection-end="2113" vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="855">
-          <folding />
-        </state>
+        <state line="49" column="5" selection-start="2113" selection-end="2113" vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="855" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/Robot.java">
@@ -614,16 +714,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/OctanumModule.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="87" column="147" selection-start="3131" selection-end="3131" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="1260">
-          <folding />
-        </state>
+        <state line="87" column="147" selection-start="3131" selection-end="3131" vertical-scroll-proportion="0.0" vertical-offset="1215" max-vertical-offset="1260" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/RobotMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="13" selection-start="1659" selection-end="1659" vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="720">
-          <folding />
-        </state>
+        <state line="31" column="13" selection-start="1659" selection-end="1659" vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="720" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/subsystems/Drive.java">
@@ -638,16 +734,9 @@
         <state line="48" column="5" selection-start="1994" selection-end="1994" vertical-scroll-proportion="0.0" vertical-offset="438" max-vertical-offset="1545" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/commands/CommandBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="0" selection-start="1916" selection-end="1916" vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="870" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/ControlBoard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="5" selection-start="2113" selection-end="2113" vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="855">
-          <folding />
-        </state>
+        <state line="49" column="5" selection-start="2113" selection-end="2113" vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="855" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/Robot.java">
@@ -659,9 +748,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/RobotMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="13" selection-start="1659" selection-end="1659" vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="720">
-          <folding />
-        </state>
+        <state line="31" column="13" selection-start="1659" selection-end="1659" vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="720" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/subsystems/Drive.java">
@@ -676,16 +763,9 @@
         <state line="48" column="5" selection-start="1994" selection-end="1994" vertical-scroll-proportion="0.0" vertical-offset="438" max-vertical-offset="1545" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/commands/CommandBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="0" selection-start="1916" selection-end="1916" vertical-scroll-proportion="0.0" vertical-offset="615" max-vertical-offset="870" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/ControlBoard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="5" selection-start="2113" selection-end="2113" vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="855">
-          <folding />
-        </state>
+        <state line="49" column="5" selection-start="2113" selection-end="2113" vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="855" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/Robot.java">
@@ -707,16 +787,9 @@
         <state line="25" column="5" selection-start="644" selection-end="644" vertical-scroll-proportion="0.0" vertical-offset="93" max-vertical-offset="1200" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/commands/CommandBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="566" selection-end="566" vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="525" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/ControlBoard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="5" selection-start="763" selection-end="763" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="510">
-          <folding />
-        </state>
+        <state line="26" column="5" selection-start="763" selection-end="763" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="510" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/Robot.java">
@@ -754,11 +827,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/commands/CommandBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="47" selection-start="170" selection-end="170" vertical-scroll-proportion="0.0" vertical-offset="90" max-vertical-offset="630" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/META-INF/MANIFEST.MF">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="927" />
@@ -766,26 +834,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/ControlBoard.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="5" selection-start="2113" selection-end="2113" vertical-scroll-proportion="0.8039216" vertical-offset="243" max-vertical-offset="855">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/commands/CommandBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="0" selection-start="1916" selection-end="1916" vertical-scroll-proportion="0.5833333" vertical-offset="258" max-vertical-offset="870" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/Robot.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="65" selection-start="1697" selection-end="1697" vertical-scroll-proportion="0.0" vertical-offset="363" max-vertical-offset="1290">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/commands/TeleopDrive.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="5" selection-start="1851" selection-end="1851" vertical-scroll-proportion="0.0" vertical-offset="213" max-vertical-offset="1140" />
+        <state line="49" column="5" selection-start="2113" selection-end="2113" vertical-scroll-proportion="0.8039216" vertical-offset="243" max-vertical-offset="855" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.properties">
@@ -802,9 +851,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/exception/NotInitializedException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="0" selection-start="1690" selection-end="1690" vertical-scroll-proportion="0.53480476" vertical-offset="0" max-vertical-offset="589">
-          <folding />
-        </state>
+        <state line="42" column="0" selection-start="1690" selection-end="1690" vertical-scroll-proportion="0.53480476" vertical-offset="0" max-vertical-offset="589" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/FriarGyro.java">
@@ -816,9 +863,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/OctanumModule.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="50" selection-start="3020" selection-end="3020" vertical-scroll-proportion="0.0" vertical-offset="588" max-vertical-offset="1200">
-          <folding />
-        </state>
+        <state line="86" column="50" selection-start="3020" selection-end="3020" vertical-scroll-proportion="0.0" vertical-offset="588" max-vertical-offset="1200" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/subsystems/Drive.java">
@@ -830,16 +875,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/RobotMap.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="3" selection-start="1645" selection-end="1645" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405">
-          <folding />
-        </state>
+        <state line="30" column="3" selection-start="1645" selection-end="1645" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/filter/IirFilter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="12" selection-start="3620" selection-end="3620" vertical-scroll-proportion="0.7657046" vertical-offset="674" max-vertical-offset="1290">
-          <folding />
-        </state>
+        <state line="100" column="12" selection-start="3620" selection-end="3620" vertical-scroll-proportion="0.7657046" vertical-offset="674" max-vertical-offset="1290" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/constants/Constant.java">
@@ -851,73 +892,94 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/filter/MaxChangeFilter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="9" selection-start="2838" selection-end="2838" vertical-scroll-proportion="0.78431374" vertical-offset="450" max-vertical-offset="1095">
-          <folding />
-        </state>
+        <state line="85" column="9" selection-start="2838" selection-end="2838" vertical-scroll-proportion="0.78431374" vertical-offset="450" max-vertical-offset="1095" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/filter/MovingAverageFilter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="77" column="7" selection-start="2883" selection-end="2883" vertical-scroll-proportion="0.27378964" vertical-offset="676" max-vertical-offset="1275">
-          <folding />
-        </state>
+        <state line="77" column="7" selection-start="2883" selection-end="2883" vertical-scroll-proportion="0.27378964" vertical-offset="676" max-vertical-offset="1275" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="6" selection-start="16" selection-end="16" vertical-scroll-proportion="0.01618123" vertical-offset="0" max-vertical-offset="927">
-          <folding />
-        </state>
+        <state line="1" column="6" selection-start="16" selection-end="16" vertical-scroll-proportion="0.01618123" vertical-offset="0" max-vertical-offset="927" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/motors/BangBangController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="42" selection-start="4012" selection-end="4012" vertical-scroll-proportion="0.33656958" vertical-offset="903" max-vertical-offset="1830">
-          <folding />
-        </state>
+        <state line="105" column="42" selection-start="4012" selection-end="4012" vertical-scroll-proportion="0.33656958" vertical-offset="903" max-vertical-offset="1830" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/motors/FilterableSpeedController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="0" selection-start="2171" selection-end="2171" vertical-scroll-proportion="0.55016184" vertical-offset="0" max-vertical-offset="927">
-          <folding />
-        </state>
+        <state line="58" column="0" selection-start="2171" selection-end="2171" vertical-scroll-proportion="0.55016184" vertical-offset="0" max-vertical-offset="927" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/motors/MultiSpeedController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="13" selection-start="2179" selection-end="2179" vertical-scroll-proportion="0.110032365" vertical-offset="498" max-vertical-offset="1425">
-          <folding />
-        </state>
+        <state line="61" column="13" selection-start="2179" selection-end="2179" vertical-scroll-proportion="0.110032365" vertical-offset="498" max-vertical-offset="1425" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/util/Util.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="25" selection-start="2448" selection-end="2448" vertical-scroll-proportion="-22.8" vertical-offset="0" max-vertical-offset="795">
+        <state line="59" column="25" selection-start="2448" selection-end="2448" vertical-scroll-proportion="0.0" vertical-offset="885" max-vertical-offset="1110">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="15330">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="15330" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.idea/misc.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="612" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/team3309/friarlib/constants/ConstantsManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="56" selection-start="2791" selection-end="2791" vertical-scroll-proportion="1.25" vertical-offset="0" max-vertical-offset="2025">
+        <state line="42" column="32" selection-start="1891" selection-end="1891" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2025">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/commands/TeleopDrive.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="5" selection-start="2185" selection-end="2185" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1170">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/commands/SingleBallAuto.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="36" column="0" selection-start="1637" selection-end="1637" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="375">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/commands/SetRobotAngle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="13" selection-start="1543" selection-end="1543" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="915">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/Sensors.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="12" selection-start="1631" selection-end="1631" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="405">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/team3309/frc2014/Robot.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="29" selection-start="2114" selection-end="2114" vertical-scroll-proportion="0.27439025" vertical-offset="120" max-vertical-offset="960">
+          <folding />
         </state>
       </provider>
     </entry>
@@ -991,6 +1053,7 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
@@ -998,7 +1061,7 @@
       </state>
       <state key="ProjectJDKs.UI">
         <settings>
-          <last-edited>1.6</last-edited>
+          <last-edited>FRC</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
