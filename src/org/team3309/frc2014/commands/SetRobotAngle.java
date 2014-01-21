@@ -24,6 +24,9 @@
 package org.team3309.frc2014.commands;
 
 import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.team3309.frc2014.Sensors;
+import org.team3309.frc2014.subsystems.Drive;
 import org.team3309.friarlib.constants.Constant;
 
 /**
@@ -35,23 +38,30 @@ public class SetRobotAngle extends PIDCommand {
     private static Constant configKi = new Constant("pid.setrobotangle.i", 0);
     private static Constant configKd = new Constant("pid.setrobotangle.d", 0);
 
-    private double angle = 0;
+    private Drive drive;
 
     public static SetRobotAngle create(double angle) {
         return new SetRobotAngle(configKp.getDouble(), configKi.getDouble(), configKd.getDouble(), angle);
     }
 
     public SetRobotAngle(double p, double i, double d, double angle) {
-        super(configKp.getDouble(), configKi.getDouble(), configKd.getDouble());
-        this.angle = angle;
+        super(p, i, d);
+        drive = drive.getInstance();
+        requires(drive);
+        setSetpoint(angle);
+        SmartDashboard.putData(this);
+    }
+
+    public void setAngle(double angle) {
+        setSetpoint(angle);
     }
 
     protected double returnPIDInput() {
-        return 0;
+        return Sensors.gyro.getAngle();
     }
 
     protected void usePIDOutput(double v) {
-
+        drive.driveAuto(0, 0, v);
     }
 
     protected void initialize() {
