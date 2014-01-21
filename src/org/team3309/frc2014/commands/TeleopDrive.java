@@ -23,13 +23,12 @@
 
 package org.team3309.frc2014.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.ControlBoard;
+import org.team3309.frc2014.subsystems.Drive;
 import org.team3309.friarlib.constants.Constant;
 
-/**
- * Created by vmagro on 1/6/14.
- */
-public class TeleopDrive extends CommandBase {
+public class TeleopDrive extends Command {
 
     private Constant configLeftStickDeadband = new Constant("control.left_deadband", .1);
 
@@ -41,9 +40,11 @@ public class TeleopDrive extends CommandBase {
         return instance;
     }
 
+    private Drive drive;
     private ControlBoard controls;
 
     private TeleopDrive() {
+        drive = Drive.getInstance();
         controls = ControlBoard.getInstance();
         requires(drive);
     }

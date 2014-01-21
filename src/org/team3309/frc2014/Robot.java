@@ -27,7 +27,6 @@ package org.team3309.frc2014;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.team3309.frc2014.commands.CommandBase;
 import org.team3309.frc2014.commands.TeleopDrive;
 
 /**
@@ -45,7 +44,6 @@ public class Robot extends IterativeRobot {
      */
     public void robotInit() {
         // Initialize all subsystems
-        CommandBase.init();
     }
 
     public void autonomousInit() {
