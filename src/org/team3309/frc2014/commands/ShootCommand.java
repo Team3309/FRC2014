@@ -23,16 +23,29 @@
 
 package org.team3309.frc2014.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Created by vmagro on 1/20/14.
  */
-public class SingleBallAuto extends CommandGroup {
+public class ShootCommand extends Command {
+    protected void initialize() {
 
-    public SingleBallAuto() {
-        addSequential(new WaitForHot(WaitForHot.Side.RIGHT));
-        addSequential(new ShootCommand());
     }
 
+    protected void execute() {
+
+    }
+
+    protected boolean isFinished() {
+        return false;
+    }
+
+    protected void end() {
+
+    }
+
+    protected void interrupted() {
+
+    }
 }
