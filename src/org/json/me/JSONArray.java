@@ -664,9 +664,9 @@ public class JSONArray {
      *
      * @param index The subscript.
      * @param value A Collection value.
+     * @return this.
      * @throws JSONException If the index is negative or if the value is
      *                       not finite.
-     * @return this.
      */
     public JSONArray put(int index, Vector value) throws JSONException {
         put(index, new JSONArray(value));
