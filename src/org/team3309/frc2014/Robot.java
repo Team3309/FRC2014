@@ -30,11 +30,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.team3309.frc2014.commands.TeleopDrive;
 
 /**
- * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
- * documentation. If you change the name of this class or the package after
- * creating this project, you must also update the manifest file in the resource
- * directory.
+ * Main robot program. This starts all commands and is the main entry point for the FRC control system.
+ *
+ * @author vmagro
  */
 public class Robot extends IterativeRobot {
 

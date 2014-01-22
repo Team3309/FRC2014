@@ -30,7 +30,10 @@ import org.team3309.frc2014.subsystems.Drive;
 import org.team3309.friarlib.constants.Constant;
 
 /**
- * Created by vmagro on 1/16/14.
+ * This command changes the angle of the drivebase relative to the current angle.
+ * The PID constants are set using {@link org.team3309.friarlib.constants.Constant}s "pid.setrobotangle.p/i/d" (3 separate Constants)
+ *
+ * @author vmagro
  */
 public class ChangeRobotAngle extends PIDCommand {
 

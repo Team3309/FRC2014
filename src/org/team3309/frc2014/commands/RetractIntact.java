@@ -26,8 +26,12 @@ package org.team3309.frc2014.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.subsystems.Intake;
 
+
 /**
- * Created by vmagro on 1/21/14.
+ * This Command retracts the {@link org.team3309.frc2014.subsystems.Intake}
+ * Fairly self-explanatory
+ *
+ * @author vmagro
  */
 public class RetractIntact extends Command {
 

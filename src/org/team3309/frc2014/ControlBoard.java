@@ -27,7 +27,9 @@ import org.team3309.friarlib.XboxController;
 import org.team3309.friarlib.constants.Constant;
 
 /**
- * Created by vmagro on 1/6/14.
+ * Operator controllers
+ *
+ * @author vmagro
  */
 public class ControlBoard {
 

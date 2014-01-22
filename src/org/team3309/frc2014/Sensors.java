@@ -26,6 +26,11 @@ package org.team3309.frc2014;
 import org.team3309.friarlib.FriarGyro;
 import org.team3309.friarlib.constants.Constant;
 
+/**
+ * This class holds on to sensors so that certain sensors can be used as global objects
+ *
+ * @author vmagro
+ */
 public class Sensors {
 
     private static Constant configGyroPort = new Constant("sensors.gyro.port", 1);

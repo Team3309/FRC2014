@@ -28,11 +28,15 @@ import org.team3309.frc2014.Vision;
 import org.team3309.friarlib.constants.Constant;
 
 /**
- * Created by vmagro on 1/20/14.
+ * This Command gets the targets from the vision coprocessor and turns the robot to aim at the hot goal.
+ * If the hot goal cannot be found, it will pick the first goal it sees.
+ * If it doesn't see any goals it turns an angle set by the {@link org.team3309.friarlib.constants.Constant} "cmd.aimathot.default_turn"
+ *
+ * @author vmagro
  */
 public class AimAtHotGoal extends Command {
 
-    private static Constant configDefaultTurn = new Constant("auto.default_turn", 45);
+    private static Constant configDefaultTurn = new Constant("cmd.aimathot.default_turn", 45);
 
     private Vision.VisionTarget[] targets = null;
     private Vision.VisionTarget hotGoal = null;

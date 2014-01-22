@@ -34,10 +34,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Created by vmagro on 1/20/14.
+ * This class makes simple connections to the vision co-processor
+ *
+ * @author vmagro
  */
 public class Vision {
 
+    /**
+     * Connect to the vision co-processor and get the info about the targets it detects
+     *
+     * @return
+     */
     public static VisionTarget[] getTargets() {
         try {
             HttpConnection conn = (HttpConnection) Connector.open("http://10.33.9.12/result");

@@ -26,7 +26,10 @@ package org.team3309.frc2014.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
- * Created by vmagro on 1/20/14.
+ * This is a CommandGroup for a single ball autonomous mode.
+ * This auto mode waits for the goal on the right side to be hot and then shoots
+ *
+ * @author vmagro
  */
 public class SingleBallAuto extends CommandGroup {
 

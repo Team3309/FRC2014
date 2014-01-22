@@ -28,6 +28,15 @@ import org.team3309.frc2014.ControlBoard;
 import org.team3309.frc2014.subsystems.Drive;
 import org.team3309.friarlib.constants.Constant;
 
+/**
+ * This is the Command that allows the driver to drive using an {@link org.team3309.friarlib.XboxController}
+ * <p/>
+ * It implements a unique style of control where if the driver is only using the right stick,
+ * it runs using a tank drive style where the right stick controls throttle and turn amount.
+ * If the driver is using both sticks, the left stick is strafing and the right stick is turn amount
+ *
+ * @author vmagro
+ */
 public class TeleopDrive extends Command {
 
     private Constant configLeftStickDeadband = new Constant("control.left_deadband", .1);

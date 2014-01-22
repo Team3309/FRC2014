@@ -28,7 +28,9 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.Vision;
 
 /**
- * Created by vmagro on 1/20/14.
+ * This Command waits for a given goal to become hot
+ *
+ * @author vmagro
  */
 public class WaitForHot extends Command {
 
@@ -36,6 +38,11 @@ public class WaitForHot extends Command {
 
     private boolean isHot = false;
 
+    /**
+     * Create a new WaitForHot command
+     *
+     * @param side which side to wait for
+     */
     public WaitForHot(Side side) {
         this.side = side;
     }

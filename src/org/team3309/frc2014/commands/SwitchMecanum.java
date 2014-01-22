@@ -27,13 +27,21 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.subsystems.Drive;
 
 /**
- * Created by vmagro on 1/21/14.
+ * This Command switches to/from mecanum mode. The constructor determines whether or not the Command will enable or
+ * disable mecanum.
+ *
+ * @author vmagro
  */
 public class SwitchMecanum extends Command {
 
     private boolean enableMecanum;
     private boolean finished = false;
 
+    /**
+     * Create a new SwitchMecanum command
+     *
+     * @param enable true to engage mecanum when run, false to engage high-traction when run
+     */
     public SwitchMecanum(boolean enable) {
         this.enableMecanum = enable;
     }

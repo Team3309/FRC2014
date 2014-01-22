@@ -32,7 +32,9 @@ import org.team3309.friarlib.FriarGyro;
 import org.team3309.friarlib.constants.Constant;
 
 /**
- * Created by vmagro on 1/4/14.
+ * Drivetrain subsystem
+ *
+ * @author vmagro
  */
 public class Drive extends Subsystem {
 
@@ -62,6 +64,11 @@ public class Drive extends Subsystem {
 
     private static Drive instance;
 
+    /**
+     * Get the singleton instance of the drivetrain
+     *
+     * @return
+     */
     public static Drive getInstance() {
         if (instance == null) {
             instance = new Drive();
@@ -97,6 +104,9 @@ public class Drive extends Subsystem {
 
     }
 
+    /**
+     * Engage the mecanum wheels
+     */
     public void enableMecanum() {
         if (!isMecanum) {
             leftFront.engageMecanum();
@@ -108,6 +118,9 @@ public class Drive extends Subsystem {
         }
     }
 
+    /**
+     * Disengage the mecanum wheels
+     */
     public void disableMecanum() {
         if (isMecanum) {
             leftFront.disengageMecanum();
@@ -119,6 +132,11 @@ public class Drive extends Subsystem {
         }
     }
 
+    /**
+     * Is the drivetrain in mecanum mode?
+     *
+     * @return
+     */
     public boolean isMecanum() {
         return isMecanum;
     }

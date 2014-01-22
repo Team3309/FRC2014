@@ -29,7 +29,9 @@ import edu.wpi.first.wpilibj.SpeedController;
 import org.team3309.friarlib.constants.Constant;
 
 /**
- * Created by vmagro on 1/8/14.
+ * This class abstracts each OctanumModule to make the code for {@link org.team3309.frc2014.subsystems.Drive} simpler.
+ *
+ * @author vmagro
  */
 public class OctanumModule implements Runnable {
 
@@ -51,6 +53,13 @@ public class OctanumModule implements Runnable {
     private double integral = 0;
     private double lastRate = 0;
 
+    /**
+     * Create a new OctanumModule with the given motor controller, solenoid and encoder
+     *
+     * @param motor
+     * @param solenoid
+     * @param encoder
+     */
     public OctanumModule(SpeedController motor, Solenoid solenoid, Encoder encoder) {
         this.motor = motor;
         this.encoder = encoder;

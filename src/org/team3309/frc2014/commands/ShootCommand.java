@@ -25,8 +25,12 @@ package org.team3309.frc2014.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+
 /**
- * Created by vmagro on 1/20/14.
+ * This Command shoots.
+ * Fairly self-explanatory
+ *
+ * @author vmagro
  */
 public class ShootCommand extends Command {
     protected void initialize() {
