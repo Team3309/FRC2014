@@ -33,11 +33,11 @@ import org.team3309.frc2014.subsystems.Intake;
  *
  * @author vmagro
  */
-public class RetractIntact extends Command {
+public class RetractIntake extends Command {
 
     private boolean finished = false;
 
-    public RetractIntact() {
+    public RetractIntake() {
         requires(Intake.getInstance());
     }
 
