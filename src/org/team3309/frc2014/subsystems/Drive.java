@@ -39,6 +39,7 @@ import org.team3309.friarlib.constants.Constant;
 public class Drive extends Subsystem {
 
     private Constant configMecanumSolenoidPort = new Constant("solenoid.mecanum", 1);
+    private static Constant configMecanumSolenoid = new Constant("drive.mecanum.on", true);
 
     private Constant configLeftFrontPort = new Constant("drive.left.front", 1);
     private Constant configLeftBackPort = new Constant("drive.left.back", 2);
@@ -88,13 +89,13 @@ public class Drive extends Subsystem {
     private Drive() {
         extender = new Solenoid(configMecanumSolenoidPort.getInt());
 
-        leftFront = new OctanumModule(new Victor(configLeftFrontPort.getInt()), extender,
+        leftFront = new OctanumModule(new Victor(configLeftFrontPort.getInt()),
                 new Encoder(configLeftFrontEncoderA.getInt(), configLeftFrontEncoderB.getInt()));
-        leftBack = new OctanumModule(new Victor(configLeftBackPort.getInt()), extender,
+        leftBack = new OctanumModule(new Victor(configLeftBackPort.getInt()),
                 new Encoder(configLeftBackEncoderA.getInt(), configLeftBackEncoderB.getInt()));
-        rightFront = new OctanumModule(new Victor(configFrontRightPort.getInt()), extender,
+        rightFront = new OctanumModule(new Victor(configFrontRightPort.getInt()),
                 new Encoder(configRightFrontEncoderA.getInt(), configRightFrontEncoderB.getInt()));
-        rightBack = new OctanumModule(new Victor(configRightBackPort.getInt()), extender,
+        rightBack = new OctanumModule(new Victor(configRightBackPort.getInt()),
                 new Encoder(configRightBackEncoderA.getInt(), configRightBackEncoderB.getInt()));
 
         gyro = new FriarGyro(configGyroPort.getInt());
@@ -109,10 +110,7 @@ public class Drive extends Subsystem {
      */
     public void enableMecanum() {
         if (!isMecanum) {
-            leftFront.engageMecanum();
-            leftBack.engageMecanum();
-            rightFront.engageMecanum();
-            rightBack.engageMecanum();
+            extender.set(configMecanumSolenoid.getBoolean());
 
             isMecanum = true;
         }
@@ -123,10 +121,7 @@ public class Drive extends Subsystem {
      */
     public void disableMecanum() {
         if (isMecanum) {
-            leftFront.disengageMecanum();
-            leftBack.disengageMecanum();
-            rightFront.disengageMecanum();
-            rightBack.disengageMecanum();
+            extender.set(!configMecanumSolenoid.getBoolean());
 
             isMecanum = false;
         }
@@ -204,6 +199,7 @@ public class Drive extends Subsystem {
         double desiredAngularVelocity = turn * maxAngularVelocity.getDouble();
         double angularVelocity = gyro.getAngularVelocity();
 
+        //proportional correction
         turn = (angularVelocity - desiredAngularVelocity) * gyroKp.getDouble();
 
         double t_left = throttle + turn;

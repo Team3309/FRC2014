@@ -23,9 +23,7 @@
 
 package org.team3309.frc2014;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.*;
 import org.team3309.friarlib.constants.Constant;
 
 /**
@@ -33,75 +31,54 @@ import org.team3309.friarlib.constants.Constant;
  *
  * @author vmagro
  */
-public class OctanumModule implements Runnable {
+public class OctanumModule implements PIDOutput, PIDSource {
 
-    private static Constant configMecanumSolenoid = new Constant("drive.mecanum.on", true);
 
-    private static final int DELTA_T = 20;
+    private static Constant configP = new Constant("drive.p", 1);
+    private static Constant configI = new Constant("drive.i", 0);
+    private static Constant configD = new Constant("drive.d", 0);
 
-    private Constant configP = new Constant("drive.p", 1);
-    private Constant configI = new Constant("drive.i", 0);
-    private Constant configD = new Constant("drive.d", 0);
+    private static Constant configMaxSpeed = new Constant("drive.max_rpm", 500);
+    private static Constant configDistancePerPulse = new Constant("drive.distance_per_pulse", 1 / 300);
 
     private SpeedController motor;
     private Encoder encoder;
-    private Solenoid solenoid;
 
-    private boolean enabled = false;
-
-    private double setpoint = 0;
-    private double integral = 0;
-    private double lastRate = 0;
+    private PIDController pidController;
 
     /**
      * Create a new OctanumModule with the given motor controller, solenoid and encoder
      *
      * @param motor
-     * @param solenoid
      * @param encoder
      */
-    public OctanumModule(SpeedController motor, Solenoid solenoid, Encoder encoder) {
+    public OctanumModule(SpeedController motor, Encoder encoder) {
         this.motor = motor;
         this.encoder = encoder;
-        this.solenoid = solenoid;
-    }
 
-    public void engageMecanum() {
-        solenoid.set(configMecanumSolenoid.getBoolean());
-    }
+        encoder.setDistancePerPulse(configDistancePerPulse.getDouble());
 
-    public void disengageMecanum() {
-        solenoid.set(!configMecanumSolenoid.getBoolean());
+        pidController = new PIDController(configP.getDouble(), configI.getDouble(), configD.getDouble(), this, this);
     }
 
     public void enable() {
-        enabled = true;
+        pidController.enable();
     }
 
     public void disable() {
-        enabled = false;
+        pidController.disable();
     }
 
     public void set(double x) {
-        motor.set(x);
+        //motor.set(x);
+        pidController.setSetpoint(x * configMaxSpeed.getDouble());
     }
 
-    public void run() {
-        while (true) {
-            if (enabled) {
-                double current = encoder.getRate();
-                double err = current - setpoint;
-                integral += err;
+    public void pidWrite(double v) {
+        motor.set(v);
+    }
 
-                double output = err * configP.getDouble() + integral * configI.getDouble() + ((current - lastRate) / DELTA_T) * configD.getDouble();
-                set(output);
-            }
-
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+    public double pidGet() {
+        return encoder.getRate();
     }
 }
