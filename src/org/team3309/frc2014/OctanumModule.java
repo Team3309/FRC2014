@@ -33,15 +33,17 @@ import org.team3309.friarlib.constants.Constant;
  */
 public class OctanumModule implements PIDOutput, PIDSource {
 
+    private static Constant configMecanumSolenoid = new Constant("drive.mecanum.on", true);
 
     private static Constant configP = new Constant("drive.p", 1);
     private static Constant configI = new Constant("drive.i", 0);
     private static Constant configD = new Constant("drive.d", 0);
 
-    private static Constant configMaxSpeed = new Constant("drive.max_rpm", 500);
+    private static Constant configCountsPerRev = new Constant("drive.counts_per_rev", 250);
     private static Constant configDistancePerPulse = new Constant("drive.distance_per_pulse", 1 / 300);
 
     private SpeedController motor;
+    private Solenoid solenoid;
     private Encoder encoder;
 
     private PIDController pidController;
@@ -49,14 +51,16 @@ public class OctanumModule implements PIDOutput, PIDSource {
     /**
      * Create a new OctanumModule with the given motor controller, solenoid and encoder
      *
-     * @param motor
-     * @param encoder
+     * @param motor    the {@link edu.wpi.first.wpilibj.SpeedController} that runs the wheel
+     * @param solenoid the {@link edu.wpi.first.wpilibj.Solenoid} to engage/disengage the mecanum wheel
+     * @param encoder  the {@link edu.wpi.first.wpilibj.Encoder} to count revolutions
      */
-    public OctanumModule(SpeedController motor, Encoder encoder) {
+    public OctanumModule(SpeedController motor, Solenoid solenoid, Encoder encoder) {
         this.motor = motor;
         this.encoder = encoder;
+        this.solenoid = solenoid;
 
-        encoder.setDistancePerPulse(configDistancePerPulse.getDouble());
+        encoder.start();
 
         pidController = new PIDController(configP.getDouble(), configI.getDouble(), configD.getDouble(), this, this);
     }
@@ -70,8 +74,11 @@ public class OctanumModule implements PIDOutput, PIDSource {
     }
 
     public void set(double x) {
-        //motor.set(x);
-        pidController.setSetpoint(x * configMaxSpeed.getDouble());
+        motor.set(x);
+    }
+
+    public void setPositionSetpoint(double inches) {
+        pidController.setSetpoint(inches);
     }
 
     public void pidWrite(double v) {
@@ -81,4 +88,13 @@ public class OctanumModule implements PIDOutput, PIDSource {
     public double pidGet() {
         return encoder.getRate();
     }
+
+    public void engageMecanum() {
+        solenoid.set(configMecanumSolenoid.getBoolean());
+    }
+
+    public void disengageMecanum() {
+        solenoid.set(!configMecanumSolenoid.getBoolean());
+    }
+
 }
