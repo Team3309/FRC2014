@@ -226,6 +226,14 @@ public class Drive extends Subsystem {
         setRight(right);
     }
 
+    public double getAngularVelocity() {
+        return gyro.getAngularVelocity();
+    }
+
+    public double getGyroAngle() {
+        return gyro.getAngle();
+    }
+
     /**
      * Normalize a set of input values between -1.0 and 1.0, with the largest value being 1.0
      *

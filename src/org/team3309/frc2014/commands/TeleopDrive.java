@@ -23,6 +23,7 @@
 
 package org.team3309.frc2014.commands;
 
+import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.ControlBoard;
 import org.team3309.frc2014.subsystems.Drive;
@@ -40,6 +41,8 @@ import org.team3309.friarlib.constants.Constant;
 public class TeleopDrive extends Command {
 
     private Constant configLeftStickDeadband = new Constant("control.left_deadband", .1);
+    private Constant configTriggerDeadband = new Constant("control.trigger_deadband", .1);
+    private Constant configAutoRotateP = new Constant("control.ar.p", .01);
 
     private static TeleopDrive instance;
 
@@ -79,7 +82,19 @@ public class TeleopDrive extends Command {
             if (Math.abs(leftX) <= configLeftStickDeadband.getDouble() && Math.abs(leftY) <= configLeftStickDeadband.getDouble()) {
                 drive.driveTank(rightY, rightX);
             } else {
-                drive.driveMecanum(leftX, leftY, rightX);
+                //if the driver is holding down the trigger, turn off the auto-rotate feature and use strict translation
+                if (controls.driver.getRightTrigger() > configTriggerDeadband.getDouble()) {
+                    drive.driveMecanum(leftX, leftY, rightX);
+                }
+                //use the "Halo-AR" drive scheme described by Ether at http://www.chiefdelphi.com/media/papers/2390 and http://www.chiefdelphi.com/forums/showpost.php?p=1021821&postcount=8
+                //this will automatically rotate the drive base to match the commanded angle as it translates
+                else {
+                    double commandAngle = MathUtils.atan2(controls.driver.getLeftY(), controls.driver.getLeftX()) * (180 / Math.PI);
+                    double angleError = commandAngle - drive.getGyroAngle();
+                    angleError %= 360;
+                    double turnOutput = configAutoRotateP.getDouble() * angleError;
+                    drive.driveMecanum(leftX, leftY, turnOutput);
+                }
             }
         }
         // high traction wheels engaged
