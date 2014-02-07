@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.team3309.friarlib.constants.Constant;
+import org.team3309.friarlib.motors.MultiSpeedController;
 
 /**
  * Created by vmagro on 1/21/14.
@@ -45,20 +46,24 @@ public class Intake extends Subsystem {
         return instance;
     }
 
-    private static final Constant configIntakeMotor = new Constant("intake.motor", 5);
+    private static final Constant configIntakeMotor = new Constant("intake.motors", new double[]{5});
     private static final Constant configBallSensor = new Constant("intake.sensor", 5);
     private static final Constant configEncoder = new Constant("intake.encoder", 6);
     private static final Constant configSolenoid = new Constant("intake.solenoid", 2);
     private static final Constant configSolenoidOn = new Constant("intake.solenoid.on", true);
 
-    private Victor motor;
+    private MultiSpeedController motors;
     private DigitalInput ballSensor;
     private IntakeTrigger trigger;
     private Counter encoder;
     private Solenoid solenoid;
 
     private Intake() {
-        motor = new Victor(configIntakeMotor.getInt());
+        Victor[] speedControllers = new Victor[configIntakeMotor.getList().length];
+        for (int i = 0; i < speedControllers.length; i++) {
+            speedControllers[i] = new Victor((int) configIntakeMotor.getList()[i]);
+        }
+        motors = new MultiSpeedController.Builder().motors(speedControllers).build();
         ballSensor = new DigitalInput(configBallSensor.getInt());
         trigger = new IntakeTrigger();
         encoder = new Counter(configEncoder.getInt());
@@ -82,7 +87,7 @@ public class Intake extends Subsystem {
     }
 
     public void setSpeed(double val) {
-        motor.set(val);
+        motors.set(val);
     }
 
     public Counter getEncoder() {
