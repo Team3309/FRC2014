@@ -76,7 +76,6 @@ public class Drive extends Subsystem {
         return instance;
     }
 
-
     private Solenoid extender;
 
     private boolean isMecanum = false;
@@ -84,6 +83,8 @@ public class Drive extends Subsystem {
     private OctanumModule leftFront, leftBack, rightFront, rightBack;
 
     private FriarGyro gyro;
+
+    private double turnIntegral = 0;
 
     private Drive() {
         extender = new Solenoid(configMecanumSolenoidPort.getInt());
@@ -206,9 +207,10 @@ public class Drive extends Subsystem {
 
         //proportional correction
         turn = (angularVelocity - desiredAngularVelocity) * gyroKp.getDouble();
+        turnIntegral += turn;
 
-        double t_left = throttle + turn;
-        double t_right = throttle - turn;
+        double t_left = throttle + turnIntegral;
+        double t_right = throttle - turnIntegral;
 
         double left = t_left + skim(t_right);
         double right = t_right + skim(t_left);
