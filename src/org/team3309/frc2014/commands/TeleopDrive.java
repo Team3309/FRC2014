@@ -89,7 +89,7 @@ public class TeleopDrive extends Command {
                 //use the "Halo-AR" drive scheme described by Ether at http://www.chiefdelphi.com/media/papers/2390 and http://www.chiefdelphi.com/forums/showpost.php?p=1021821&postcount=8
                 //this will automatically rotate the drive base to match the commanded angle as it translates
                 else {
-                    double commandAngle = MathUtils.atan2(controls.driver.getLeftY(), controls.driver.getLeftX()) * (180 / Math.PI);
+                    double commandAngle = MathUtils.atan2(leftY, leftX) * (180 / Math.PI);
                     double angleError = commandAngle - drive.getGyroAngle();
                     angleError %= 360;
                     double turnOutput = configAutoRotateP.getDouble() * angleError;
