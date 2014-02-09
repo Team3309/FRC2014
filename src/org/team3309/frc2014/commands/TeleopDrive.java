@@ -23,7 +23,6 @@
 
 package org.team3309.frc2014.commands;
 
-import com.sun.squawk.util.MathUtils;
 import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.ControlBoard;
 import org.team3309.frc2014.Sensors;
@@ -94,12 +93,12 @@ public class TeleopDrive extends Command {
                 drive.driveTank(rightY, rightX);
             } else {
                 //if the driver is holding down the trigger, turn off the auto-rotate feature and use strict translation
-                if (controls.driver.getRightTrigger() > configTriggerDeadband.getDouble()) {
-                    drive.driveMecanum(leftX, leftY, rightX);
-                }
+                //if (controls.driver.getRightTrigger() > configTriggerDeadband.getDouble()) {
+                drive.driveMecanum(leftX, leftY, rightX);
+                //}
                 //use the "Halo-AR" drive scheme described by Ether at http://www.chiefdelphi.com/media/papers/2390 and http://www.chiefdelphi.com/forums/showpost.php?p=1021821&postcount=8
                 //this will automatically rotate the drive base to match the commanded angle as it translates
-                else {
+                /*else {
                     double commandAngle = MathUtils.atan2(leftX, leftY) * (180 / Math.PI);
                     double angleError = commandAngle - drive.getGyroAngle();
                     angleError %= 180;
@@ -107,7 +106,7 @@ public class TeleopDrive extends Command {
                     drive.driveMecanum(leftX, leftY, turnOutput);
 
                     //drive.driveMecanum(leftX, leftY, rightX);
-                }
+                }*/
             }
         }
         // high traction wheels engaged
