@@ -46,13 +46,13 @@ public class Drive extends Subsystem {
     private Constant configFrontRightPort = new Constant("drive.right.front", 3);
     private Constant configRightBackPort = new Constant("drive.right.back", 4);
 
-    private Constant configLeftFrontEncoderA = new Constant("drive.encoder.left.front.a", 5);
-    private Constant configLeftBackEncoderA = new Constant("drive.encoder.left.back.a", 9);
-    private Constant configRightFrontEncoderA = new Constant("drive.encoder.right.front.a", 4);
+    private Constant configLeftFrontEncoderA = new Constant("drive.encoder.left.front.a", 8);
+    private Constant configLeftFrontEncoderB = new Constant("drive.encoder.left.front.b", 9);
+    private Constant configLeftBackEncoderA = new Constant("drive.encoder.left.back.a", 4);
+    private Constant configLeftBackEncoderB = new Constant("drive.encoder.left.back.b", 5);
+    private Constant configRightFrontEncoderA = new Constant("drive.encoder.right.front.a", 6);
+    private Constant configRightFrontEncoderB = new Constant("drive.encoder.right.front.b", 7);
     private Constant configRightBackEncoderA = new Constant("drive.encoder.right.back.a", 2);
-    private Constant configLeftFrontEncoderB = new Constant("drive.encoder.left.front.b", 6);
-    private Constant configLeftBackEncoderB = new Constant("drive.encoder.left.back.b", 7);
-    private Constant configRightFrontEncoderB = new Constant("drive.encoder.right.front.b", 8);
     private Constant configRightBackEncoderB = new Constant("drive.encoder.right.back.b", 3);
 
     private Constant skimGain = new Constant("drive.skim_gain", .25);
@@ -173,9 +173,9 @@ public class Drive extends Subsystem {
      */
     public void driveMecanum(double x, double y, double turn) {
         // Compensate for gyro angle.
-        double rotated[] = rotateVector(x, y, getGyroAngle());
+        /*double rotated[] = rotateVector(x, y, getGyroAngle());
         x = rotated[0];
-        y = rotated[1];
+        y = rotated[1];*/
 
         double[] speeds = new double[4];
         speeds[0] = x + y + turn; //left front
@@ -193,8 +193,6 @@ public class Drive extends Subsystem {
         leftBack.set(speeds[1]);
         rightFront.set(speeds[2]);
         rightBack.set(speeds[3]);
-
-        System.out.println(speeds[0] + "," + speeds[1] + "," + speeds[2] + "," + speeds[3] + "\tgyroAngle=" + getGyroAngle());
     }
 
     /**
@@ -208,17 +206,13 @@ public class Drive extends Subsystem {
         double angularVelocity = getAngularVelocity();
 
         //proportional correction
-        turn = (angularVelocity - desiredAngularVelocity) * gyroKp.getDouble();
+        //turn = (angularVelocity - desiredAngularVelocity) * gyroKp.getDouble();
 
         double t_left = throttle + turn;
         double t_right = throttle - turn;
 
         double left = t_left + skim(t_right);
         double right = t_right + skim(t_left);
-
-        System.out.println("throttle=" + throttle + "\tturn=" + turn + "\tleft=" + -left + "\tright=" + right +
-                "\tgyro=" +
-                angularVelocity);
 
         if (left > 1)
             left = 1;
@@ -300,5 +294,11 @@ public class Drive extends Subsystem {
             return -((v + 1.0) * skimGain.getDouble());
         }
         return 0;
+    }
+
+    public void printEncoders() {
+        System.out.println("fl:" + leftFront.getEncoder().get() + "\tfr:" + rightFront.getEncoder().get()
+                + "\tbl:" + leftBack
+                .getEncoder().get() + "\tbr:" + rightBack.getEncoder().get());
     }
 }

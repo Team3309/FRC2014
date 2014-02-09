@@ -42,7 +42,7 @@ public class TeleopDrive extends Command {
 
     private Constant configLeftStickDeadband = new Constant("control.left_deadband", .1);
     private Constant configTriggerDeadband = new Constant("control.trigger_deadband", .1);
-    private Constant configAutoRotateP = new Constant("control.ar.p", .01);
+    private Constant configAutoRotateP = new Constant("control.ar.p", -.01);
 
     private static TeleopDrive instance;
 
@@ -65,6 +65,8 @@ public class TeleopDrive extends Command {
     }
 
     protected void execute() {
+        drive.printEncoders();
+
         double leftX = controls.driver.getLeftX();
         double leftY = controls.driver.getLeftY();
         double rightX = controls.driver.getRightX();
@@ -85,7 +87,7 @@ public class TeleopDrive extends Command {
 
         // the mecanum wheels are engaged
         if (drive.isMecanum()) {
-            System.out.println("Mecanum");
+            //System.out.println("Mecanum");
             // not using the left stick, switch to "tank" mode
             if (Math.abs(leftX) <= configLeftStickDeadband.getDouble() && Math.abs(leftY) <= configLeftStickDeadband
                     .getDouble() && (rightX > .1 || rightY > .1)) {
@@ -100,12 +102,11 @@ public class TeleopDrive extends Command {
                 //this will automatically rotate the drive base to match the commanded angle as it translates
                 /*else {
                     double commandAngle = MathUtils.atan2(leftX, leftY) * (180 / Math.PI);
-                    double angleError = commandAngle - drive.getGyroAngle();
-                    angleError %= 180;
+                    double fieldAngle = drive.getGyroAngle();
+                    double angleError = commandAngle - fieldAngle;
                     double turnOutput = configAutoRotateP.getDouble() * angleError;
+                    turnOutput += rightX; //driver manually compensate
                     drive.driveMecanum(leftX, leftY, turnOutput);
-
-                    //drive.driveMecanum(leftX, leftY, rightX);
                 }*/
             }
         }

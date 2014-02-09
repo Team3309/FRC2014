@@ -24,6 +24,7 @@
 package org.team3309.frc2014;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team3309.friarlib.constants.Constant;
 
 /**
@@ -35,7 +36,7 @@ public class OctanumModule implements PIDOutput, PIDSource {
 
     private static Constant configMecanumSolenoid = new Constant("drive.mecanum.on", false);
 
-    private static Constant configP = new Constant("drive.p", .001);
+    private static Constant configP = new Constant("drive.p", -.01);
     private static Constant configI = new Constant("drive.i", 0);
     private static Constant configD = new Constant("drive.d", .002);
 
@@ -64,6 +65,7 @@ public class OctanumModule implements PIDOutput, PIDSource {
 
         pidController = new PIDController(configP.getDouble(), configI.getDouble(), configD.getDouble(), this, this);
         pidController.disable();
+        SmartDashboard.putData("octo" + motor.hashCode(), pidController);
     }
 
     public void enable() {
