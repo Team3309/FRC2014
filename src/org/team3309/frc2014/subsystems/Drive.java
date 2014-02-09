@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.team3309.frc2014.OctanumModule;
+import org.team3309.frc2014.Sensors;
 import org.team3309.friarlib.FriarGyro;
 import org.team3309.friarlib.constants.Constant;
 
@@ -38,29 +39,26 @@ import org.team3309.friarlib.constants.Constant;
  */
 public class Drive extends Subsystem {
 
-    private Constant configMecanumSolenoidPort = new Constant("solenoid.mecanum", 1);
+    private Constant configMecanumSolenoidPort = new Constant("solenoid.mecanum", 3);
 
     private Constant configLeftFrontPort = new Constant("drive.left.front", 1);
     private Constant configLeftBackPort = new Constant("drive.left.back", 2);
     private Constant configFrontRightPort = new Constant("drive.right.front", 3);
     private Constant configRightBackPort = new Constant("drive.right.back", 4);
 
-    private Constant configLeftFrontEncoderA = new Constant("drive.encoder.left.front.a", 1);
-    private Constant configLeftBackEncoderA = new Constant("drive.encoder.left.back.a", 1);
-    private Constant configRightFrontEncoderA = new Constant("drive.encoder.right.front.a", 1);
-    private Constant configRightBackEncoderA = new Constant("drive.encoder.right.back.a", 1);
-    private Constant configLeftFrontEncoderB = new Constant("drive.encoder.left.front.b", 1);
-    private Constant configLeftBackEncoderB = new Constant("drive.encoder.left.back.b", 1);
-    private Constant configRightFrontEncoderB = new Constant("drive.encoder.right.front.b", 1);
-    private Constant configRightBackEncoderB = new Constant("drive.encoder.right.back.b", 1);
-
-    private Constant configGyroPort = new Constant("drive.gyro.port", 1);
+    private Constant configLeftFrontEncoderA = new Constant("drive.encoder.left.front.a", 5);
+    private Constant configLeftBackEncoderA = new Constant("drive.encoder.left.back.a", 9);
+    private Constant configRightFrontEncoderA = new Constant("drive.encoder.right.front.a", 4);
+    private Constant configRightBackEncoderA = new Constant("drive.encoder.right.back.a", 2);
+    private Constant configLeftFrontEncoderB = new Constant("drive.encoder.left.front.b", 6);
+    private Constant configLeftBackEncoderB = new Constant("drive.encoder.left.back.b", 7);
+    private Constant configRightFrontEncoderB = new Constant("drive.encoder.right.front.b", 8);
+    private Constant configRightBackEncoderB = new Constant("drive.encoder.right.back.b", 3);
 
     private Constant skimGain = new Constant("drive.skim_gain", .25);
 
     private Constant gyroKp = new Constant("drive.gyro.kp", .02);
     private Constant maxAngularVelocity = new Constant("drive.gyro.max_angular_velocity", 720);
-
 
     private static Drive instance;
 
@@ -78,13 +76,11 @@ public class Drive extends Subsystem {
 
     private Solenoid extender;
 
-    private boolean isMecanum = false;
+    private boolean isMecanum = true;
 
     private OctanumModule leftFront, leftBack, rightFront, rightBack;
 
     private FriarGyro gyro;
-
-    private double turnIntegral = 0;
 
     private Drive() {
         extender = new Solenoid(configMecanumSolenoidPort.getInt());
@@ -98,7 +94,7 @@ public class Drive extends Subsystem {
         rightBack = new OctanumModule(new Victor(configRightBackPort.getInt()), extender,
                 new Encoder(configRightBackEncoderA.getInt(), configRightBackEncoderB.getInt()));
 
-        gyro = new FriarGyro(configGyroPort.getInt());
+        gyro = Sensors.gyro;
     }
 
     protected void initDefaultCommand() {
@@ -177,7 +173,7 @@ public class Drive extends Subsystem {
      */
     public void driveMecanum(double x, double y, double turn) {
         // Compensate for gyro angle.
-        double rotated[] = rotateVector(x, y, gyro.getAngle());
+        double rotated[] = rotateVector(x, y, getGyroAngle());
         x = rotated[0];
         y = rotated[1];
 
@@ -187,12 +183,18 @@ public class Drive extends Subsystem {
         speeds[2] = -x + y - turn; //right front
         speeds[3] = x + y - turn; //right back
 
+        //invert left outputs
+        speeds[0] = -speeds[0];
+        speeds[1] = -speeds[1];
+
         normalize(speeds);
 
         leftFront.set(speeds[0]);
         leftBack.set(speeds[1]);
         rightFront.set(speeds[2]);
         rightBack.set(speeds[3]);
+
+        System.out.println(speeds[0] + "," + speeds[1] + "," + speeds[2] + "," + speeds[3] + "\tgyroAngle=" + getGyroAngle());
     }
 
     /**
@@ -203,28 +205,31 @@ public class Drive extends Subsystem {
      */
     public void driveTank(double throttle, double turn) {
         double desiredAngularVelocity = turn * maxAngularVelocity.getDouble();
-        double angularVelocity = gyro.getAngularVelocity();
+        double angularVelocity = getAngularVelocity();
 
         //proportional correction
         turn = (angularVelocity - desiredAngularVelocity) * gyroKp.getDouble();
-        turnIntegral += turn;
 
-        double t_left = throttle + turnIntegral;
-        double t_right = throttle - turnIntegral;
+        double t_left = throttle + turn;
+        double t_right = throttle - turn;
 
         double left = t_left + skim(t_right);
         double right = t_right + skim(t_left);
 
+        System.out.println("throttle=" + throttle + "\tturn=" + turn + "\tleft=" + -left + "\tright=" + right +
+                "\tgyro=" +
+                angularVelocity);
+
         if (left > 1)
             left = 1;
-        else if (left < 1)
+        else if (left < -1)
             left = -1;
         if (right > 1)
             right = 1;
         else if (right < -1)
             right = -1;
 
-        setLeft(-left);
+        setLeft(left);
         setRight(right);
     }
 
@@ -234,6 +239,20 @@ public class Drive extends Subsystem {
 
     public double getGyroAngle() {
         return gyro.getAngle();
+    }
+
+    public void brake() {
+        leftBack.brake();
+        leftFront.brake();
+        rightBack.brake();
+        rightFront.brake();
+    }
+
+    public void releaseBrake() {
+        leftBack.releaseBrake();
+        leftFront.releaseBrake();
+        rightBack.releaseBrake();
+        rightFront.releaseBrake();
     }
 
     /**

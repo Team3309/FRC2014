@@ -24,10 +24,12 @@
 package org.team3309.frc2014;
 
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.team3309.frc2014.commands.TeleopDrive;
+import org.team3309.friarlib.constants.Constant;
 
 /**
  * Main robot program. This starts all commands and is the main entry point for the FRC control system.
@@ -36,25 +38,43 @@ import org.team3309.frc2014.commands.TeleopDrive;
  */
 public class Robot extends IterativeRobot {
 
+    private static Constant configCompressorRelay = new Constant("compressor.relay", 1);
+    private static Constant configCompressorSensor = new Constant("compressor.sensor", 1);
+
+    private Compressor compressor;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
         // Initialize all subsystems
+        compressor = new Compressor(configCompressorRelay.getInt(), configCompressorSensor.getInt());
+        compressor.start();
     }
 
     public void autonomousInit() {
+        Sensors.gyro.reset();
     }
 
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
+        //Scheduler.getInstance().run();
+
+        //module.set(.5);
+
+        //SmartDashboard.putNumber("speed", module.getEncoder().getRate());
+        //SmartDashboard.putNumber("counts", module.getEncoder().get());
+        //SmartDashboard.putNumber("period", module.getEncoder().getPeriod());
+
+        //DriverStationLCD.getInstance().println();
     }
 
     public void teleopInit() {
+        Sensors.gyro.reset();
+
         //start the TeleopDrive command
         TeleopDrive.getInstance().start();
     }

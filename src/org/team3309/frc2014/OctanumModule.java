@@ -33,11 +33,11 @@ import org.team3309.friarlib.constants.Constant;
  */
 public class OctanumModule implements PIDOutput, PIDSource {
 
-    private static Constant configMecanumSolenoid = new Constant("drive.mecanum.on", true);
+    private static Constant configMecanumSolenoid = new Constant("drive.mecanum.on", false);
 
-    private static Constant configP = new Constant("drive.p", 1);
+    private static Constant configP = new Constant("drive.p", .001);
     private static Constant configI = new Constant("drive.i", 0);
-    private static Constant configD = new Constant("drive.d", 0);
+    private static Constant configD = new Constant("drive.d", .002);
 
     private static Constant configCountsPerRev = new Constant("drive.counts_per_rev", 250);
     private static Constant configDistancePerPulse = new Constant("drive.distance_per_pulse", 1 / 300);
@@ -63,14 +63,11 @@ public class OctanumModule implements PIDOutput, PIDSource {
         encoder.start();
 
         pidController = new PIDController(configP.getDouble(), configI.getDouble(), configD.getDouble(), this, this);
+        pidController.disable();
     }
 
     public void enable() {
-        pidController.enable();
-    }
-
-    public void disable() {
-        pidController.disable();
+        //pidController.enable();
     }
 
     public void set(double x) {
@@ -85,8 +82,17 @@ public class OctanumModule implements PIDOutput, PIDSource {
         motor.set(v);
     }
 
+    public void brake() {
+        pidController.enable();
+        pidController.setSetpoint(encoder.get());
+    }
+
+    public void releaseBrake() {
+        pidController.disable();
+    }
+
     public double pidGet() {
-        return encoder.getRate();
+        return encoder.get();
     }
 
     public void engageMecanum() {
@@ -95,6 +101,10 @@ public class OctanumModule implements PIDOutput, PIDSource {
 
     public void disengageMecanum() {
         solenoid.set(!configMecanumSolenoid.getBoolean());
+    }
+
+    public Encoder getEncoder() {
+        return encoder;
     }
 
 }

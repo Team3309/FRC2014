@@ -33,7 +33,7 @@ import org.team3309.friarlib.constants.Constant;
  */
 public class Sensors {
 
-    private static Constant configGyroPort = new Constant("sensors.gyro.port", 1);
+    private static Constant configGyroPort = new Constant("sensors.gyro.port", 2);
 
     static {
         gyro = new FriarGyro(configGyroPort.getInt());
