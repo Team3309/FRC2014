@@ -48,7 +48,7 @@ public class MultiSpeedController implements SpeedController {
             x = -x;
         this.x = x;
         for (int i = 0; i < motors.length; i++) {
-            if (motorsReverse[i])
+            if (motorsReverse != null && motorsReverse[i])
                 motors[i].set(-x);
             else
                 motors[i].set(x);
@@ -73,6 +73,7 @@ public class MultiSpeedController implements SpeedController {
 
         public Builder motors(SpeedController[] motors) {
             controller.motors = motors;
+            controller.motorsReverse = new boolean[motors.length];
             return this;
         }
 
