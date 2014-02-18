@@ -29,6 +29,8 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.team3309.frc2014.commands.TeleopDrive;
+import org.team3309.frc2014.subsystems.Catapult;
+import org.team3309.frc2014.subsystems.Intake;
 import org.team3309.friarlib.constants.Constant;
 
 /**
@@ -77,6 +79,9 @@ public class Robot extends IterativeRobot {
 
         //start the TeleopDrive command
         TeleopDrive.getInstance().start();
+
+        //new JoystickButton(ControlBoard.getInstance().operator, XboxController.BUTTON_A).whileActive(new RunIntake
+        // ());
     }
 
     /**
@@ -84,6 +89,20 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+
+        Catapult.getInstance().set(ControlBoard.getInstance().operator.getRightY());
+
+        Intake.getInstance().set(ControlBoard.getInstance().operator.getLeftY());
+
+        if (ControlBoard.getInstance().operator.getRightBumper())
+            Catapult.getInstance().unlatch();
+        else
+            Catapult.getInstance().latch();
+
+        if (ControlBoard.getInstance().operator.getYButton())
+            Intake.getInstance().extend();
+        else if (ControlBoard.getInstance().operator.getXButton())
+            Intake.getInstance().retract();
     }
 
     public void disabledInit() {

@@ -27,50 +27,45 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
-import edu.wpi.first.wpilibj.buttons.Trigger;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.team3309.friarlib.constants.Constant;
 import org.team3309.friarlib.motors.MultiSpeedController;
 
 /**
- * Created by vmagro on 1/21/14.
+ * Catapult Subsystem
+ *
+ * @author vmagro
  */
-public class Intake extends Subsystem {
+public class Catapult extends Subsystem {
 
-    private static Intake instance = null;
+    private static Constant configFullBackPort = new Constant("catapult.fullback.port", 10);
+    private static Constant configWinchMotors = new Constant("catapult.winch.motors", new double[]{5, 6});
+    private static Constant configSolenoid = new Constant("catapult.solenoid", 1);
 
-    public static Intake getInstance() {
+    private static Catapult instance;
+
+    public static synchronized Catapult getInstance() {
         if (instance == null)
-            instance = new Intake();
+            instance = new Catapult();
         return instance;
     }
 
-    private static final Constant configIntakeMotors = new Constant("intake.motors", new double[]{7, 8, 9, 10});
-    private static final Constant configBallSensor = new Constant("intake.sensor", 8);
-    private static final Constant configSolenoid = new Constant("intake.solenoid", 4);
-    private static final Constant configSolenoidOn = new Constant("intake.solenoid.on", true);
-
-    private MultiSpeedController motors;
-    private DigitalInput ballSensor;
-    private IntakeTrigger trigger;
+    private MultiSpeedController winchMotors;
+    private DigitalInput fullBackSensor;
     private Solenoid solenoid;
 
-    private Intake() {
-        SpeedController[] motorArr = new SpeedController[configIntakeMotors.getList().length];
-        for (int i = 0; i < configIntakeMotors.getList().length; i++) {
-            motorArr[i] = new Victor((int) configIntakeMotors.getList()[i]);
+    private Catapult() {
+        SpeedController[] motorArr = new SpeedController[configWinchMotors.getList().length];
+        for (int i = 0; i < configWinchMotors.getList().length; i++) {
+            motorArr[i] = new Victor((int) configWinchMotors.getList()[i]);
         }
 
-        motors = new MultiSpeedController.Builder()
+        winchMotors = new MultiSpeedController.Builder()
                 .motors(motorArr)
-                .reverse(2)
-                .reverse(0)
                 .build();
 
-        //ballSensor = new DigitalInput(configBallSensor.getInt());
+        fullBackSensor = new DigitalInput(configFullBackPort.getInt());
 
-        trigger = new IntakeTrigger();
         solenoid = new Solenoid(configSolenoid.getInt());
     }
 
@@ -78,34 +73,19 @@ public class Intake extends Subsystem {
 
     }
 
-    public void whenBallActive(Command cmd) {
-        trigger.whenActive(cmd);
+    public boolean isFullBack() {
+        return fullBackSensor.get();
     }
 
-    public void whileBackActive(Command cmd) {
-        trigger.whileActive(cmd);
+    public void set(double x) {
+        winchMotors.set(x);
     }
 
-    public void whenBallInactive(Command cmd) {
-        trigger.whenInactive(cmd);
+    public void latch() {
+        solenoid.set(false);
     }
 
-    public void set(double val) {
-        motors.set(val);
-    }
-
-    public void extend() {
-        solenoid.set(configSolenoidOn.getBoolean());
-    }
-
-    public void retract() {
-        solenoid.set(!configSolenoidOn.getBoolean());
-    }
-
-    private class IntakeTrigger extends Trigger {
-
-        public boolean get() {
-            return ballSensor.get();
-        }
+    public void unlatch() {
+        solenoid.set(true);
     }
 }

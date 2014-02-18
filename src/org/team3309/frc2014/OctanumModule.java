@@ -56,7 +56,7 @@ public class OctanumModule implements PIDOutput, PIDSource {
      * @param solenoid the {@link edu.wpi.first.wpilibj.Solenoid} to engage/disengage the mecanum wheel
      * @param encoder  the {@link edu.wpi.first.wpilibj.Encoder} to count revolutions
      */
-    public OctanumModule(SpeedController motor, Solenoid solenoid, Encoder encoder) {
+    public OctanumModule(String name, SpeedController motor, Solenoid solenoid, Encoder encoder) {
         this.motor = motor;
         this.encoder = encoder;
         this.solenoid = solenoid;
@@ -65,7 +65,7 @@ public class OctanumModule implements PIDOutput, PIDSource {
 
         pidController = new PIDController(configP.getDouble(), configI.getDouble(), configD.getDouble(), this, this);
         pidController.disable();
-        SmartDashboard.putData("octo" + motor.hashCode(), pidController);
+        SmartDashboard.putData(name, pidController);
     }
 
     public void enable() {
@@ -74,6 +74,7 @@ public class OctanumModule implements PIDOutput, PIDSource {
 
     public void set(double x) {
         motor.set(x);
+        //pidController.setSetpoint(x);
     }
 
     public void setPositionSetpoint(double inches) {

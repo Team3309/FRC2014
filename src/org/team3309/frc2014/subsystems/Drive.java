@@ -85,13 +85,13 @@ public class Drive extends Subsystem {
     private Drive() {
         extender = new Solenoid(configMecanumSolenoidPort.getInt());
 
-        leftFront = new OctanumModule(new Victor(configLeftFrontPort.getInt()), extender,
+        leftFront = new OctanumModule("leftFront", new Victor(configLeftFrontPort.getInt()), extender,
                 new Encoder(configLeftFrontEncoderA.getInt(), configLeftFrontEncoderB.getInt()));
-        leftBack = new OctanumModule(new Victor(configLeftBackPort.getInt()), extender,
+        leftBack = new OctanumModule("leftBack", new Victor(configLeftBackPort.getInt()), extender,
                 new Encoder(configLeftBackEncoderA.getInt(), configLeftBackEncoderB.getInt()));
-        rightFront = new OctanumModule(new Victor(configFrontRightPort.getInt()), extender,
+        rightFront = new OctanumModule("rightFront", new Victor(configFrontRightPort.getInt()), extender,
                 new Encoder(configRightFrontEncoderA.getInt(), configRightFrontEncoderB.getInt()));
-        rightBack = new OctanumModule(new Victor(configRightBackPort.getInt()), extender,
+        rightBack = new OctanumModule("rightBack", new Victor(configRightBackPort.getInt()), extender,
                 new Encoder(configRightBackEncoderA.getInt(), configRightBackEncoderB.getInt()));
 
         gyro = Sensors.gyro;
