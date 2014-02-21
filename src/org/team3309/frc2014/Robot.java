@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.team3309.frc2014.commands.TeleopDrive;
 import org.team3309.frc2014.subsystems.Catapult;
 import org.team3309.frc2014.subsystems.Intake;
+import org.team3309.friarlib.XboxController;
 import org.team3309.friarlib.constants.Constant;
 
 /**
@@ -44,6 +45,10 @@ public class Robot extends IterativeRobot {
     private static Constant configCompressorSensor = new Constant("compressor.sensor", 1);
 
     private Compressor compressor;
+    private Catapult catapult;
+    private Intake intake;
+    private XboxController driver;
+    private XboxController operator;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -53,6 +58,11 @@ public class Robot extends IterativeRobot {
         // Initialize all subsystems
         compressor = new Compressor(configCompressorRelay.getInt(), configCompressorSensor.getInt());
         compressor.start();
+
+        catapult = Catapult.getInstance();
+        intake = Intake.getInstance();
+        driver = ControlBoard.getInstance().driver;
+        operator = ControlBoard.getInstance().operator;
     }
 
     public void autonomousInit() {
@@ -90,19 +100,19 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
 
-        Catapult.getInstance().set(ControlBoard.getInstance().operator.getRightY());
+        catapult.set(operator.getRightY());
 
-        Intake.getInstance().set(ControlBoard.getInstance().operator.getLeftY());
+        intake.set(operator.getLeftY());
 
-        if (ControlBoard.getInstance().operator.getRightBumper())
-            Catapult.getInstance().unlatch();
+        if (operator.getRightBumper())
+            catapult.unlatch();
         else
-            Catapult.getInstance().latch();
+            catapult.latch();
 
-        if (ControlBoard.getInstance().operator.getYButton())
-            Intake.getInstance().extend();
-        else if (ControlBoard.getInstance().operator.getXButton())
-            Intake.getInstance().retract();
+        if (operator.getYButton())
+            intake.extend();
+        else if (operator.getXButton())
+            intake.retract();
     }
 
     public void disabledInit() {
