@@ -24,6 +24,7 @@
 package org.team3309.frc2014.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team3309.frc2014.ControlBoard;
 import org.team3309.frc2014.Sensors;
 import org.team3309.frc2014.subsystems.Drive;
@@ -65,7 +66,7 @@ public class TeleopDrive extends Command {
     }
 
     protected void execute() {
-        drive.printEncoders();
+        //drive.printEncoders();
 
         double leftX = controls.driver.getLeftX();
         double leftY = controls.driver.getLeftY();
@@ -80,35 +81,48 @@ public class TeleopDrive extends Command {
         else if (controls.driver.getYButton())
             drive.releaseBrake();
 
-        if (controls.driver.getLeftBumper())
-            drive.enableMecanum();
-        else if (controls.driver.getRightBumper())
+        if (controls.driver.getRightBumper())
             drive.disableMecanum();
+        else
+            drive.enableMecanum();
+
+        SmartDashboard.putNumber("gyro", drive.getGyroAngle());
+        SmartDashboard.putNumber("rotation", drive.getAngularVelocity());
 
         // the mecanum wheels are engaged
         if (drive.isMecanum()) {
-            //System.out.println("Mecanum");
+            System.out.println("Mecanum");
             // not using the left stick, switch to "tank" mode
-            if (Math.abs(leftX) <= configLeftStickDeadband.getDouble() && Math.abs(leftY) <= configLeftStickDeadband
-                    .getDouble() && (rightX > .1 || rightY > .1)) {
+            /*if (Math.abs(leftX) <= configLeftStickDeadband.getDouble() && Math.abs(leftY) <= configLeftStickDeadband
+                    .getDouble() && (Math.abs(rightX) > .1 || Math.abs(rightY) > .1)) {
                 System.out.println("mecanum but using as tank");
                 drive.driveTank(rightY, rightX);
-            } else {
-                //if the driver is holding down the trigger, turn off the auto-rotate feature and use strict translation
-                //if (controls.driver.getRightTrigger() > configTriggerDeadband.getDouble()) {
-                drive.driveMecanum(leftX, leftY, rightX);
-                //}
-                //use the "Halo-AR" drive scheme described by Ether at http://www.chiefdelphi.com/media/papers/2390 and http://www.chiefdelphi.com/forums/showpost.php?p=1021821&postcount=8
+            } else {*/
+            //if the driver is holding down the trigger, turn off the auto-rotate feature and use strict translation
+                /*if (controls.driver.getRightTrigger() > configTriggerDeadband.getDouble()) {
+                    drive.driveMecanum(leftX, leftY, rightX);
+                }*/
+
+            double desiredRotation = rightX * 720;
+            double actualRotation = drive.getAngularVelocity();
+            double rotateError = desiredRotation - actualRotation;
+            double turnOutput = .01 * rotateError;
+
+            drive.driveMecanum(leftX, leftY, turnOutput);
+            //drive.driveMecanum(leftX, leftY, rightX);
+            //use the "Halo-AR" drive scheme described by Ether at http://www.chiefdelphi.com/media/papers/2390 and http://www.chiefdelphi.com/forums/showpost.php?p=1021821&postcount=8
                 //this will automatically rotate the drive base to match the commanded angle as it translates
-                /*else {
-                    double commandAngle = MathUtils.atan2(leftX, leftY) * (180 / Math.PI);
-                    double fieldAngle = drive.getGyroAngle();
+                /*//else{
+                    double commandAngle = MathUtils.atan2(leftY, leftX) * (180 / Math.PI);
+                SmartDashboard.putNumber("command", commandAngle);
+                    double fieldAngle = -drive.getGyroAngle();
+                SmartDashboard.putNumber("angle", fieldAngle);
                     double angleError = commandAngle - fieldAngle;
                     double turnOutput = configAutoRotateP.getDouble() * angleError;
                     turnOutput += rightX; //driver manually compensate
                     drive.driveMecanum(leftX, leftY, turnOutput);
-                }*/
-            }
+                //}*/
+            //}
         }
         // high traction wheels engaged
         else {

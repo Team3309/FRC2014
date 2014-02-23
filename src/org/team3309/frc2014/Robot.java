@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.team3309.frc2014.commands.TeleopDrive;
 import org.team3309.frc2014.subsystems.Catapult;
+import org.team3309.frc2014.subsystems.Drive;
 import org.team3309.frc2014.subsystems.Intake;
 import org.team3309.friarlib.XboxController;
 import org.team3309.friarlib.constants.Constant;
@@ -63,6 +64,8 @@ public class Robot extends IterativeRobot {
         intake = Intake.getInstance();
         driver = ControlBoard.getInstance().driver;
         operator = ControlBoard.getInstance().operator;
+
+        Drive.getInstance().enableMecanum();
     }
 
     public void autonomousInit() {
