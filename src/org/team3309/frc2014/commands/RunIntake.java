@@ -28,8 +28,19 @@ import org.team3309.frc2014.subsystems.Intake;
 
 public class RunIntake extends Command {
 
-    protected void initialize() {
+    private long startTime = 0;
+    private long lengthMs = -1;
 
+    public RunIntake(double lengthSeconds) {
+        this.lengthMs = (int) (lengthSeconds * 1000d);
+    }
+
+    public RunIntake() {
+        this.lengthMs = -1;
+    }
+
+    protected void initialize() {
+        startTime = System.currentTimeMillis();
     }
 
     protected void execute() {
@@ -37,7 +48,7 @@ public class RunIntake extends Command {
     }
 
     protected boolean isFinished() {
-        return true;
+        return lengthMs != -1 || (System.currentTimeMillis() - startTime) > lengthMs;
     }
 
     protected void end() {
