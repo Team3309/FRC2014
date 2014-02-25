@@ -58,7 +58,7 @@ public class Drive extends Subsystem {
 
     private Constant skimGain = new Constant("drive.skim_gain", .25);
 
-    private Constant gyroKp = new Constant("drive.gyro.kp", .02);
+    private Constant gyroKp = new Constant("drive.gyro.kp", .01);
     private Constant maxAngularVelocity = new Constant("drive.gyro.max_angular_velocity", 720);
 
     private static Drive instance;

@@ -115,9 +115,9 @@ public class TeleopDrive extends Command {
                 /*//else{
                     double commandAngle = MathUtils.atan2(leftY, leftX) * (180 / Math.PI);
                 SmartDashboard.putNumber("command", commandAngle);
-                    double fieldAngle = -drive.getGyroAngle();
+                    double fieldAngle = -drive.getGyroAngle() % 180;
                 SmartDashboard.putNumber("angle", fieldAngle);
-                    double angleError = commandAngle - fieldAngle;
+                    double angleError = commandAngle - 90 - fieldAngle;
                     double turnOutput = configAutoRotateP.getDouble() * angleError;
                     turnOutput += rightX; //driver manually compensate
                     drive.driveMecanum(leftX, leftY, turnOutput);
