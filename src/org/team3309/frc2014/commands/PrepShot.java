@@ -40,13 +40,12 @@ public class PrepShot extends Command {
     }
 
     protected void initialize() {
-
-    }
-
-    protected void execute() {
         Catapult.getInstance().latch();
         startTime = System.currentTimeMillis();
         Catapult.getInstance().set(1);
+    }
+
+    protected void execute() {
     }
 
     protected boolean isFinished() {
