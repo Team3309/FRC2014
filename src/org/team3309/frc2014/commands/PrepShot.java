@@ -32,23 +32,28 @@ import org.team3309.frc2014.subsystems.Catapult;
  * @author vmagro
  */
 public class PrepShot extends Command {
+
+    private long startTime = 0;
+
     protected void initialize() {
 
     }
 
     protected void execute() {
-
+        Catapult.getInstance().latch();
+        startTime = System.currentTimeMillis();
+        Catapult.getInstance().set(1);
     }
 
     protected boolean isFinished() {
-        return Catapult.getInstance().isFullBack();
+        return (System.currentTimeMillis() - startTime) > 1000 || Catapult.getInstance().isFullBack();
     }
 
     protected void end() {
-
+        Catapult.getInstance().set(0);
     }
 
     protected void interrupted() {
-
+        Catapult.getInstance().set(0);
     }
 }
