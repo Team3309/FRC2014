@@ -303,4 +303,20 @@ public class Drive extends Subsystem {
                 + "\tbl:" + leftBack
                 .getEncoder().get() + "\tbr:" + rightBack.getEncoder().get());
     }
+
+    public int leftFrontCount() {
+        return leftFront.getEncoder().get();
+    }
+
+    public int rightFrontCount() {
+        return rightFront.getEncoder().get();
+    }
+
+    public int leftBackCount() {
+        return leftBack.getEncoder().get();
+    }
+
+    public int rightBackCount() {
+        return rightBack.getEncoder().get();
+    }
 }
