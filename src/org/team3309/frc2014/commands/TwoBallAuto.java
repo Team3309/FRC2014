@@ -38,6 +38,8 @@ public class TwoBallAuto extends CommandGroup {
         addSequential(new RunIntake(.25));
         addSequential(new WaitCommand(1));
         addSequential(new Shoot());
+        addSequential(new WaitCommand(.5));
+        addSequential(new MobilityBonus());
     }
 
 }

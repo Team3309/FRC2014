@@ -24,6 +24,7 @@
 package org.team3309.frc2014.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
  * This is a CommandGroup for a single ball autonomous mode.
@@ -36,6 +37,8 @@ public class SingleBallAuto extends CommandGroup {
     public SingleBallAuto() {
         addSequential(new WaitForHot(WaitForHot.Side.RIGHT));
         addSequential(new Shoot());
+        addSequential(new WaitCommand(.5));
+        addSequential(new MobilityBonus());
     }
 
 }
