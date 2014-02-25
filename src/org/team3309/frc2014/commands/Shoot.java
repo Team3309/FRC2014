@@ -23,33 +23,25 @@
 
 package org.team3309.frc2014.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
- * This Command shoots.
- * Fairly self-explanatory
+ * Sequence of commands to execute a shot, including the winch-back to prepare for the next
  *
  * @author vmagro
  */
-public class ShootCommand extends Command {
-    protected void initialize() {
+public class Shoot extends CommandGroup {
 
+    public Shoot() {
+        addSequential(new ExtendIntake());
+        addSequential(new PrepShot());
+        addSequential(new ExtendIntake());
+        addSequential(new WaitCommand(.25));
+        addSequential(new UnlatchCatapult());
+        addSequential(new WaitCommand(.25));
+        addSequential(new ExtendIntake());
+        addSequential(new PrepShot());
     }
 
-    protected void execute() {
-
-    }
-
-    protected boolean isFinished() {
-        return false;
-    }
-
-    protected void end() {
-
-    }
-
-    protected void interrupted() {
-
-    }
 }

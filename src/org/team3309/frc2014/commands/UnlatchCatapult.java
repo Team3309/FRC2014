@@ -27,15 +27,13 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.subsystems.Catapult;
 
 /**
- * Command to prepare a shot, not actually shoot
- *
- * @author vmagro
+ * Created by vmagro on 2/25/14.
  */
-public class PrepShot extends Command {
+public class UnlatchCatapult extends Command {
 
-    private long startTime = 0;
+    private boolean finished = false;
 
-    public PrepShot() {
+    public UnlatchCatapult() {
         requires(Catapult.getInstance());
     }
 
@@ -44,20 +42,19 @@ public class PrepShot extends Command {
     }
 
     protected void execute() {
-        Catapult.getInstance().latch();
-        startTime = System.currentTimeMillis();
-        Catapult.getInstance().set(1);
+        Catapult.getInstance().unlatch();
+        finished = true;
     }
 
     protected boolean isFinished() {
-        return (System.currentTimeMillis() - startTime) > 1000 || Catapult.getInstance().isFullBack();
+        return finished;
     }
 
     protected void end() {
-        Catapult.getInstance().set(0);
+
     }
 
     protected void interrupted() {
-        Catapult.getInstance().set(0);
+
     }
 }

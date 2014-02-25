@@ -35,7 +35,7 @@ public class SingleBallAuto extends CommandGroup {
 
     public SingleBallAuto() {
         addSequential(new WaitForHot(WaitForHot.Side.RIGHT));
-        addSequential(new ShootCommand());
+        addSequential(new Shoot());
     }
 
 }
