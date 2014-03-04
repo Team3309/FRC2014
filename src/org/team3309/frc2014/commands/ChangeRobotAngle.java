@@ -68,7 +68,6 @@ public class ChangeRobotAngle extends PIDCommand {
     }
 
     protected void initialize() {
-        setSetpoint(returnPIDInput());
     }
 
     protected void execute() {
