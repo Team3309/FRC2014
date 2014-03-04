@@ -25,7 +25,7 @@ package org.team3309.frc2014.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import org.team3309.frc2014.Vision;
+import org.team3309.frc2014.subsystems.HotGoalDetector;
 
 /**
  * This Command waits for a given goal to become hot
@@ -48,12 +48,15 @@ public class WaitForHot extends Command {
     }
 
     protected void initialize() {
-        Vision.VisionTarget[] targets = Vision.getTargets();
-        for (int i = 0; i < targets.length; i++) {
-            if (side.equals(Side.LEFT) && targets[i].left)
-                isHot = targets[i].hot;
-            else if (side.equals(Side.RIGHT) && targets[i].right)
-                isHot = targets[i].hot;
+        if (side.equals(Side.RIGHT)) {
+            isHot = HotGoalDetector.getInstance().isRightHot();
+        } else if (side.equals(Side.LEFT)) {
+            isHot = HotGoalDetector.getInstance().isLeftHot();
+        }
+
+        //if neither goal is detected as hot, just do it
+        if(!HotGoalDetector.getInstance().isLeftHot() && !HotGoalDetector.getInstance().isRightHot()){
+            isHot = true;
         }
     }
 
