@@ -46,10 +46,12 @@ public class PrepShot extends Command {
     }
 
     protected void execute() {
+        Catapult.getInstance().set(.5);
     }
 
     protected boolean isFinished() {
-        return (System.currentTimeMillis() - startTime) > 1000 || Catapult.getInstance().isFullBack();
+        //return (System.currentTimeMillis() - startTime) > 1000 || Catapult.getInstance().isFullBack();
+        return Catapult.getInstance().isFullBack();
     }
 
     protected void end() {

@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import org.team3309.frc2014.commands.PrepShot;
 import org.team3309.frc2014.commands.TeleopDrive;
 import org.team3309.frc2014.subsystems.Catapult;
 import org.team3309.frc2014.subsystems.Drive;
@@ -103,9 +104,9 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
 
-        catapult.set(operator.getRightY());
+        //catapult.set(operator.getRightY());
 
-        intake.set(operator.getLeftY());
+        intake.set(-operator.getLeftY());
 
         if (operator.getRightBumper())
             catapult.unlatch();
@@ -116,6 +117,17 @@ public class Robot extends IterativeRobot {
             intake.extend();
         else if (operator.getXButton())
             intake.retract();
+
+        if (operator.getAButton()) {
+            new PrepShot().start();
+        }
+
+        if (operator.getLeftBumper())
+            catapult.engageWinch();
+        if (operator.getBButton())
+            catapult.disengageWinch();
+
+        System.out.println("catapult back: " + catapult.isFullBack());
     }
 
     public void disabledInit() {

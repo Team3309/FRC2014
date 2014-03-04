@@ -34,7 +34,7 @@ import org.team3309.friarlib.constants.Constant;
  */
 public class OctanumModule implements PIDOutput, PIDSource {
 
-    private static Constant configMecanumSolenoid = new Constant("drive.mecanum.on", false);
+    private static Constant configMecanumSolenoid = new Constant("drive.mecanum.on", true);
 
     private static Constant configP = new Constant("drive.p", -.01);
     private static Constant configI = new Constant("drive.i", 0);

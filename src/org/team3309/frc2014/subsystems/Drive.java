@@ -49,9 +49,9 @@ public class Drive extends Subsystem {
 
     private Constant configLeftFrontEncoderA = new Constant("drive.encoder.left.front.a", 8);
     private Constant configLeftFrontEncoderB = new Constant("drive.encoder.left.front.b", 9);
-    private Constant configLeftBackEncoderA = new Constant("drive.encoder.left.back.a", 4);
+    private Constant configLeftBackEncoderA = new Constant("drive.encoder.left.back.a", 10); //this was 4
     private Constant configLeftBackEncoderB = new Constant("drive.encoder.left.back.b", 5);
-    private Constant configRightFrontEncoderA = new Constant("drive.encoder.right.front.a", 6);
+    private Constant configRightFrontEncoderA = new Constant("drive.encoder.right.front.a", 11); //this was 6
     private Constant configRightFrontEncoderB = new Constant("drive.encoder.right.front.b", 7);
     private Constant configRightBackEncoderA = new Constant("drive.encoder.right.back.a", 2);
     private Constant configRightBackEncoderB = new Constant("drive.encoder.right.back.b", 3);

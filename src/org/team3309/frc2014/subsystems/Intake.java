@@ -24,7 +24,7 @@
 package org.team3309.frc2014.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.buttons.Trigger;
@@ -54,7 +54,7 @@ public class Intake extends Subsystem {
     private MultiSpeedController motors;
     private DigitalInput ballSensor;
     private IntakeTrigger trigger;
-    private Solenoid solenoid;
+    private DoubleSolenoid solenoid;
 
     private Intake() {
         SpeedController[] motorArr = new SpeedController[configIntakeMotors.getList().length];
@@ -71,7 +71,7 @@ public class Intake extends Subsystem {
         //ballSensor = new DigitalInput(configBallSensor.getInt());
 
         trigger = new IntakeTrigger();
-        solenoid = new Solenoid(configSolenoid.getInt());
+        solenoid = new DoubleSolenoid(2, 3, configSolenoid.getInt());
     }
 
     protected void initDefaultCommand() {
@@ -95,11 +95,17 @@ public class Intake extends Subsystem {
     }
 
     public void extend() {
-        solenoid.set(configSolenoidOn.getBoolean());
+        if (configSolenoidOn.getBoolean())
+            solenoid.set(DoubleSolenoid.Value.kForward);
+        else
+            solenoid.set(DoubleSolenoid.Value.kReverse);
     }
 
     public void retract() {
-        solenoid.set(!configSolenoidOn.getBoolean());
+        if (configSolenoidOn.getBoolean())
+            solenoid.set(DoubleSolenoid.Value.kReverse);
+        else
+            solenoid.set(DoubleSolenoid.Value.kForward);
     }
 
     private class IntakeTrigger extends Trigger {
