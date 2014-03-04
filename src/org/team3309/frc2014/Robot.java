@@ -26,10 +26,10 @@ package org.team3309.frc2014;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.team3309.frc2014.commands.PrepShot;
-import org.team3309.frc2014.commands.TeleopDrive;
+import org.team3309.frc2014.commands.*;
 import org.team3309.frc2014.subsystems.Catapult;
 import org.team3309.frc2014.subsystems.Drive;
 import org.team3309.frc2014.subsystems.Intake;
@@ -52,6 +52,11 @@ public class Robot extends IterativeRobot {
     private XboxController driver;
     private XboxController operator;
 
+    private JoystickButton winchButton;
+    private JoystickButton fireButton;
+    private JoystickButton extendIntakeButton;
+    private JoystickButton retractIntakeButton;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -66,6 +71,11 @@ public class Robot extends IterativeRobot {
         driver = ControlBoard.getInstance().driver;
         operator = ControlBoard.getInstance().operator;
 
+        winchButton = new JoystickButton(operator, XboxController.BUTTON_A);
+        fireButton = new JoystickButton(operator, XboxController.BUTTON_RIGHT_BUMPER);
+        extendIntakeButton = new JoystickButton(operator, XboxController.BUTTON_X);
+        retractIntakeButton = new JoystickButton(operator, XboxController.BUTTON_Y);
+
         Drive.getInstance().enableMecanum();
     }
 
@@ -77,15 +87,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-        //Scheduler.getInstance().run();
-
-        //module.set(.5);
-
-        //SmartDashboard.putNumber("speed", module.getEncoder().getRate());
-        //SmartDashboard.putNumber("counts", module.getEncoder().get());
-        //SmartDashboard.putNumber("period", module.getEncoder().getPeriod());
-
-        //DriverStationLCD.getInstance().println();
+        Scheduler.getInstance().run();
     }
 
     public void teleopInit() {
@@ -94,8 +96,11 @@ public class Robot extends IterativeRobot {
         //start the TeleopDrive command
         TeleopDrive.getInstance().start();
 
-        //new JoystickButton(ControlBoard.getInstance().operator, XboxController.BUTTON_A).whileActive(new RunIntake
-        // ());
+        winchButton.whenPressed(new PrepShot());
+        fireButton.whenPressed(new UnlatchCatapult());
+        fireButton.whenReleased(new LatchCatapult());
+        extendIntakeButton.whenPressed(new ExtendIntake());
+        retractIntakeButton.whenPressed(new RetractIntake());
     }
 
     /**
@@ -107,27 +112,6 @@ public class Robot extends IterativeRobot {
         //catapult.set(operator.getRightY());
 
         intake.set(-operator.getLeftY());
-
-        if (operator.getRightBumper())
-            catapult.unlatch();
-        else
-            catapult.latch();
-
-        if (operator.getYButton())
-            intake.extend();
-        else if (operator.getXButton())
-            intake.retract();
-
-        if (operator.getAButton()) {
-            new PrepShot().start();
-        }
-
-        if (operator.getLeftBumper())
-            catapult.engageWinch();
-        if (operator.getBButton())
-            catapult.disengageWinch();
-
-        System.out.println("catapult back: " + catapult.isFullBack());
     }
 
     public void disabledInit() {
