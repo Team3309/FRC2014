@@ -42,7 +42,8 @@ public class PrepShot extends Command {
     protected void initialize() {
         Catapult.getInstance().latch();
         startTime = System.currentTimeMillis();
-        Catapult.getInstance().set(1);
+        Catapult.getInstance().engageWinch();
+        Catapult.getInstance().set(.5);
     }
 
     protected void execute() {
@@ -56,6 +57,7 @@ public class PrepShot extends Command {
 
     protected void end() {
         Catapult.getInstance().set(0);
+        Catapult.getInstance().disengageWinch();
     }
 
     protected void interrupted() {
