@@ -21,24 +21,27 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014;
+package org.team3309.frc2014.commands;
 
-import org.team3309.friarlib.FriarGyro;
-import org.team3309.friarlib.constants.Constant;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
- * This class holds on to sensors so that certain sensors can be used as global objects
+ * Sequence of commands to execute a shot, including the winch-back to prepare for the next
  *
  * @author vmagro
  */
-public class Sensors {
+public class Shoot extends CommandGroup {
 
-    private static Constant configGyroPort = new Constant("sensors.gyro.port", 2);
-
-    static {
-        gyro = new FriarGyro(configGyroPort.getInt());
+    public Shoot() {
+        addSequential(new ExtendIntake());
+        addSequential(new PrepShot());
+        addSequential(new ExtendIntake());
+        addSequential(new WaitCommand(.25));
+        addSequential(new UnlatchCatapult());
+        addSequential(new WaitCommand(.25));
+        addSequential(new ExtendIntake());
+        addSequential(new PrepShot());
     }
-
-    public static FriarGyro gyro;
 
 }

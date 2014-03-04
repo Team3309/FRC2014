@@ -21,24 +21,44 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014;
+package org.team3309.frc2014.commands;
 
-import org.team3309.friarlib.FriarGyro;
-import org.team3309.friarlib.constants.Constant;
+import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.subsystems.Catapult;
 
 /**
- * This class holds on to sensors so that certain sensors can be used as global objects
+ * Command to prepare a shot, not actually shoot
  *
  * @author vmagro
  */
-public class Sensors {
+public class PrepShot extends Command {
 
-    private static Constant configGyroPort = new Constant("sensors.gyro.port", 2);
+    private long startTime = 0;
 
-    static {
-        gyro = new FriarGyro(configGyroPort.getInt());
+    public PrepShot() {
+        requires(Catapult.getInstance());
     }
 
-    public static FriarGyro gyro;
+    protected void initialize() {
+        Catapult.getInstance().latch();
+        startTime = System.currentTimeMillis();
+        Catapult.getInstance().set(1);
+    }
 
+    protected void execute() {
+        Catapult.getInstance().set(.5);
+    }
+
+    protected boolean isFinished() {
+        //return (System.currentTimeMillis() - startTime) > 1000 || Catapult.getInstance().isFullBack();
+        return Catapult.getInstance().isFullBack();
+    }
+
+    protected void end() {
+        Catapult.getInstance().set(0);
+    }
+
+    protected void interrupted() {
+        Catapult.getInstance().set(0);
+    }
 }

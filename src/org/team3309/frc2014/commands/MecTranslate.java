@@ -24,21 +24,31 @@
 package org.team3309.frc2014.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
+import org.team3309.frc2014.subsystems.Drive;
 
 /**
- * This Command shoots.
- * Fairly self-explanatory
- *
- * @author vmagro
+ * Created by vmagro on 2/6/14.
  */
-public class ShootCommand extends Command {
-    protected void initialize() {
+public class MecTranslate extends Command {
 
+    private Drive drive;
+    private double xInches, yInches;
+    private boolean completedShortLeg;
+
+    public MecTranslate(double xInches, double yInches) {
+        drive = Drive.getInstance();
+        requires(drive);
+    }
+
+    protected void initialize() {
+        drive.enableMecanum();
     }
 
     protected void execute() {
+        //x is the shorter leg
+        if (xInches <= yInches) {
 
+        }
     }
 
     protected boolean isFinished() {

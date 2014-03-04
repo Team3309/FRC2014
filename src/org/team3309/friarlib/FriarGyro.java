@@ -48,6 +48,12 @@ public class FriarGyro {
         initGyro();
     }
 
+    public FriarGyro(int module, int port) {
+        channel = new AnalogChannel(module, port);
+
+        initGyro();
+    }
+
     /**
      * Initialize the gyro.
      * Calibrate the gyro by running for a number of samples and computing the center value for this

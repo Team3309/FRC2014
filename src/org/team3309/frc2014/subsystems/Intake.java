@@ -23,9 +23,9 @@
 
 package org.team3309.frc2014.subsystems;
 
-import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.command.Command;
@@ -46,28 +46,32 @@ public class Intake extends Subsystem {
         return instance;
     }
 
-    private static final Constant configIntakeMotor = new Constant("intake.motors", new double[]{5});
-    private static final Constant configBallSensor = new Constant("intake.sensor", 5);
-    private static final Constant configEncoder = new Constant("intake.encoder", 6);
-    private static final Constant configSolenoid = new Constant("intake.solenoid", 2);
+    private static final Constant configIntakeMotors = new Constant("intake.motors", new double[]{7, 8, 9, 10});
+    private static final Constant configBallSensor = new Constant("intake.sensor", 8);
+    private static final Constant configSolenoid = new Constant("intake.solenoid", 4);
     private static final Constant configSolenoidOn = new Constant("intake.solenoid.on", true);
 
     private MultiSpeedController motors;
     private DigitalInput ballSensor;
     private IntakeTrigger trigger;
-    private Counter encoder;
-    private Solenoid solenoid;
+    private DoubleSolenoid solenoid;
 
     private Intake() {
-        Victor[] speedControllers = new Victor[configIntakeMotor.getList().length];
-        for (int i = 0; i < speedControllers.length; i++) {
-            speedControllers[i] = new Victor((int) configIntakeMotor.getList()[i]);
+        SpeedController[] motorArr = new SpeedController[configIntakeMotors.getList().length];
+        for (int i = 0; i < configIntakeMotors.getList().length; i++) {
+            motorArr[i] = new Victor((int) configIntakeMotors.getList()[i]);
         }
-        motors = new MultiSpeedController.Builder().motors(speedControllers).build();
-        ballSensor = new DigitalInput(configBallSensor.getInt());
+
+        motors = new MultiSpeedController.Builder()
+                .motors(motorArr)
+                .reverse(2)
+                .reverse(0)
+                .build();
+
+        //ballSensor = new DigitalInput(configBallSensor.getInt());
+
         trigger = new IntakeTrigger();
-        encoder = new Counter(configEncoder.getInt());
-        solenoid = new Solenoid(configSolenoid.getInt());
+        solenoid = new DoubleSolenoid(2, 3, configSolenoid.getInt());
     }
 
     protected void initDefaultCommand() {
@@ -86,20 +90,22 @@ public class Intake extends Subsystem {
         trigger.whenInactive(cmd);
     }
 
-    public void setSpeed(double val) {
+    public void set(double val) {
         motors.set(val);
     }
 
-    public Counter getEncoder() {
-        return encoder;
-    }
-
     public void extend() {
-        solenoid.set(configSolenoidOn.getBoolean());
+        if (configSolenoidOn.getBoolean())
+            solenoid.set(DoubleSolenoid.Value.kForward);
+        else
+            solenoid.set(DoubleSolenoid.Value.kReverse);
     }
 
     public void retract() {
-        solenoid.set(!configSolenoidOn.getBoolean());
+        if (configSolenoidOn.getBoolean())
+            solenoid.set(DoubleSolenoid.Value.kReverse);
+        else
+            solenoid.set(DoubleSolenoid.Value.kForward);
     }
 
     private class IntakeTrigger extends Trigger {

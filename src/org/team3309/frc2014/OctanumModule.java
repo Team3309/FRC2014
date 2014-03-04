@@ -24,6 +24,7 @@
 package org.team3309.frc2014;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team3309.friarlib.constants.Constant;
 
 /**
@@ -35,15 +36,15 @@ public class OctanumModule implements PIDOutput, PIDSource {
 
     private static Constant configMecanumSolenoid = new Constant("drive.mecanum.on", true);
 
-    private static Constant configP = new Constant("drive.p", 1);
+    private static Constant configP = new Constant("drive.p", -.01);
     private static Constant configI = new Constant("drive.i", 0);
-    private static Constant configD = new Constant("drive.d", 0);
+    private static Constant configD = new Constant("drive.d", .002);
 
     private static Constant configCountsPerRev = new Constant("drive.counts_per_rev", 250);
     private static Constant configDistancePerPulse = new Constant("drive.distance_per_pulse", 1 / 300);
 
     private SpeedController motor;
-    private Solenoid solenoid;
+    private DoubleSolenoid solenoid;
     private Encoder encoder;
 
     private PIDController pidController;
@@ -55,7 +56,7 @@ public class OctanumModule implements PIDOutput, PIDSource {
      * @param solenoid the {@link edu.wpi.first.wpilibj.Solenoid} to engage/disengage the mecanum wheel
      * @param encoder  the {@link edu.wpi.first.wpilibj.Encoder} to count revolutions
      */
-    public OctanumModule(SpeedController motor, Solenoid solenoid, Encoder encoder) {
+    public OctanumModule(String name, SpeedController motor, DoubleSolenoid solenoid, Encoder encoder) {
         this.motor = motor;
         this.encoder = encoder;
         this.solenoid = solenoid;
@@ -63,18 +64,17 @@ public class OctanumModule implements PIDOutput, PIDSource {
         encoder.start();
 
         pidController = new PIDController(configP.getDouble(), configI.getDouble(), configD.getDouble(), this, this);
+        pidController.disable();
+        SmartDashboard.putData(name, pidController);
     }
 
     public void enable() {
-        pidController.enable();
-    }
-
-    public void disable() {
-        pidController.disable();
+        //pidController.enable();
     }
 
     public void set(double x) {
         motor.set(x);
+        //pidController.setSetpoint(x);
     }
 
     public void setPositionSetpoint(double inches) {
@@ -85,16 +85,35 @@ public class OctanumModule implements PIDOutput, PIDSource {
         motor.set(v);
     }
 
+    public void brake() {
+        pidController.enable();
+        pidController.setSetpoint(encoder.get());
+    }
+
+    public void releaseBrake() {
+        pidController.disable();
+    }
+
     public double pidGet() {
-        return encoder.getRate();
+        return encoder.get();
     }
 
     public void engageMecanum() {
-        solenoid.set(configMecanumSolenoid.getBoolean());
+        if (configMecanumSolenoid.getBoolean())
+            solenoid.set(DoubleSolenoid.Value.kForward);
+        else
+            solenoid.set(DoubleSolenoid.Value.kReverse);
     }
 
     public void disengageMecanum() {
-        solenoid.set(!configMecanumSolenoid.getBoolean());
+        if (configMecanumSolenoid.getBoolean())
+            solenoid.set(DoubleSolenoid.Value.kReverse);
+        else
+            solenoid.set(DoubleSolenoid.Value.kForward);
+    }
+
+    public Encoder getEncoder() {
+        return encoder;
     }
 
 }

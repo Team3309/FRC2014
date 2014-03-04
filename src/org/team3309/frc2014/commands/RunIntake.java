@@ -21,24 +21,42 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014;
+package org.team3309.frc2014.commands;
 
-import org.team3309.friarlib.FriarGyro;
-import org.team3309.friarlib.constants.Constant;
+import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.subsystems.Intake;
 
-/**
- * This class holds on to sensors so that certain sensors can be used as global objects
- *
- * @author vmagro
- */
-public class Sensors {
+public class RunIntake extends Command {
 
-    private static Constant configGyroPort = new Constant("sensors.gyro.port", 2);
+    private long startTime = 0;
+    private long lengthMs = -1;
 
-    static {
-        gyro = new FriarGyro(configGyroPort.getInt());
+    public RunIntake(double lengthSeconds) {
+        this.lengthMs = (int) (lengthSeconds * 1000d);
     }
 
-    public static FriarGyro gyro;
+    public RunIntake() {
+        this.lengthMs = -1;
+    }
+
+    protected void initialize() {
+        startTime = System.currentTimeMillis();
+    }
+
+    protected void execute() {
+        Intake.getInstance().set(1);
+    }
+
+    protected boolean isFinished() {
+        return lengthMs != -1 || (System.currentTimeMillis() - startTime) > lengthMs;
+    }
+
+    protected void end() {
+        Intake.getInstance().set(0);
+    }
+
+    protected void interrupted() {
+
+    }
 
 }

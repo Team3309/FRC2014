@@ -24,10 +24,17 @@
 package org.team3309.frc2014;
 
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import org.team3309.frc2014.commands.PrepShot;
 import org.team3309.frc2014.commands.TeleopDrive;
+import org.team3309.frc2014.subsystems.Catapult;
+import org.team3309.frc2014.subsystems.Drive;
+import org.team3309.frc2014.subsystems.Intake;
+import org.team3309.friarlib.XboxController;
+import org.team3309.friarlib.constants.Constant;
 
 /**
  * Main robot program. This starts all commands and is the main entry point for the FRC control system.
@@ -36,27 +43,59 @@ import org.team3309.frc2014.commands.TeleopDrive;
  */
 public class Robot extends IterativeRobot {
 
+    private static Constant configCompressorRelay = new Constant("compressor.relay", 1);
+    private static Constant configCompressorSensor = new Constant("compressor.sensor", 1);
+
+    private Compressor compressor;
+    private Catapult catapult;
+    private Intake intake;
+    private XboxController driver;
+    private XboxController operator;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
     public void robotInit() {
         // Initialize all subsystems
+        compressor = new Compressor(configCompressorRelay.getInt(), configCompressorSensor.getInt());
+        compressor.start();
+
+        catapult = Catapult.getInstance();
+        intake = Intake.getInstance();
+        driver = ControlBoard.getInstance().driver;
+        operator = ControlBoard.getInstance().operator;
+
+        Drive.getInstance().enableMecanum();
     }
 
     public void autonomousInit() {
+        Sensors.gyro.reset();
     }
 
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-        Scheduler.getInstance().run();
+        //Scheduler.getInstance().run();
+
+        //module.set(.5);
+
+        //SmartDashboard.putNumber("speed", module.getEncoder().getRate());
+        //SmartDashboard.putNumber("counts", module.getEncoder().get());
+        //SmartDashboard.putNumber("period", module.getEncoder().getPeriod());
+
+        //DriverStationLCD.getInstance().println();
     }
 
     public void teleopInit() {
+        Sensors.gyro.reset();
+
         //start the TeleopDrive command
         TeleopDrive.getInstance().start();
+
+        //new JoystickButton(ControlBoard.getInstance().operator, XboxController.BUTTON_A).whileActive(new RunIntake
+        // ());
     }
 
     /**
@@ -64,6 +103,31 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+
+        //catapult.set(operator.getRightY());
+
+        intake.set(-operator.getLeftY());
+
+        if (operator.getRightBumper())
+            catapult.unlatch();
+        else
+            catapult.latch();
+
+        if (operator.getYButton())
+            intake.extend();
+        else if (operator.getXButton())
+            intake.retract();
+
+        if (operator.getAButton()) {
+            new PrepShot().start();
+        }
+
+        if (operator.getLeftBumper())
+            catapult.engageWinch();
+        if (operator.getBButton())
+            catapult.disengageWinch();
+
+        System.out.println("catapult back: " + catapult.isFullBack());
     }
 
     public void disabledInit() {

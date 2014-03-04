@@ -21,24 +21,39 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014;
+package org.team3309.frc2014.commands;
 
-import org.team3309.friarlib.FriarGyro;
-import org.team3309.friarlib.constants.Constant;
+import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.subsystems.Drive;
 
 /**
- * This class holds on to sensors so that certain sensors can be used as global objects
- *
- * @author vmagro
+ * Created by vmagro on 2/25/14.
  */
-public class Sensors {
+public class MobilityBonus extends Command {
 
-    private static Constant configGyroPort = new Constant("sensors.gyro.port", 2);
+    private long startTime = 0;
 
-    static {
-        gyro = new FriarGyro(configGyroPort.getInt());
+    public MobilityBonus() {
+        requires(Drive.getInstance());
     }
 
-    public static FriarGyro gyro;
+    protected void initialize() {
+        startTime = System.currentTimeMillis();
+    }
 
+    protected void execute() {
+        Drive.getInstance().driveMecanum(0, 1, 0);
+    }
+
+    protected boolean isFinished() {
+        return (System.currentTimeMillis() - startTime) > 1500;
+    }
+
+    protected void end() {
+
+    }
+
+    protected void interrupted() {
+
+    }
 }
