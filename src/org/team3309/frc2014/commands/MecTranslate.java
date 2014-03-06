@@ -27,36 +27,65 @@ import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.subsystems.Drive;
 
 /**
- * Created by vmagro on 2/6/14.
+ * This command allows the robot to translate using the mecanum method of control.
+ *
+ * @author vmagro
  */
 public class MecTranslate extends Command {
 
-    private Drive drive;
-    private double xInches, yInches;
-    private boolean completedShortLeg;
+    private static final double kP = 0.01;
 
-    public MecTranslate(double xInches, double yInches) {
+    private Drive drive;
+    private int xCounts, yCounts;
+    private boolean finishedX, finishedY;
+    private boolean onXLeg = false;
+
+    public MecTranslate(int xCounts, int yCounts) {
         drive = Drive.getInstance();
         requires(drive);
+        this.xCounts = xCounts;
+        this.yCounts = yCounts;
     }
 
     protected void initialize() {
         drive.enableMecanum();
+        //x is the shorter leg
+        if (xCounts < yCounts) {
+            onXLeg = true;
+        }
     }
 
     protected void execute() {
-        //x is the shorter leg
-        if (xInches <= yInches) {
-
+        if (onXLeg) {
+            //average all of the encoder counts
+            double actualCounts = (Math.abs(drive.leftBackCount()) + Math.abs(drive.leftFrontCount()) + Math.abs(drive
+                    .rightBackCount()) + Math.abs(drive.rightFrontCount())) / 4;
+            double err = xCounts - actualCounts;
+            drive.driveMecanum(kP * err, 0, 0);
+            if (err < 100) {
+                finishedX = true;
+                onXLeg = false;
+                drive.driveMecanum(0, 0, 0);
+            }
+        } else {
+            //average all of the encoder counts
+            double actualCounts = (Math.abs(drive.leftBackCount()) + Math.abs(drive.leftFrontCount()) + Math.abs(drive
+                    .rightBackCount()) + Math.abs(drive.rightFrontCount())) / 4;
+            double err = xCounts - actualCounts;
+            drive.driveMecanum(0, kP * err, 0);
+            if (err < 100) {
+                finishedY = true;
+                drive.driveMecanum(0, 0, 0);
+            }
         }
     }
 
     protected boolean isFinished() {
-        return false;
+        return finishedX && finishedY;
     }
 
     protected void end() {
-
+        drive.driveMecanum(0, 0, 0);
     }
 
     protected void interrupted() {
