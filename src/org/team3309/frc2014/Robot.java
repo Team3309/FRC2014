@@ -96,7 +96,7 @@ public class Robot extends IterativeRobot {
         //start the TeleopDrive command
         TeleopDrive.getInstance().start();
 
-        winchButton.whenPressed(new PrepShot());
+        //winchButton.whenPressed(new PrepShot());
         fireButton.whenPressed(new UnlatchCatapult());
         fireButton.whenReleased(new LatchCatapult());
         extendIntakeButton.whenPressed(new ExtendIntake());
@@ -110,6 +110,9 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
 
         //catapult.set(operator.getRightY());
+        if(operator.getAButton()){
+            new PrepShot().start();
+        }
 
         intake.set(-operator.getLeftY());
     }
