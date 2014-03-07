@@ -33,6 +33,8 @@ import org.team3309.frc2014.subsystems.Catapult;
  */
 public class PrepShot extends Command {
 
+    private static final double speed = .95;
+
     private long startTime = 0;
 
     public PrepShot() {
@@ -43,17 +45,20 @@ public class PrepShot extends Command {
         Catapult.getInstance().latch();
         startTime = System.currentTimeMillis();
         Catapult.getInstance().engageWinch();
-        Catapult.getInstance().set(.5);
+        Catapult.getInstance().set(speed);
         System.out.println("PrepShot.initialize");
     }
 
     protected void execute() {
-        Catapult.getInstance().set(.5);
+        Catapult.getInstance().set(speed);
         System.out.println("PrepShot.execute");
     }
 
     protected boolean isFinished() {
         //return (System.currentTimeMillis() - startTime) > 1000 || Catapult.getInstance().isFullBack();
+        if(Catapult.getInstance().isFullBack()){
+            System.out.println("=================FULL BACK==================");
+        }
         return Catapult.getInstance().isFullBack();
     }
 
