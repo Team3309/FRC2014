@@ -102,6 +102,10 @@ public class Intake extends Subsystem {
     }
 
     public void retract() {
+        if (!Catapult.getInstance().isFullBack()) {
+            //don't allow retract unless the catapult is winched back
+            return;
+        }
         if (configSolenoidOn.getBoolean())
             solenoid.set(DoubleSolenoid.Value.kReverse);
         else

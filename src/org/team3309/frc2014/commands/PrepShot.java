@@ -25,6 +25,7 @@ package org.team3309.frc2014.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.subsystems.Catapult;
+import org.team3309.frc2014.subsystems.Intake;
 
 /**
  * Command to prepare a shot, not actually shoot
@@ -45,21 +46,19 @@ public class PrepShot extends Command {
         Catapult.getInstance().latch();
         startTime = System.currentTimeMillis();
         Catapult.getInstance().engageWinch();
-        Catapult.getInstance().set(speed);
-        System.out.println("PrepShot.initialize");
     }
 
     protected void execute() {
+        if (!Intake.getInstance().isExtended()) {
+            cancel(); //cancel the command if the intake is not extended
+            return;
+        }
         Catapult.getInstance().engageWinch();
         Catapult.getInstance().set(speed);
-        System.out.println("PrepShot.execute");
     }
 
     protected boolean isFinished() {
         //return (System.currentTimeMillis() - startTime) > 1000 || Catapult.getInstance().isFullBack();
-        if(Catapult.getInstance().isFullBack()){
-            System.out.println("=================FULL BACK==================");
-        }
         return Catapult.getInstance().isFullBack();
     }
 
