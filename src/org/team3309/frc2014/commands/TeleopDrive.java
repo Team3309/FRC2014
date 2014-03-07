@@ -91,7 +91,6 @@ public class TeleopDrive extends Command {
 
         // the mecanum wheels are engaged
         if (drive.isMecanum()) {
-            System.out.println("Mecanum");
             // not using the left stick, switch to "tank" mode
             /*if (Math.abs(leftX) <= configLeftStickDeadband.getDouble() && Math.abs(leftY) <= configLeftStickDeadband
                     .getDouble() && (Math.abs(rightX) > .1 || Math.abs(rightY) > .1)) {
@@ -126,7 +125,6 @@ public class TeleopDrive extends Command {
         }
         // high traction wheels engaged
         else {
-            System.out.println("Tank");
             drive.driveTank(leftY, rightX);
         }
     }
