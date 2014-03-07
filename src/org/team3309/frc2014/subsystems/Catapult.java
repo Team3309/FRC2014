@@ -67,7 +67,7 @@ public class Catapult extends Subsystem {
                 .motors(motorArr)
                 .build();
 
-        fullBackSensor = new DigitalInput(configFullBackPort.getInt());
+                fullBackSensor = new DigitalInput(configFullBackPort.getInt());
 
         latchSolenoid = new DoubleSolenoid(2, configLatchSolenoid.getInt(), 2);
         latchSensor = new DigitalInput(configLatchSensor.getInt());
@@ -80,7 +80,7 @@ public class Catapult extends Subsystem {
     }
 
     public boolean isFullBack() {
-        return fullBackSensor.get();
+        return !fullBackSensor.get();
     }
 
     public void set(double x) {
