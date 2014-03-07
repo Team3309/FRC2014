@@ -113,6 +113,12 @@ public class Robot extends IterativeRobot {
         /*if(operator.getAButton()){
             new PrepShot().start();
         }*/
+        if (operator.getBButton()) {
+            catapult.disengageWinch();
+        }
+        if (operator.getLeftBumper()) {
+            catapult.engageWinch();
+        }
 
         intake.set(-operator.getLeftY());
     }
