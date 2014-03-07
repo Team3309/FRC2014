@@ -44,10 +44,12 @@ public class PrepShot extends Command {
         startTime = System.currentTimeMillis();
         Catapult.getInstance().engageWinch();
         Catapult.getInstance().set(.5);
+        System.out.println("PrepShot.initialize");
     }
 
     protected void execute() {
         Catapult.getInstance().set(.5);
+        System.out.println("PrepShot.execute");
     }
 
     protected boolean isFinished() {
@@ -56,11 +58,13 @@ public class PrepShot extends Command {
     }
 
     protected void end() {
+        System.out.println("PrepShot.end");
         Catapult.getInstance().set(0);
         Catapult.getInstance().disengageWinch();
     }
 
     protected void interrupted() {
+        System.out.println("PrepShot.interrupted");
         Catapult.getInstance().set(0);
     }
 }
