@@ -96,10 +96,10 @@ public class Catapult extends Subsystem {
     }
 
     public void engageWinch() {
-        winchSolenoid.set(DoubleSolenoid.Value.kForward);
+        winchSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
 
     public void disengageWinch() {
-        winchSolenoid.set(DoubleSolenoid.Value.kReverse);
+        winchSolenoid.set(DoubleSolenoid.Value.kForward);
     }
 }
