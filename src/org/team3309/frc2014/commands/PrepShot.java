@@ -33,7 +33,7 @@ import org.team3309.frc2014.subsystems.Catapult;
  */
 public class PrepShot extends Command {
 
-    private static final double speed = .95;
+    private static final double speed = 0;
 
     private long startTime = 0;
 
