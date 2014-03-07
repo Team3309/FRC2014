@@ -38,7 +38,7 @@ import org.team3309.friarlib.motors.MultiSpeedController;
  */
 public class Catapult extends Subsystem {
 
-    private static Constant configFullBackPort = new Constant("catapult.fullback.port", 6);
+    private static Constant configFullBackPort = new Constant("catapult.fullback.port", 10);
     private static Constant configWinchMotors = new Constant("catapult.winch.motors", new double[]{5, 6});
     private static Constant configLatchSolenoid = new Constant("catapult.latch.solenoid", 1);
     private static Constant configLatchSensor = new Constant("catapult.latch.sensor", 4);
@@ -80,7 +80,7 @@ public class Catapult extends Subsystem {
     }
 
     public boolean isFullBack() {
-        return !fullBackSensor.get();
+        return fullBackSensor.get();
     }
 
     public void set(double x) {
