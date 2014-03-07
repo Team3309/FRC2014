@@ -50,6 +50,7 @@ public class PrepShot extends Command {
     }
 
     protected void execute() {
+        Catapult.getInstance().engageWinch();
         Catapult.getInstance().set(speed);
         System.out.println("PrepShot.execute");
     }
