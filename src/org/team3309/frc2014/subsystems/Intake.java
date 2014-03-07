@@ -108,6 +108,13 @@ public class Intake extends Subsystem {
             solenoid.set(DoubleSolenoid.Value.kForward);
     }
 
+    public boolean isExtended() {
+        if (configSolenoidOn.getBoolean())
+            return solenoid.get().equals(DoubleSolenoid.Value.kForward);
+        else
+            return solenoid.get().equals(DoubleSolenoid.Value.kReverse);
+    }
+
     private class IntakeTrigger extends Trigger {
 
         public boolean get() {

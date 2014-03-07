@@ -25,6 +25,7 @@ package org.team3309.frc2014.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.subsystems.Catapult;
+import org.team3309.frc2014.subsystems.Intake;
 
 /**
  * Created by vmagro on 2/25/14.
@@ -42,7 +43,11 @@ public class UnlatchCatapult extends Command {
     }
 
     protected void execute() {
-        Catapult.getInstance().unlatch();
+        Catapult.getInstance().disengageWinch(); //just in case
+        //don't shoot unless intake is extended
+        if (Intake.getInstance().isExtended()) {
+            Catapult.getInstance().unlatch();
+        }
         finished = true;
     }
 
