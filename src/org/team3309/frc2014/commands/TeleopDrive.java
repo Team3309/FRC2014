@@ -43,7 +43,7 @@ public class TeleopDrive extends Command {
 
     private Constant configLeftStickDeadband = new Constant("control.left_deadband", .1);
     private Constant configTriggerDeadband = new Constant("control.trigger_deadband", .1);
-    private Constant configAutoRotateP = new Constant("control.ar.p", -.01);
+    private Constant configAutoRotateP = new Constant("control.ar.p", 0.1);
 
     private static TeleopDrive instance;
 
@@ -112,13 +112,13 @@ public class TeleopDrive extends Command {
             //use the "Halo-AR" drive scheme described by Ether at http://www.chiefdelphi.com/media/papers/2390 and http://www.chiefdelphi.com/forums/showpost.php?p=1021821&postcount=8
                 //this will automatically rotate the drive base to match the commanded angle as it translates
                 /*//else{
-                    double commandAngle = MathUtils.atan2(leftY, leftX) * (180 / Math.PI);
+                    double commandAngle = MathUtils.atan2(leftY, leftX) * (180 / Math.PI) - 90;
                 SmartDashboard.putNumber("command", commandAngle);
-                    double fieldAngle = -drive.getGyroAngle() % 180;
+                    double fieldAngle = -1 * (drive.getGyroAngle() % 360);
                 SmartDashboard.putNumber("angle", fieldAngle);
-                    double angleError = commandAngle - 90 - fieldAngle;
+                    double angleError = (commandAngle - 90 - fieldAngle) % 180;
                     double turnOutput = configAutoRotateP.getDouble() * angleError;
-                    turnOutput += rightX; //driver manually compensate
+                    turnOutput += rightX * 720; //driver manually compensate
                     drive.driveMecanum(leftX, leftY, turnOutput);
                 //}*/
             //}
