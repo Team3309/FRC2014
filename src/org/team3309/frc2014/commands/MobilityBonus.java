@@ -46,11 +46,11 @@ public class MobilityBonus extends Command {
     }
 
     protected boolean isFinished() {
-        return (System.currentTimeMillis() - startTime) > 1500;
+        return (System.currentTimeMillis() - startTime) > 500;
     }
 
     protected void end() {
-
+        Drive.getInstance().driveMecanum(0, 0, 0);
     }
 
     protected void interrupted() {

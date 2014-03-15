@@ -48,7 +48,9 @@ public class RunIntake extends Command {
     }
 
     protected boolean isFinished() {
-        return lengthMs != -1 || (System.currentTimeMillis() - startTime) > lengthMs;
+        if (lengthMs == -1)
+            return false;
+        return (System.currentTimeMillis() - startTime) > lengthMs;
     }
 
     protected void end() {

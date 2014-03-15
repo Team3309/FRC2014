@@ -27,6 +27,7 @@ package org.team3309.frc2014;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.team3309.frc2014.commands.*;
@@ -58,6 +59,8 @@ public class Robot extends IterativeRobot {
     private JoystickButton togglePocketPistonButton;
     private JoystickButton autoShootButton;
 
+    private Command autonomousCommand;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -79,10 +82,14 @@ public class Robot extends IterativeRobot {
         autoShootButton = new JoystickButton(operator, XboxController.BUTTON_LEFT_BUMPER);
 
         Drive.getInstance().enableMecanum();
+
+        autonomousCommand = new TwoBallAuto();
     }
 
     public void autonomousInit() {
         Sensors.gyro.reset();
+
+        autonomousCommand.start();
     }
 
     /**
@@ -93,6 +100,8 @@ public class Robot extends IterativeRobot {
     }
 
     public void teleopInit() {
+        autonomousCommand.cancel();
+
         Sensors.gyro.reset();
 
         //start the TeleopDrive command
