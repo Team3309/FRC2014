@@ -108,11 +108,10 @@ public class Robot extends IterativeRobot {
         TeleopDrive.getInstance().start();
 
         winchButton.whenPressed(new PrepShot());
-        fireButton.whenPressed(new UnlatchCatapult());
-        fireButton.whenReleased(new LatchCatapult());
+        fireButton.whenPressed(new Shoot());
         toggleIntakeButton.whenPressed(new ToggleIntake());
         togglePocketPistonButton.whenPressed(new TogglePocketPiston());
-        autoShootButton.whenPressed(new Shoot());
+        autoShootButton.whenPressed(new ShootAndRetract());
     }
 
     /**
