@@ -23,10 +23,7 @@
 
 package org.team3309.frc2014.subsystems;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -48,13 +45,15 @@ public class Intake extends Subsystem {
 
     private static final Constant configIntakeMotors = new Constant("intake.motors", new double[]{7, 8, 9, 10});
     private static final Constant configBallSensor = new Constant("intake.sensor", 8);
-    private static final Constant configSolenoid = new Constant("intake.solenoid", 4);
+    private static final Constant configSolenoid = new Constant("intake.solenoid", new double[]{1, 2});
     private static final Constant configSolenoidOn = new Constant("intake.solenoid.on", true);
+    private static final Constant configPocketPiston = new Constant("intake.pocket", 3);
 
     private MultiSpeedController motors;
     private DigitalInput ballSensor;
     private IntakeTrigger trigger;
-    private Solenoid solenoid;
+    private DoubleSolenoid solenoid;
+    private Solenoid pocketPiston;
 
     private Intake() {
         SpeedController[] motorArr = new SpeedController[configIntakeMotors.getList().length];
@@ -71,7 +70,8 @@ public class Intake extends Subsystem {
         //ballSensor = new DigitalInput(configBallSensor.getInt());
 
         trigger = new IntakeTrigger();
-        solenoid = new Solenoid(2, configSolenoid.getInt());
+        solenoid = new DoubleSolenoid(2, (int) configSolenoid.getList()[0], (int) configSolenoid.getList()[1]);
+        pocketPiston = new Solenoid(2, configPocketPiston.getInt());
     }
 
     protected void initDefaultCommand() {
@@ -95,19 +95,41 @@ public class Intake extends Subsystem {
     }
 
     public void extend() {
-        solenoid.set(configSolenoidOn.getBoolean());
+        if (configSolenoidOn.getBoolean())
+            solenoid.set(DoubleSolenoid.Value.kReverse);
+        else
+            solenoid.set(DoubleSolenoid.Value.kForward);
     }
 
     public void retract() {
         if (!Catapult.getInstance().isFullBack()) {
+            System.out.println("Can't retract if catapult isn't winched back");
             //don't allow retract unless the catapult is winched back
             return;
         }
-        solenoid.set(!configSolenoidOn.getBoolean());
+        if (configSolenoidOn.getBoolean())
+            solenoid.set(DoubleSolenoid.Value.kForward);
+        else
+            solenoid.set(DoubleSolenoid.Value.kReverse);
     }
 
     public boolean isExtended() {
-        return solenoid.get() == configSolenoidOn.getBoolean();
+        if (configSolenoidOn.getBoolean())
+            return solenoid.get() == DoubleSolenoid.Value.kReverse;
+        else
+            return solenoid.get() != DoubleSolenoid.Value.kReverse;
+    }
+
+    public void extendPocket() {
+        pocketPiston.set(true);
+    }
+
+    public void retractPocket() {
+        pocketPiston.set(false);
+    }
+
+    public boolean isPocketExtended() {
+        return pocketPiston.get();
     }
 
     private class IntakeTrigger extends Trigger {

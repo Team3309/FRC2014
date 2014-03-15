@@ -23,10 +23,7 @@
 
 package org.team3309.frc2014.subsystems;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.team3309.friarlib.constants.Constant;
 import org.team3309.friarlib.motors.MultiSpeedController;
@@ -40,7 +37,7 @@ public class Catapult extends Subsystem {
 
     private static Constant configFullBackPort = new Constant("catapult.fullback.port", 10);
     private static Constant configWinchMotors = new Constant("catapult.winch.motors", new double[]{5, 6});
-    private static Constant configLatchSolenoid = new Constant("catapult.latch.solenoid", 1);
+    private static Constant configLatchSolenoid = new Constant("catapult.latch.solenoid", 4);
     private static Constant configLatchSensor = new Constant("catapult.latch.sensor", 4);
 
     private static Catapult instance;
@@ -53,7 +50,7 @@ public class Catapult extends Subsystem {
 
     private MultiSpeedController winchMotors;
     private DigitalInput fullBackSensor;
-    private DoubleSolenoid latchSolenoid;
+    private Solenoid latchSolenoid;
     private DigitalInput latchSensor;
     private DoubleSolenoid winchSolenoid;
 
@@ -69,7 +66,7 @@ public class Catapult extends Subsystem {
 
                 fullBackSensor = new DigitalInput(configFullBackPort.getInt());
 
-        latchSolenoid = new DoubleSolenoid(2, configLatchSolenoid.getInt(), 2);
+        latchSolenoid = new Solenoid(2, configLatchSolenoid.getInt());
         latchSensor = new DigitalInput(configLatchSensor.getInt());
 
         winchSolenoid = new DoubleSolenoid(2, 7, 8);
@@ -88,11 +85,11 @@ public class Catapult extends Subsystem {
     }
 
     public void latch() {
-        latchSolenoid.set(DoubleSolenoid.Value.kForward);
+        latchSolenoid.set(false);
     }
 
     public void unlatch() {
-        latchSolenoid.set(DoubleSolenoid.Value.kReverse);
+        latchSolenoid.set(true);
     }
 
     public void engageWinch() {

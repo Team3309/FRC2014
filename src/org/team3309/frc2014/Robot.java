@@ -54,8 +54,9 @@ public class Robot extends IterativeRobot {
 
     private JoystickButton winchButton;
     private JoystickButton fireButton;
-    private JoystickButton extendIntakeButton;
-    private JoystickButton retractIntakeButton;
+    private JoystickButton toggleIntakeButton;
+    private JoystickButton togglePocketPistonButton;
+    private JoystickButton autoShootButton;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -71,10 +72,11 @@ public class Robot extends IterativeRobot {
         driver = ControlBoard.getInstance().driver;
         operator = ControlBoard.getInstance().operator;
 
-        winchButton = new JoystickButton(operator, XboxController.BUTTON_A);
-        fireButton = new JoystickButton(operator, XboxController.BUTTON_RIGHT_BUMPER);
-        extendIntakeButton = new JoystickButton(operator, XboxController.BUTTON_X);
-        retractIntakeButton = new JoystickButton(operator, XboxController.BUTTON_Y);
+        winchButton = new JoystickButton(operator, XboxController.BUTTON_Y);
+        fireButton = new JoystickButton(operator, XboxController.BUTTON_A);
+        toggleIntakeButton = new JoystickButton(operator, XboxController.BUTTON_B);
+        togglePocketPistonButton = new JoystickButton(operator, XboxController.BUTTON_RIGHT_BUMPER);
+        autoShootButton = new JoystickButton(operator, XboxController.BUTTON_LEFT_BUMPER);
 
         Drive.getInstance().enableMecanum();
     }
@@ -99,8 +101,9 @@ public class Robot extends IterativeRobot {
         winchButton.whenPressed(new PrepShot());
         fireButton.whenPressed(new UnlatchCatapult());
         fireButton.whenReleased(new LatchCatapult());
-        extendIntakeButton.whenPressed(new ExtendIntake());
-        retractIntakeButton.whenPressed(new RetractIntake());
+        toggleIntakeButton.whenPressed(new ToggleIntake());
+        togglePocketPistonButton.whenPressed(new TogglePocketPiston());
+        autoShootButton.whenPressed(new Shoot());
     }
 
     /**
@@ -108,17 +111,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-
-        //catapult.set(operator.getRightY());
-        /*if(operator.getAButton()){
-            new PrepShot().start();
-        }*/
-        if (operator.getBButton()) {
-            catapult.disengageWinch();
-        }
-        if (operator.getLeftBumper()) {
-            catapult.engageWinch();
-        }
 
         intake.set(-operator.getLeftY());
     }

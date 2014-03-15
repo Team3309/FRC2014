@@ -23,26 +23,42 @@
 
 package org.team3309.frc2014.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.subsystems.Intake;
 
 /**
- * Sequence of commands to execute a shot, including the winch-back to prepare for the next
- *
- * @author vmagro
+ * Created by vmagro on 3/14/14.
  */
-public class Shoot extends CommandGroup {
+public class ToggleIntake extends Command {
 
-    public Shoot() {
-        addSequential(new ExtendIntake());
-        addSequential(new WaitCommand(3));
-        addSequential(new PrepShot());
-        addSequential(new ExtendIntake());
-        addSequential(new WaitCommand(.25));
-        addSequential(new UnlatchCatapult());
-        addSequential(new WaitCommand(.25));
-        addSequential(new ExtendIntake());
-        addSequential(new PrepShot());
+    private boolean finished = false;
+
+    public ToggleIntake() {
+        requires(Intake.getInstance());
     }
 
+    protected void initialize() {
+
+    }
+
+    protected void execute() {
+        System.out.println("extended: " + Intake.getInstance().isExtended());
+        if (Intake.getInstance().isExtended())
+            Intake.getInstance().retract();
+        else
+            Intake.getInstance().extend();
+        finished = true;
+    }
+
+    protected boolean isFinished() {
+        return finished;
+    }
+
+    protected void end() {
+
+    }
+
+    protected void interrupted() {
+
+    }
 }
