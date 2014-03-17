@@ -64,8 +64,16 @@ public class Constant {
         return doubleVal;
     }
 
-    public double[] getList() {
+    public double[] getDoubleList() {
         return doubleList;
+    }
+
+    public int[] getIntList() {
+        int[] arr = new int[doubleList.length];
+        for (int i = 0; i < doubleList.length; i++) {
+            arr[i] = (int) doubleList[i];
+        }
+        return arr;
     }
 
     public boolean getBoolean() {
