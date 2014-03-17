@@ -95,6 +95,7 @@ public class Intake extends Subsystem {
             //don't allow retract unless the catapult is winched back
             return;
         }
+        retractPocket();
         if (configSolenoidOn.getBoolean())
             solenoid.set(DoubleSolenoid.Value.kForward);
         else
