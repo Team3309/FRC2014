@@ -42,7 +42,7 @@ import org.team3309.friarlib.constants.Constant;
  *
  * @author vmagro
  */
-public class Robot extends IterativeRobot {
+public class Gateway extends IterativeRobot {
 
     private static Constant configCompressorRelay = new Constant("compressor.relay", 1);
     private static Constant configCompressorSensor = new Constant("compressor.sensor", 1);
