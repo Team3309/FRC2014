@@ -37,6 +37,7 @@ import java.util.Vector;
 public class ConstantsManager {
 
     static {
+        constants = new Hashtable();
         try {
             loadConstantsFromFile("/Constants.txt");
         } catch (IOException e) {
