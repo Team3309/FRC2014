@@ -76,11 +76,6 @@ public class TeleopDrive extends Command {
         if (controls.driver.getAButton())
             Sensors.gyro.reset();
 
-        if (controls.driver.getXButton())
-            drive.brake();
-        else if (controls.driver.getYButton())
-            drive.releaseBrake();
-
         if (controls.driver.getRightBumper())
             drive.disableMecanum();
         else
@@ -110,7 +105,7 @@ public class TeleopDrive extends Command {
             drive.driveMecanum(leftX, leftY, turnOutput);
             //drive.driveMecanum(leftX, leftY, rightX);
             //use the "Halo-AR" drive scheme described by Ether at http://www.chiefdelphi.com/media/papers/2390 and http://www.chiefdelphi.com/forums/showpost.php?p=1021821&postcount=8
-                //this will automatically rotate the drive base to match the commanded angle as it translates
+            //this will automatically rotate the drive base to match the commanded angle as it translates
                 /*//else{
                     double commandAngle = MathUtils.atan2(leftY, leftX) * (180 / Math.PI) - 90;
                 SmartDashboard.putNumber("command", commandAngle);

@@ -36,7 +36,7 @@ public class OctanumModule implements PIDOutput, PIDSource {
 
     private static Constant configMecanumSolenoid = new Constant("drive.mecanum.on", true);
 
-    private static Constant configP = new Constant("drive.p", -.01);
+    private static Constant configP = new Constant("drive.p", -.02);
     private static Constant configI = new Constant("drive.i", 0);
     private static Constant configD = new Constant("drive.d", .002);
 
@@ -86,6 +86,7 @@ public class OctanumModule implements PIDOutput, PIDSource {
     }
 
     public void brake() {
+        pidController.setPID(configP.getDouble(), configI.getDouble(), configD.getDouble());
         pidController.enable();
         pidController.setSetpoint(encoder.get());
     }

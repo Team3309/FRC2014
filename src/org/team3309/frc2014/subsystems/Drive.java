@@ -63,6 +63,7 @@ public class Drive extends Subsystem {
     private Constant maxAngularVelocity = new Constant("drive.gyro.max_angular_velocity", 720);
 
     private static Drive instance;
+    private boolean wasInMecanumBeforeBrake = false;
 
     /**
      * Get the singleton instance of the drivetrain
@@ -239,6 +240,10 @@ public class Drive extends Subsystem {
     }
 
     public void brake() {
+        if (isMecanum()) {
+            disableMecanum();
+            wasInMecanumBeforeBrake = true;
+        }
         leftBack.brake();
         leftFront.brake();
         rightBack.brake();
@@ -246,6 +251,10 @@ public class Drive extends Subsystem {
     }
 
     public void releaseBrake() {
+        if (wasInMecanumBeforeBrake) {
+            enableMecanum();
+            wasInMecanumBeforeBrake = false;
+        }
         leftBack.releaseBrake();
         leftFront.releaseBrake();
         rightBack.releaseBrake();

@@ -36,6 +36,9 @@ import org.team3309.frc2014.subsystems.Drive;
 import org.team3309.frc2014.subsystems.Intake;
 import org.team3309.friarlib.XboxController;
 import org.team3309.friarlib.constants.Constant;
+import org.team3309.friarlib.constants.ConstantsManager;
+
+import java.io.IOException;
 
 /**
  * Main robot program. This starts all commands and is the main entry point for the FRC control system.
@@ -59,6 +62,8 @@ public class Gateway extends IterativeRobot {
     private JoystickButton togglePocketPistonButton;
     private JoystickButton autoShootButton;
 
+    private JoystickButton engageBrakeButton;
+
     private Command autonomousCommand;
 
     /**
@@ -80,6 +85,8 @@ public class Gateway extends IterativeRobot {
         toggleIntakeButton = new JoystickButton(operator, XboxController.BUTTON_B);
         togglePocketPistonButton = new JoystickButton(operator, XboxController.BUTTON_RIGHT_BUMPER);
         autoShootButton = new JoystickButton(operator, XboxController.BUTTON_LEFT_BUMPER);
+
+        engageBrakeButton = new JoystickButton(driver, XboxController.BUTTON_LEFT_BUMPER);
 
         Drive.getInstance().enableMecanum();
 
@@ -112,6 +119,15 @@ public class Gateway extends IterativeRobot {
         toggleIntakeButton.whenPressed(new ToggleIntake());
         togglePocketPistonButton.whenPressed(new TogglePocketPiston());
         autoShootButton.whenPressed(new ShootAndRetract());
+
+        engageBrakeButton.whenPressed(new EngageBrake());
+        engageBrakeButton.whenReleased(new ReleaseBrake());
+
+        try {
+            ConstantsManager.loadConstantsFromFile("/Constants.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
