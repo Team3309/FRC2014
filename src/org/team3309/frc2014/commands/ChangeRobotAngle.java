@@ -23,6 +23,7 @@
 
 package org.team3309.frc2014.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.PIDCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team3309.frc2014.Sensors;
@@ -37,11 +38,13 @@ import org.team3309.friarlib.constants.Constant;
  */
 public class ChangeRobotAngle extends PIDCommand {
 
-    private static Constant configKp = new Constant("pid.setrobotangle.p", 1);
+    private static Constant configKp = new Constant("pid.setrobotangle.p", .01);
     private static Constant configKi = new Constant("pid.setrobotangle.i", 0);
     private static Constant configKd = new Constant("pid.setrobotangle.d", 0);
 
     private Drive drive;
+
+    private Timer doneTimer = new Timer();
 
     public static ChangeRobotAngle create(double angle) {
         return new ChangeRobotAngle(configKp.getDouble(), configKi.getDouble(), configKd.getDouble(), angle);
@@ -71,11 +74,16 @@ public class ChangeRobotAngle extends PIDCommand {
     }
 
     protected void execute() {
-
+        if (Math.abs(Sensors.gyro.getAngle() - getSetpoint()) < 2)
+            doneTimer.start();
+        else {
+            doneTimer.stop();
+            doneTimer.reset();
+        }
     }
 
     protected boolean isFinished() {
-        return false;
+        return doneTimer.get() > 500000; //.5 seconds in microseconds
     }
 
     protected void end() {
