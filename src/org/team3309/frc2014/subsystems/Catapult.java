@@ -37,7 +37,10 @@ public class Catapult extends Subsystem {
 
     private static Constant configFullBackPort = new Constant("catapult.fullback.port", 10);
     private static Constant configWinchMotors = new Constant("catapult.winch.motors", new double[]{5, 6});
+    private static Constant configWinchSolenoid = new Constant("catapult.winch.solenoid", new double[]{7, 8});
+    private static Constant configWinchSolenoidModule = new Constant("catapult.winch.solenoid.module", 2);
     private static Constant configLatchSolenoid = new Constant("catapult.latch.solenoid", 4);
+    private static Constant configLatchSolenoidModule = new Constant("catapult.latch.solenoid.module", 2);
     private static Constant configLatchSensor = new Constant("catapult.latch.sensor", 4);
 
     private static Catapult instance;
@@ -55,21 +58,22 @@ public class Catapult extends Subsystem {
     private DoubleSolenoid winchSolenoid;
 
     private Catapult() {
-        SpeedController[] motorArr = new SpeedController[configWinchMotors.getList().length];
-        for (int i = 0; i < configWinchMotors.getList().length; i++) {
-            motorArr[i] = new Victor((int) configWinchMotors.getList()[i]);
+        SpeedController[] motorArr = new SpeedController[configWinchMotors.getIntList().length];
+        for (int i = 0; i < configWinchMotors.getIntList().length; i++) {
+            motorArr[i] = new Victor(configWinchMotors.getIntList()[i]);
         }
 
         winchMotors = new MultiSpeedController.Builder()
                 .motors(motorArr)
                 .build();
 
-                fullBackSensor = new DigitalInput(configFullBackPort.getInt());
+        fullBackSensor = new DigitalInput(configFullBackPort.getInt());
 
-        latchSolenoid = new Solenoid(2, configLatchSolenoid.getInt());
+        latchSolenoid = new Solenoid(configLatchSolenoidModule.getInt(), configLatchSolenoid.getInt());
         latchSensor = new DigitalInput(configLatchSensor.getInt());
 
-        winchSolenoid = new DoubleSolenoid(2, 7, 8);
+        winchSolenoid = new DoubleSolenoid(configWinchSolenoidModule.getInt(), configWinchSolenoid.getIntList()[0],
+                configWinchSolenoid.getIntList()[1]);
     }
 
     protected void initDefaultCommand() {

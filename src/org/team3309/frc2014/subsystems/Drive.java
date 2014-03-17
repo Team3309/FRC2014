@@ -40,7 +40,8 @@ import org.team3309.friarlib.constants.Constant;
 public class Drive extends Subsystem {
 
     //first number is port A
-    private Constant configMecanumSolenoidPorts = new Constant("solenoid.mecanum", new double[]{6, 5});
+    private Constant configMecanumSolenoidPorts = new Constant("drive.solenoid", new double[]{6, 5});
+    private Constant configMecanumSolenoidModule = new Constant("drive.solenoid.module", 2);
 
     private Constant configLeftFrontPort = new Constant("drive.left.front", 1);
     private Constant configLeftBackPort = new Constant("drive.left.back", 2);
@@ -84,8 +85,8 @@ public class Drive extends Subsystem {
     private FriarGyro gyro;
 
     private Drive() {
-        extender = new DoubleSolenoid(2, (int) configMecanumSolenoidPorts.getList()[0],
-                (int) configMecanumSolenoidPorts.getList()[1]);
+        extender = new DoubleSolenoid(configMecanumSolenoidModule.getInt(), configMecanumSolenoidPorts.getIntList()[0],
+                configMecanumSolenoidPorts.getIntList()[1]);
 
         leftFront = new OctanumModule("leftFront", new Victor(configLeftFrontPort.getInt()), extender,
                 new Encoder(configLeftFrontEncoderA.getInt(), configLeftFrontEncoderB.getInt()));
