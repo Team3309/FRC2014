@@ -18,6 +18,9 @@ drive.skim_gain=.25
 drive.gyro.kp=.01
 drive.gyro.max_angular_velocity=720
 
+drive.p=-.02
+drive.i=0
+
 drive.mecanum.on=true
 
 intake.motors=7,8,9,10
