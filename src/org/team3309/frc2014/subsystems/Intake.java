@@ -45,6 +45,8 @@ public class Intake extends Subsystem {
     }
 
     private static final Constant configIntakeMotors = new Constant("intake.motors", new double[]{7, 8, 9, 10});
+    private static final Constant configIntakeMotorsReversed = new Constant("intake.motors.reversed", new double[]{2,
+            0});
     private static final Constant configSolenoid = new Constant("intake.solenoid", new double[]{1, 2});
     private static final Constant configSolenoidModule = new Constant("intake.solenoid.module", 2);
     private static final Constant configSolenoidOn = new Constant("intake.solenoid.on", true);
@@ -61,11 +63,11 @@ public class Intake extends Subsystem {
             motorArr[i] = new Victor((int) configIntakeMotors.getDoubleList()[i]);
         }
 
-        motors = new MultiSpeedController.Builder()
-                .motors(motorArr)
-                .reverse(2)
-                .reverse(0)
-                .build();
+        MultiSpeedController.Builder builder = new MultiSpeedController.Builder()
+                .motors(motorArr);
+        for (int i = 0; i < configIntakeMotorsReversed.getIntList().length; i++)
+            builder.reverse(configIntakeMotorsReversed.getIntList()[i]);
+        motors = builder.build();
 
         solenoid = new DoubleSolenoid(configSolenoidModule.getInt(), configSolenoid.getIntList()[0],
                 configSolenoid.getIntList()[1]);

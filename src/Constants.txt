@@ -17,6 +17,7 @@ drive.solenoid.module=2
 drive.mecanum.on=true
 
 intake.motors=7,8,9,10
+intake.motors.reversed=2,0
 intake.solenoid=1,2
 intake.solenoid.module=2
 intake.solenoid.on=true
