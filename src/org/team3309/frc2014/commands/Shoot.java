@@ -33,7 +33,7 @@ public class Shoot extends CommandGroup {
 
     public Shoot() {
         addSequential(new RetractPocketPiston());
-        addSequential(new WaitCommand(.1));
+        addSequential(new WaitCommand(.05));
         addSequential(new UnlatchCatapult());
     }
 }

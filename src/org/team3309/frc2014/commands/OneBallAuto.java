@@ -27,17 +27,18 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 
 /**
- * Sequence of commands to execute a shot, including the winch-back to prepare for the next
- *
- * @author vmagro
+ * Created by vmagro on 3/17/14.
  */
-public class ShootAndRetract extends CommandGroup {
+public class OneBallAuto extends CommandGroup {
 
-    public ShootAndRetract() {
-        addSequential(new Shoot());
-        addSequential(new WaitCommand(.5));
+    public OneBallAuto() {
         addSequential(new ExtendIntake());
-        addSequential(new PrepShot());
+        addParallel(new RunIntake(.5));
+        addSequential(new WaitCommand(1));
+        addSequential(new ExtendPocketPiston());
+        addSequential(new WaitCommand(.5));
+        addSequential(new ShootAndRetract());
+        addSequential(new MobilityBonus());
     }
 
 }

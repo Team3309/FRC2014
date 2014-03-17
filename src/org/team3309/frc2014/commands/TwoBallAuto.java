@@ -42,7 +42,6 @@ public class TwoBallAuto extends CommandGroup {
         addSequential(new ExtendPocketPiston());
         addSequential(new WaitCommand(1));
         addSequential(new ShootAndRetract());
-        addSequential(new WaitCommand(.5));
         addSequential(new MobilityBonus());
     }
 
