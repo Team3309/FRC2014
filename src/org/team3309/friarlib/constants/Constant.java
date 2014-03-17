@@ -33,11 +33,17 @@ public class Constant {
 
     private boolean booleanVal;
 
-    private Constant(String name) {
+    protected Constant(String name) {
         if (name == null) {
             throw new NullPointerException("Constant name cannot be null");
         }
         this.name = name;
+        if (ConstantsManager.getConstant(name) != null) {
+            Constant existing = ConstantsManager.getConstant(name);
+            this.doubleVal = existing.doubleVal;
+            this.doubleList = existing.doubleList;
+            this.booleanVal = existing.booleanVal;
+        }
         ConstantsManager.addConstant(this);
     }
 

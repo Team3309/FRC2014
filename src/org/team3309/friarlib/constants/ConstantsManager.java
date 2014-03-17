@@ -57,6 +57,16 @@ public class ConstantsManager {
     }
 
     /**
+     * Get a constant
+     *
+     * @param key
+     * @return
+     */
+    protected static Constant getConstant(String key) {
+        return (Constant) constants.get(key);
+    }
+
+    /**
      * Load constants from a txt file on the cRIO
      *
      * @param path
@@ -101,15 +111,19 @@ public class ConstantsManager {
                         if (constants.containsKey(key)) {
                             ((Constant) constants.get(key)).set(val);
                         } else {
-                            System.err.println("Constant <" + key + "> will not be used");
+                            Constant c = new Constant(key);
+                            c.set(val);
+                            constants.put(key, c);
                         }
                     }
-                } else {
+                }
+                //not a list
+                else {
+                    if (value.equals("")) {
+                        System.err.println("Malformed line <" + line + "> empty string as value");
+                        continue;
+                    }
                     if (constants.containsKey(key)) {
-                        if (value.equals("")) {
-                            System.err.println("Malformed line <" + line + "> empty string as value");
-                            continue;
-                        }
                         if (value.equals("true"))
                             ((Constant) constants.get(key)).set(true);
                         else if (value.equals("false"))
@@ -117,7 +131,14 @@ public class ConstantsManager {
                         else
                             ((Constant) constants.get(key)).set(Double.parseDouble(value));
                     } else {
-                        System.err.println("Constant <" + key + "> will not be used");
+                        Constant c = new Constant(key);
+                        if (value.equals("true"))
+                            c.set(true);
+                        else if (value.equals("false"))
+                            c.set(false);
+                        else
+                            c.set(Double.parseDouble(value));
+                        constants.put(key, c);
                     }
                 }
             }
