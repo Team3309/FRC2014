@@ -49,7 +49,7 @@ public class HotGoalDetector extends Subsystem {
     }
 
     public boolean isRightHot() {
-        return right.get();
+        return !right.get();
     }
 
     protected void initDefaultCommand() {
