@@ -37,6 +37,7 @@ import org.team3309.frc2014.subsystems.Intake;
 import org.team3309.friarlib.XboxController;
 import org.team3309.friarlib.constants.Constant;
 import org.team3309.friarlib.constants.ConstantsManager;
+import org.team3309.friarlib.util.Latch;
 
 import java.io.IOException;
 
@@ -62,7 +63,7 @@ public class Gateway extends IterativeRobot {
     private JoystickButton togglePocketPistonButton;
     private JoystickButton autoShootButton;
 
-    private JoystickButton engageBrakeButton;
+    private Latch brakeLatch = new Latch();
 
     private Command autonomousCommand;
 
@@ -85,8 +86,6 @@ public class Gateway extends IterativeRobot {
         toggleIntakeButton = new JoystickButton(operator, XboxController.BUTTON_B);
         togglePocketPistonButton = new JoystickButton(operator, XboxController.BUTTON_RIGHT_BUMPER);
         autoShootButton = new JoystickButton(operator, XboxController.BUTTON_LEFT_BUMPER);
-
-        engageBrakeButton = new JoystickButton(driver, XboxController.BUTTON_LEFT_BUMPER);
 
         Drive.getInstance().enableMecanum();
 
@@ -120,9 +119,6 @@ public class Gateway extends IterativeRobot {
         togglePocketPistonButton.whenPressed(new TogglePocketPiston());
         autoShootButton.whenPressed(new ShootAndRetract());
 
-        engageBrakeButton.whenPressed(new EngageBrake());
-        engageBrakeButton.whenReleased(new ReleaseBrake());
-
         try {
             ConstantsManager.loadConstantsFromFile("/Constants.txt");
         } catch (IOException e) {
@@ -137,6 +133,13 @@ public class Gateway extends IterativeRobot {
         Scheduler.getInstance().run();
 
         intake.set(-operator.getLeftY());
+
+        if (brakeLatch.update(driver.getLeftBumper())) {
+            if (driver.getLeftBumper())
+                Drive.getInstance().brake();
+            else
+                Drive.getInstance().releaseBrake();
+        }
     }
 
     public void disabledInit() {

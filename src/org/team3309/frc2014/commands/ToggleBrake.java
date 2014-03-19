@@ -23,26 +23,38 @@
 
 package org.team3309.frc2014.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.subsystems.Drive;
 
 /**
- * Created by vmagro on 2/25/14.
+ * Created by vmagro on 3/18/14.
  */
-public class TwoBallAuto extends CommandGroup {
+public class ToggleBrake extends Command {
 
-    public TwoBallAuto() {
-        addSequential(new ExtendIntake());
-        addParallel(new RunIntake(.5));
-        addSequential(new WaitCommand(1));
-        addSequential(new ExtendPocketPiston());
-        addSequential(new WaitCommand(.5));
-        addSequential(new ShootAndRetract());
-        addSequential(new RunIntake(1.5));
-        addSequential(new ExtendPocketPiston());
-        addSequential(new WaitCommand(1));
-        addSequential(new ShootAndRetract());
-        addSequential(new MobilityBonus());
+    private boolean finished = false;
+
+    protected void initialize() {
+        requires(Drive.getInstance());
     }
 
+    protected void execute() {
+        if (Drive.getInstance().isBrake())
+            Drive.getInstance().releaseBrake();
+        else
+            Drive.getInstance().brake();
+
+        finished = true;
+    }
+
+    protected boolean isFinished() {
+        return finished;
+    }
+
+    protected void end() {
+
+    }
+
+    protected void interrupted() {
+
+    }
 }

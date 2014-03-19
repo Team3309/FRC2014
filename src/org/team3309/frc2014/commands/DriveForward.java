@@ -23,26 +23,38 @@
 
 package org.team3309.frc2014.commands;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.subsystems.Drive;
 
 /**
- * Created by vmagro on 2/25/14.
+ * Created by vmagro on 3/18/14.
  */
-public class TwoBallAuto extends CommandGroup {
+public class DriveForward extends Command {
 
-    public TwoBallAuto() {
-        addSequential(new ExtendIntake());
-        addParallel(new RunIntake(.5));
-        addSequential(new WaitCommand(1));
-        addSequential(new ExtendPocketPiston());
-        addSequential(new WaitCommand(.5));
-        addSequential(new ShootAndRetract());
-        addSequential(new RunIntake(1.5));
-        addSequential(new ExtendPocketPiston());
-        addSequential(new WaitCommand(1));
-        addSequential(new ShootAndRetract());
-        addSequential(new MobilityBonus());
+    private long timeoutMs = 0;
+    private long startTime = 0;
+
+    public DriveForward(double seconds) {
+        this.timeoutMs = (long) (seconds * 1000);
     }
 
+    protected void initialize() {
+        requires(Drive.getInstance());
+    }
+
+    protected void execute() {
+        Drive.getInstance().driveTank(1, 0);
+    }
+
+    protected boolean isFinished() {
+        return (System.currentTimeMillis() - startTime) >= timeoutMs;
+    }
+
+    protected void end() {
+        Drive.getInstance().driveTank(0, 0);
+    }
+
+    protected void interrupted() {
+
+    }
 }

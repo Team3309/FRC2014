@@ -64,6 +64,7 @@ public class Drive extends Subsystem {
 
     private static Drive instance;
     private boolean wasInMecanumBeforeBrake = false;
+    private boolean brake = false;
 
     /**
      * Get the singleton instance of the drivetrain
@@ -240,6 +241,7 @@ public class Drive extends Subsystem {
     }
 
     public void brake() {
+        brake = true;
         if (isMecanum()) {
             disableMecanum();
             wasInMecanumBeforeBrake = true;
@@ -251,6 +253,7 @@ public class Drive extends Subsystem {
     }
 
     public void releaseBrake() {
+        brake = false;
         if (wasInMecanumBeforeBrake) {
             enableMecanum();
             wasInMecanumBeforeBrake = false;
@@ -259,6 +262,10 @@ public class Drive extends Subsystem {
         leftFront.releaseBrake();
         rightBack.releaseBrake();
         rightFront.releaseBrake();
+    }
+
+    public boolean isBrake() {
+        return brake;
     }
 
     /**
