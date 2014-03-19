@@ -96,7 +96,6 @@ public class OctanumModule implements PIDOutput, PIDSource {
         pidController.setPID(configP.getDouble(), configI.getDouble(), configD.getDouble());
         pidController.enable();
         pidController.setSetpoint(encoder.get());
-        pidController.setAbsoluteTolerance(5);
     }
 
     public void releaseBrake() {
