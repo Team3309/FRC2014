@@ -76,7 +76,7 @@ public class TeleopDrive extends Command {
 
         if (controls.driver.getRightBumper())
             drive.disableMecanum();
-        else
+        else if (!drive.isBrake())
             drive.enableMecanum();
 
         SmartDashboard.putNumber("gyro", drive.getGyroAngle());
@@ -87,7 +87,11 @@ public class TeleopDrive extends Command {
             double desiredRotation = rightX * 720;
             double actualRotation = drive.getAngularVelocity();
             double rotateError = desiredRotation - actualRotation;
-            double turnOutput = .01 * rotateError;
+            double turnOutput = 0;
+            if (Math.abs(leftY) < .1)
+                turnOutput = .005 * rotateError;
+            else
+                turnOutput = .01 * rotateError;
 
             drive.driveMecanum(leftX, leftY, turnOutput);
         }

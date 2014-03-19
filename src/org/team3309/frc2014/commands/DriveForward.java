@@ -31,24 +31,26 @@ import org.team3309.frc2014.subsystems.Drive;
  */
 public class DriveForward extends Command {
 
-    private long timeoutMs = 0;
-    private long startTime = 0;
+    private Drive drive;
+    private int counts;
 
-    public DriveForward(double seconds) {
-        this.timeoutMs = (long) (seconds * 1000);
-        requires(Drive.getInstance());
+    public DriveForward(int counts) {
+        this.counts = counts;
+        drive = Drive.getInstance();
+        requires(drive);
     }
 
     protected void initialize() {
-        startTime = System.currentTimeMillis();
     }
 
     protected void execute() {
-        Drive.getInstance().driveTank(1, 0);
+        Drive.getInstance().enableMecanum();
+        Drive.getInstance().driveTank(.6, 0);
     }
 
     protected boolean isFinished() {
-        return (System.currentTimeMillis() - startTime) >= timeoutMs;
+        return Math.abs((Math.abs(drive.leftBackCount()) + Math.abs(drive.leftFrontCount())
+                + Math.abs(drive.rightBackCount()) + Math.abs(drive.rightFrontCount())) / 4 - counts) < 50;
     }
 
     protected void end() {

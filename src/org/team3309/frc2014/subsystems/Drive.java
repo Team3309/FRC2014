@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.team3309.frc2014.OctanumModule;
 import org.team3309.frc2014.Sensors;
+import org.team3309.frc2014.commands.TeleopDrive;
 import org.team3309.friarlib.FriarGyro;
 import org.team3309.friarlib.constants.Constant;
 
@@ -71,9 +72,11 @@ public class Drive extends Subsystem {
      *
      * @return
      */
-    public static Drive getInstance() {
+    public static synchronized Drive getInstance() {
         if (instance == null) {
             instance = new Drive();
+            instance.setDefaultCommand(TeleopDrive.getInstance()); //put it here so that Drive will already be
+            // initialized
         }
         return instance;
     }
@@ -91,19 +94,18 @@ public class Drive extends Subsystem {
                 configMecanumSolenoidPorts.getIntList()[1]);
 
         leftFront = new OctanumModule("leftFront", new Victor(configLeftFrontPort.getInt()), extender,
-                new Encoder(configLeftFrontEncoderA.getInt(), configLeftFrontEncoderB.getInt()));
+                new Encoder(configLeftFrontEncoderA.getInt(), configLeftFrontEncoderB.getInt()), false);
         leftBack = new OctanumModule("leftBack", new Victor(configLeftBackPort.getInt()), extender,
-                new Encoder(configLeftBackEncoderA.getInt(), configLeftBackEncoderB.getInt()));
+                new Encoder(configLeftBackEncoderA.getInt(), configLeftBackEncoderB.getInt()), false);
         rightFront = new OctanumModule("rightFront", new Victor(configFrontRightPort.getInt()), extender,
-                new Encoder(configRightFrontEncoderA.getInt(), configRightFrontEncoderB.getInt()));
+                new Encoder(configRightFrontEncoderA.getInt(), configRightFrontEncoderB.getInt()), true);
         rightBack = new OctanumModule("rightBack", new Victor(configRightBackPort.getInt()), extender,
-                new Encoder(configRightBackEncoderA.getInt(), configRightBackEncoderB.getInt()));
+                new Encoder(configRightBackEncoderA.getInt(), configRightBackEncoderB.getInt()), true);
 
         gyro = Sensors.gyro;
     }
 
     protected void initDefaultCommand() {
-
     }
 
     /**
@@ -177,8 +179,9 @@ public class Drive extends Subsystem {
      * @param turn
      */
     public void driveMecanum(double x, double y, double turn) {
-        if (isBrake())
+        if (isBrake()) {
             return;
+        }
 
         double[] speeds = new double[4];
         speeds[0] = x + y + turn; //left front
@@ -205,8 +208,9 @@ public class Drive extends Subsystem {
      * @param turn
      */
     public void driveTank(double throttle, double turn) {
-        if (isBrake())
+        if (isBrake()) {
             return;
+        }
 
         double desiredAngularVelocity = turn * maxAngularVelocity.getDouble();
         double angularVelocity = getAngularVelocity();
@@ -336,5 +340,12 @@ public class Drive extends Subsystem {
 
     public int rightBackCount() {
         return rightBack.getEncoder().get();
+    }
+
+    public void resetEncoders() {
+        leftBack.resetEncoder();
+        leftFront.resetEncoder();
+        rightBack.resetEncoder();
+        rightFront.resetEncoder();
     }
 }

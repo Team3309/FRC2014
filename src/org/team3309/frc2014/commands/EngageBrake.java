@@ -34,7 +34,6 @@ public class EngageBrake extends Command {
     private boolean finished = false;
 
     public EngageBrake() {
-        requires(Drive.getInstance());
     }
 
     protected void initialize() {
@@ -42,6 +41,7 @@ public class EngageBrake extends Command {
     }
 
     protected void execute() {
+        System.out.println("Engage brake");
         Drive.getInstance().brake();
         finished = true;
     }

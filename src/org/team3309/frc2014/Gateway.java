@@ -25,6 +25,7 @@ package org.team3309.frc2014;
 
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -39,7 +40,6 @@ import org.team3309.frc2014.subsystems.Intake;
 import org.team3309.friarlib.XboxController;
 import org.team3309.friarlib.constants.Constant;
 import org.team3309.friarlib.constants.ConstantsManager;
-import org.team3309.friarlib.util.Latch;
 
 import java.io.IOException;
 
@@ -65,7 +65,7 @@ public class Gateway extends IterativeRobot {
     private JoystickButton togglePocketPistonButton;
     private JoystickButton autoShootButton;
 
-    private Latch brakeLatch = new Latch();
+    private JoystickButton brakeButton;
 
     private Command autonomousCommand;
 
@@ -89,6 +89,8 @@ public class Gateway extends IterativeRobot {
         togglePocketPistonButton = new JoystickButton(operator, XboxController.BUTTON_RIGHT_BUMPER);
         autoShootButton = new JoystickButton(operator, XboxController.BUTTON_LEFT_BUMPER);
 
+        brakeButton = new JoystickButton(driver, XboxController.BUTTON_LEFT_BUMPER);
+
         Drive.getInstance().enableMecanum();
 
         autonomousCommand = new TwoBallAuto();
@@ -96,12 +98,34 @@ public class Gateway extends IterativeRobot {
 
     public void disabledPeriodic() {
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser1, 1,
-                HotGoalDetector.getInstance().isRightHot() ? "Hot      " : "Not hot");
+                HotGoalDetector.getInstance().isRightHot() ? "Hot    " : "Not hot");
+
+        String autoModeName = "";
+        if (DriverStation.getInstance().getDigitalIn(1))
+            autoModeName = "Mobility Bonus";
+        else if (DriverStation.getInstance().getDigitalIn(2))
+            autoModeName = "One Ball Auto ";
+        else if (DriverStation.getInstance().getDigitalIn(3))
+            autoModeName = "Two Ball Auto ";
+        else
+            autoModeName = "Mobility Bonus";
+
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, autoModeName);
+
         DriverStationLCD.getInstance().updateLCD();
     }
 
     public void autonomousInit() {
         Sensors.gyro.reset();
+
+        if (DriverStation.getInstance().getDigitalIn(1))
+            autonomousCommand = new MobilityBonus();
+        else if (DriverStation.getInstance().getDigitalIn(2))
+            autonomousCommand = new OneBallAuto();
+        else if (DriverStation.getInstance().getDigitalIn(3))
+            autonomousCommand = new TwoBallAuto();
+        else
+            autonomousCommand = new MobilityBonus();
 
         autonomousCommand.start();
     }
@@ -116,6 +140,12 @@ public class Gateway extends IterativeRobot {
     public void teleopInit() {
         autonomousCommand.cancel();
 
+        try {
+            ConstantsManager.loadConstantsFromFile("/Constants.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         Sensors.gyro.reset();
 
         //start the TeleopDrive command
@@ -127,11 +157,8 @@ public class Gateway extends IterativeRobot {
         togglePocketPistonButton.whenPressed(new TogglePocketPiston());
         autoShootButton.whenPressed(new ShootAndRetract());
 
-        try {
-            ConstantsManager.loadConstantsFromFile("/Constants.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        brakeButton.whenPressed(new EngageBrake());
+        brakeButton.whenReleased(new ReleaseBrake());
     }
 
     /**
@@ -142,12 +169,9 @@ public class Gateway extends IterativeRobot {
 
         intake.set(-operator.getLeftY());
 
-        if (brakeLatch.update(driver.getLeftBumper())) {
-            if (driver.getLeftBumper())
-                Drive.getInstance().brake();
-            else
-                Drive.getInstance().releaseBrake();
-        }
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Is brake: " + (Drive.getInstance()
+                .isBrake() ? "true" : "false"));
+        DriverStationLCD.getInstance().updateLCD();
     }
 
     public void disabledInit() {

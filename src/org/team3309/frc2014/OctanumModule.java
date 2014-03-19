@@ -24,7 +24,6 @@
 package org.team3309.frc2014;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team3309.friarlib.constants.Constant;
 
 /**
@@ -38,7 +37,7 @@ public class OctanumModule implements PIDOutput, PIDSource {
 
     private static Constant configP = new Constant("drive.p", -.02);
     private static Constant configI = new Constant("drive.i", 0);
-    private static Constant configD = new Constant("drive.d", .002);
+    private static Constant configD = new Constant("drive.d", .00);
 
     private static Constant configCountsPerRev = new Constant("drive.counts_per_rev", 250);
     private static Constant configDistancePerPulse = new Constant("drive.distance_per_pulse", 1 / 300);
@@ -49,6 +48,8 @@ public class OctanumModule implements PIDOutput, PIDSource {
 
     private PIDController pidController;
 
+    private boolean encoderReverse;
+
     /**
      * Create a new OctanumModule with the given motor controller, solenoid and encoder
      *
@@ -56,16 +57,19 @@ public class OctanumModule implements PIDOutput, PIDSource {
      * @param solenoid the {@link edu.wpi.first.wpilibj.Solenoid} to engage/disengage the mecanum wheel
      * @param encoder  the {@link edu.wpi.first.wpilibj.Encoder} to count revolutions
      */
-    public OctanumModule(String name, SpeedController motor, DoubleSolenoid solenoid, Encoder encoder) {
+    public OctanumModule(String name, SpeedController motor, DoubleSolenoid solenoid, Encoder encoder,
+                         boolean encoderReverse) {
+        this.encoderReverse = encoderReverse;
         this.motor = motor;
         this.encoder = encoder;
         this.solenoid = solenoid;
+
+        encoder.setReverseDirection(encoderReverse);
 
         encoder.start();
 
         pidController = new PIDController(configP.getDouble(), configI.getDouble(), configD.getDouble(), this, this);
         pidController.disable();
-        SmartDashboard.putData(name, pidController);
     }
 
     public void enable() {
@@ -82,13 +86,17 @@ public class OctanumModule implements PIDOutput, PIDSource {
     }
 
     public void pidWrite(double v) {
-        motor.set(v);
+        if (encoderReverse)
+            motor.set(-v);
+        else
+            motor.set(v);
     }
 
     public void brake() {
         pidController.setPID(configP.getDouble(), configI.getDouble(), configD.getDouble());
         pidController.enable();
         pidController.setSetpoint(encoder.get());
+        pidController.setAbsoluteTolerance(5);
     }
 
     public void releaseBrake() {
@@ -117,4 +125,7 @@ public class OctanumModule implements PIDOutput, PIDSource {
         return encoder;
     }
 
+    public void resetEncoder() {
+        encoder.reset();
+    }
 }

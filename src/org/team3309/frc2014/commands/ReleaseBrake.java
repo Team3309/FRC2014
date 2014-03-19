@@ -34,7 +34,6 @@ public class ReleaseBrake extends Command {
     private boolean finished = false;
 
     public ReleaseBrake() {
-        requires(Drive.getInstance());
     }
 
     protected void initialize() {
@@ -42,6 +41,7 @@ public class ReleaseBrake extends Command {
     }
 
     protected void execute() {
+        System.out.println("Release brake");
         Drive.getInstance().releaseBrake();
         finished = true;
     }
