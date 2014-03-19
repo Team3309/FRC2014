@@ -177,10 +177,8 @@ public class Drive extends Subsystem {
      * @param turn
      */
     public void driveMecanum(double x, double y, double turn) {
-        // Compensate for gyro angle.
-        /*double rotated[] = rotateVector(x, y, getGyroAngle());
-        x = rotated[0];
-        y = rotated[1];*/
+        if (isBrake())
+            return;
 
         double[] speeds = new double[4];
         speeds[0] = x + y + turn; //left front
@@ -207,6 +205,9 @@ public class Drive extends Subsystem {
      * @param turn
      */
     public void driveTank(double throttle, double turn) {
+        if (isBrake())
+            return;
+
         double desiredAngularVelocity = turn * maxAngularVelocity.getDouble();
         double angularVelocity = getAngularVelocity();
 
