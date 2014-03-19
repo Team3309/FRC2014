@@ -4,12 +4,21 @@ catapult.winch.solenoid=7,8
 catapult.winch.solenoid.module=2
 catapult.latch.solenoid=4
 catapult.latch.solenoid.module=2
-catapult.latch.sensor=4
+catapult.latch.sensor=11
 
 drive.left.front=1
 drive.left.back=2
 drive.right.front=3
 drive.right.back=4
+
+drive.encoder.left.front.a=8
+drive.encoder.left.front.b=9
+drive.encoder.left.back.a=4
+drive.encoder.left.back.b=5
+drive.encoder.right.front.a=6
+drive.encoder.right.front.b=7
+drive.encoder.right.back.a=2
+drive.encoder.right.back.b=3
 
 drive.solenoid=6,5
 drive.solenoid.module=2
