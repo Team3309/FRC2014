@@ -36,10 +36,11 @@ public class DriveForward extends Command {
 
     public DriveForward(double seconds) {
         this.timeoutMs = (long) (seconds * 1000);
+        requires(Drive.getInstance());
     }
 
     protected void initialize() {
-        requires(Drive.getInstance());
+        startTime = System.currentTimeMillis();
     }
 
     protected void execute() {
