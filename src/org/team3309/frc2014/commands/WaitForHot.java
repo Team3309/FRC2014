@@ -51,12 +51,7 @@ public class WaitForHot extends Command {
         if (side.equals(Side.RIGHT)) {
             isHot = HotGoalDetector.getInstance().isRightHot();
         } else if (side.equals(Side.LEFT)) {
-            isHot = HotGoalDetector.getInstance().isLeftHot();
-        }
-
-        //if neither goal is detected as hot, just do it
-        if(!HotGoalDetector.getInstance().isLeftHot() && !HotGoalDetector.getInstance().isRightHot()){
-            isHot = true;
+            isHot = !HotGoalDetector.getInstance().isRightHot();
         }
     }
 

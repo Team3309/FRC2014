@@ -32,13 +32,11 @@ import org.team3309.friarlib.constants.Constant;
  */
 public class HotGoalDetector extends Subsystem {
 
-    private static Constant leftPort = new Constant("hotgoal.left.port", 12);
-    private static Constant rightPort = new Constant("hotgoal.right.port", 13);
+    private static Constant rightPort = new Constant("hotgoal.right.port", 14);
 
-    private DigitalInput left, right;
+    private DigitalInput right;
 
     private HotGoalDetector() {
-        left = new DigitalInput(leftPort.getInt());
         right = new DigitalInput(rightPort.getInt());
     }
 
@@ -48,10 +46,6 @@ public class HotGoalDetector extends Subsystem {
         if (instance == null)
             instance = new HotGoalDetector();
         return instance;
-    }
-
-    public boolean isLeftHot() {
-        return left.get();
     }
 
     public boolean isRightHot() {
