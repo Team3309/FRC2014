@@ -32,13 +32,13 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 public class OneBallAuto extends CommandGroup {
 
     public OneBallAuto() {
+        addSequential(new SwitchMecanum(true));
         addSequential(new ExtendIntake());
-        addParallel(new RunIntake(.5));
         addSequential(new WaitCommand(1));
+        addSequential(new DriveForward(3));
         addSequential(new ExtendPocketPiston());
         addSequential(new WaitCommand(.5));
         addSequential(new ShootAndRetract());
-        addSequential(new MobilityBonus());
     }
 
 }
