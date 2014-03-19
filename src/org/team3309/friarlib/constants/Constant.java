@@ -38,28 +38,34 @@ public class Constant {
             throw new NullPointerException("Constant name cannot be null");
         }
         this.name = name;
+    }
+
+    protected void postConstruct() {
         if (ConstantsManager.getConstant(name) != null) {
             Constant existing = ConstantsManager.getConstant(name);
             this.doubleVal = existing.doubleVal;
             this.doubleList = existing.doubleList;
             this.booleanVal = existing.booleanVal;
-        }
-        ConstantsManager.addConstant(this);
+        } else
+            ConstantsManager.addConstant(this);
     }
 
     public Constant(String name, double defaultVal) {
         this(name);
         this.doubleVal = defaultVal;
+        postConstruct();
     }
 
     public Constant(String name, double[] defaultList) {
         this(name);
         this.doubleList = defaultList;
+        postConstruct();
     }
 
     public Constant(String name, boolean defaultVal) {
         this(name);
         this.booleanVal = defaultVal;
+        postConstruct();
     }
 
     public String getName() {

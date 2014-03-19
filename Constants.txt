@@ -42,3 +42,5 @@ intake.pocket.module=2
 
 compressor.relay=1
 compressor.sensor=1
+
+hotgoal.right.port=14
