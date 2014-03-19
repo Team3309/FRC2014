@@ -25,6 +25,7 @@ package org.team3309.frc2014;
 
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
@@ -33,6 +34,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.team3309.frc2014.commands.*;
 import org.team3309.frc2014.subsystems.Catapult;
 import org.team3309.frc2014.subsystems.Drive;
+import org.team3309.frc2014.subsystems.HotGoalDetector;
 import org.team3309.frc2014.subsystems.Intake;
 import org.team3309.friarlib.XboxController;
 import org.team3309.friarlib.constants.Constant;
@@ -90,6 +92,12 @@ public class Gateway extends IterativeRobot {
         Drive.getInstance().enableMecanum();
 
         autonomousCommand = new TwoBallAuto();
+    }
+
+    public void disabledPeriodic() {
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser1, 1,
+                HotGoalDetector.getInstance().isRightHot() ? "Hot      " : "Not hot");
+        DriverStationLCD.getInstance().updateLCD();
     }
 
     public void autonomousInit() {
