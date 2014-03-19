@@ -52,7 +52,7 @@ public class ChangeRobotAngle extends PIDCommand {
 
     public ChangeRobotAngle(double p, double i, double d, double angle) {
         super(p, i, d);
-        drive = drive.getInstance();
+        drive = Drive.getInstance();
         requires(drive);
         changeAngle(angle);
         SmartDashboard.putData(this);
