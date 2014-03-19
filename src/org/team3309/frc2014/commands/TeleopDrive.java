@@ -66,8 +66,6 @@ public class TeleopDrive extends Command {
     }
 
     protected void execute() {
-        //drive.printEncoders();
-
         double leftX = controls.driver.getLeftX();
         double leftY = controls.driver.getLeftY();
         double rightX = controls.driver.getRightX();
@@ -86,37 +84,12 @@ public class TeleopDrive extends Command {
 
         // the mecanum wheels are engaged
         if (drive.isMecanum()) {
-            // not using the left stick, switch to "tank" mode
-            /*if (Math.abs(leftX) <= configLeftStickDeadband.getDouble() && Math.abs(leftY) <= configLeftStickDeadband
-                    .getDouble() && (Math.abs(rightX) > .1 || Math.abs(rightY) > .1)) {
-                System.out.println("mecanum but using as tank");
-                drive.driveTank(rightY, rightX);
-            } else {*/
-            //if the driver is holding down the trigger, turn off the auto-rotate feature and use strict translation
-                /*if (controls.driver.getRightTrigger() > configTriggerDeadband.getDouble()) {
-                    drive.driveMecanum(leftX, leftY, rightX);
-                }*/
-
             double desiredRotation = rightX * 720;
             double actualRotation = drive.getAngularVelocity();
             double rotateError = desiredRotation - actualRotation;
             double turnOutput = .01 * rotateError;
 
             drive.driveMecanum(leftX, leftY, turnOutput);
-            //drive.driveMecanum(leftX, leftY, rightX);
-            //use the "Halo-AR" drive scheme described by Ether at http://www.chiefdelphi.com/media/papers/2390 and http://www.chiefdelphi.com/forums/showpost.php?p=1021821&postcount=8
-            //this will automatically rotate the drive base to match the commanded angle as it translates
-                /*//else{
-                    double commandAngle = MathUtils.atan2(leftY, leftX) * (180 / Math.PI) - 90;
-                SmartDashboard.putNumber("command", commandAngle);
-                    double fieldAngle = -1 * (drive.getGyroAngle() % 360);
-                SmartDashboard.putNumber("angle", fieldAngle);
-                    double angleError = (commandAngle - 90 - fieldAngle) % 180;
-                    double turnOutput = configAutoRotateP.getDouble() * angleError;
-                    turnOutput += rightX * 720; //driver manually compensate
-                    drive.driveMecanum(leftX, leftY, turnOutput);
-                //}*/
-            //}
         }
         // high traction wheels engaged
         else {
