@@ -45,8 +45,8 @@ public class Intake extends Subsystem {
     }
 
     private static final Constant configIntakeMotors = new Constant("intake.motors", new double[]{7, 8, 9, 10});
-    private static final Constant configIntakeMotorsReversed = new Constant("intake.motors.reversed", new double[]{2,
-            0});
+    private static final Constant configIntakeMotorsReversed = new Constant("intake.motors.reversed", new double[]{1,
+            2});
     private static final Constant configSolenoid = new Constant("intake.solenoid", new double[]{6, 7});
     private static final Constant configSolenoidModule = new Constant("intake.solenoid.module", 1);
     private static final Constant configSolenoidOn = new Constant("intake.solenoid.on", false);
