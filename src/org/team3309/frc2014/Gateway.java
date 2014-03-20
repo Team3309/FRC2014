@@ -72,6 +72,7 @@ public class Gateway extends IterativeRobot {
 
     private int hotCounts = 0;
     private long autoStartTime = 0;
+    private boolean oneBallStarted = false;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -145,22 +146,26 @@ public class Gateway extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
 
-        if (autonomousCommand != null && !autonomousCommand.isRunning()) {
-            System.out.println("Hot counts: " + hotCounts);
+        if (!oneBallStarted) {
 
-            if (HotGoalDetector.getInstance().isRightHot()) {
-                hotCounts++;
-            }
+            if (autonomousCommand != null && !autonomousCommand.isRunning()) {
+                System.out.println("Hot counts: " + hotCounts);
 
-            if ((System.currentTimeMillis() - autoStartTime) > 1500) {
-                System.out.println("Hot goal timeout");
-                autonomousCommand = new OneBallHotSecond();
-                autonomousCommand.start();
-            }
+                if (HotGoalDetector.getInstance().isRightHot()) {
+                    hotCounts++;
+                }
 
-            if (hotCounts > 4) {
-                autonomousCommand = new OneBallHotFirst();
-                autonomousCommand.start();
+                if (System.currentTimeMillis() - autoStartTime > 1500) {
+                    System.out.println("Hot goal timeout");
+                    autonomousCommand = new OneBallHotSecond();
+                    autonomousCommand.start();
+                    oneBallStarted = true;
+                } else if (hotCounts > 4) {
+                    System.out.println("Goal is hot");
+                    autonomousCommand = new OneBallHotFirst();
+                    autonomousCommand.start();
+                    oneBallStarted = true;
+                }
             }
         }
 
