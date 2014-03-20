@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.team3309.frc2014.commands.*;
 import org.team3309.frc2014.subsystems.Catapult;
@@ -114,7 +115,7 @@ public class Gateway extends IterativeRobot {
         else if (DriverStation.getInstance().getDigitalIn(3))
             autoModeName = "Two Ball Auto ";
         else
-            autoModeName = "Mobility Bonus";
+            autoModeName = "Do Nothing";
 
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, autoModeName);
 
@@ -135,7 +136,7 @@ public class Gateway extends IterativeRobot {
         else if (DriverStation.getInstance().getDigitalIn(3))
             autonomousCommand = new TwoBallAuto();
         else
-            autonomousCommand = new MobilityBonus();
+            autonomousCommand = new WaitCommand(8);
 
         //only start if not in one ball mode
         if (!DriverStation.getInstance().getDigitalIn(2))
