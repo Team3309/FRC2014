@@ -124,6 +124,8 @@ public class Gateway extends IterativeRobot {
     public void autonomousInit() {
         Sensors.gyro.reset();
 
+        oneBallStarted = false;
+
         autoStartTime = System.currentTimeMillis();
 
         if (DriverStation.getInstance().getDigitalIn(1))
