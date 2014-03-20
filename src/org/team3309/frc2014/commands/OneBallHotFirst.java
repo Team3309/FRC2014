@@ -29,9 +29,9 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 /**
  * Created by vmagro on 3/17/14.
  */
-public class OneBallAuto extends CommandGroup {
+public class OneBallHotFirst extends CommandGroup {
 
-    public OneBallAuto() {
+    public OneBallHotFirst() {
         addSequential(new SwitchMecanum(true));
         addSequential(new MecDriveForwardTime(2.25));
         //addSequential(new DriveForward(1000)); //28500 is like perfect for line to one point

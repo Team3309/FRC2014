@@ -70,6 +70,9 @@ public class Gateway extends IterativeRobot {
 
     private Command autonomousCommand;
 
+    private int hotCounts = 0;
+    private long autoStartTime = 0;
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -120,16 +123,20 @@ public class Gateway extends IterativeRobot {
     public void autonomousInit() {
         Sensors.gyro.reset();
 
+        autoStartTime = System.currentTimeMillis();
+
         if (DriverStation.getInstance().getDigitalIn(1))
             autonomousCommand = new MobilityBonus();
         else if (DriverStation.getInstance().getDigitalIn(2))
-            autonomousCommand = new OneBallAuto();
+            autonomousCommand = new OneBallHotFirst();
         else if (DriverStation.getInstance().getDigitalIn(3))
             autonomousCommand = new TwoBallAuto();
         else
             autonomousCommand = new MobilityBonus();
 
-        autonomousCommand.start();
+        //only start if not in one ball mode
+        if (!DriverStation.getInstance().getDigitalIn(2))
+            autonomousCommand.start();
     }
 
     /**
@@ -137,6 +144,26 @@ public class Gateway extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+
+        if (autonomousCommand != null && !autonomousCommand.isRunning()) {
+            System.out.println("Hot counts: " + hotCounts);
+
+            if (HotGoalDetector.getInstance().isRightHot()) {
+                hotCounts++;
+            }
+
+            if ((System.currentTimeMillis() - autoStartTime) > 1500) {
+                System.out.println("Hot goal timeout");
+                autonomousCommand = new OneBallHotSecond();
+                autonomousCommand.start();
+            }
+
+            if (hotCounts > 4) {
+                autonomousCommand = new OneBallHotFirst();
+                autonomousCommand.start();
+            }
+        }
+
 
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser1, 1, String.valueOf(Drive.getInstance().getAverageCount()));
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, String.valueOf(Sensors.gyro.getAngularRateOfChange()));
