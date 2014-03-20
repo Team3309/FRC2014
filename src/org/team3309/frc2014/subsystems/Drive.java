@@ -216,7 +216,10 @@ public class Drive extends Subsystem {
         double angularVelocity = getAngularVelocity();
 
         //proportional correction
-        turn = (desiredAngularVelocity - angularVelocity) * gyroKp.getDouble();
+        if (Math.abs(throttle) > .1)
+            turn = (desiredAngularVelocity - angularVelocity) * gyroKp.getDouble();
+        else
+            turn = (desiredAngularVelocity - angularVelocity) * (gyroKp.getDouble() / 2);
 
         double t_left = throttle + turn;
         double t_right = throttle - turn;
@@ -340,6 +343,11 @@ public class Drive extends Subsystem {
 
     public int rightBackCount() {
         return rightBack.getEncoder().get();
+    }
+
+    public int getAverageCount() {
+        return Math.abs(leftBackCount()) + Math.abs(leftFrontCount())
+                + Math.abs(rightBackCount()) + Math.abs(rightFrontCount()) / 4;
     }
 
     public void resetEncoders() {

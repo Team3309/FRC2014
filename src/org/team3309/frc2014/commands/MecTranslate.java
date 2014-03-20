@@ -33,7 +33,7 @@ import org.team3309.frc2014.subsystems.Drive;
  */
 public class MecTranslate extends Command {
 
-    private static final double kP = 0.01;
+    private static final double kP = 0.0005;
 
     private Drive drive;
     private int xCounts, yCounts;
@@ -45,6 +45,8 @@ public class MecTranslate extends Command {
         requires(drive);
         this.xCounts = xCounts;
         this.yCounts = yCounts;
+
+        drive.resetEncoders();
     }
 
     protected void initialize() {
@@ -58,22 +60,24 @@ public class MecTranslate extends Command {
     protected void execute() {
         if (onXLeg) {
             //average all of the encoder counts
-            double actualCounts = (Math.abs(drive.leftBackCount()) + Math.abs(drive.leftFrontCount()) + Math.abs(drive
-                    .rightBackCount()) + Math.abs(drive.rightFrontCount())) / 4;
+            double actualCounts = (double) (Math.abs(drive.leftBackCount()) + Math.abs(drive.leftFrontCount())
+                    + Math.abs(drive.rightBackCount()) + Math.abs(drive.rightFrontCount())) / 4d;
             double err = xCounts - actualCounts;
             drive.driveMecanum(kP * err, 0, 0);
             if (err < 100) {
+                System.out.println("Finished X leg");
                 finishedX = true;
                 onXLeg = false;
                 drive.driveMecanum(0, 0, 0);
             }
         } else {
             //average all of the encoder counts
-            double actualCounts = (Math.abs(drive.leftBackCount()) + Math.abs(drive.leftFrontCount()) + Math.abs(drive
-                    .rightBackCount()) + Math.abs(drive.rightFrontCount())) / 4;
-            double err = xCounts - actualCounts;
+            double actualCounts = (double) (Math.abs(drive.leftBackCount()) + Math.abs(drive.leftFrontCount())
+                    + Math.abs(drive.rightBackCount()) + Math.abs(drive.rightFrontCount())) / 4d;
+            double err = yCounts - actualCounts;
             drive.driveMecanum(0, kP * err, 0);
             if (err < 100) {
+                System.out.println("Finished Y leg");
                 finishedY = true;
                 drive.driveMecanum(0, 0, 0);
             }

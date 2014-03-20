@@ -74,11 +74,6 @@ public class TeleopDrive extends Command {
         if (controls.driver.getAButton())
             Sensors.gyro.reset();
 
-        if (controls.driver.getRightBumper())
-            drive.disableMecanum();
-        else if (!drive.isBrake())
-            drive.enableMecanum();
-
         SmartDashboard.putNumber("gyro", drive.getGyroAngle());
         SmartDashboard.putNumber("rotation", drive.getAngularVelocity());
 

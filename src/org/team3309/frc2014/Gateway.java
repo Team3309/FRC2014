@@ -66,6 +66,7 @@ public class Gateway extends IterativeRobot {
     private JoystickButton autoShootButton;
 
     private JoystickButton brakeButton;
+    private JoystickButton tankButton;
 
     private Command autonomousCommand;
 
@@ -90,6 +91,7 @@ public class Gateway extends IterativeRobot {
         autoShootButton = new JoystickButton(operator, XboxController.BUTTON_LEFT_BUMPER);
 
         brakeButton = new JoystickButton(driver, XboxController.BUTTON_LEFT_BUMPER);
+        tankButton = new JoystickButton(driver, XboxController.BUTTON_RIGHT_BUMPER);
 
         Drive.getInstance().enableMecanum();
 
@@ -135,6 +137,10 @@ public class Gateway extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser1, 1, String.valueOf(Drive.getInstance().getAverageCount()));
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, String.valueOf(Sensors.gyro.getAngularRateOfChange()));
+        DriverStationLCD.getInstance().updateLCD();
     }
 
     public void teleopInit() {
@@ -148,6 +154,7 @@ public class Gateway extends IterativeRobot {
 
         Sensors.gyro.reset();
 
+        Drive.getInstance().enableMecanum();
         //start the TeleopDrive command
         TeleopDrive.getInstance().start();
 
@@ -159,6 +166,8 @@ public class Gateway extends IterativeRobot {
 
         brakeButton.whenPressed(new EngageBrake());
         brakeButton.whenReleased(new ReleaseBrake());
+        tankButton.whenPressed(new SwitchMecanum(false));
+        tankButton.whenReleased(new SwitchMecanum(true));
     }
 
     /**
@@ -171,6 +180,7 @@ public class Gateway extends IterativeRobot {
 
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Is brake: " + (Drive.getInstance()
                 .isBrake() ? "true" : "false"));
+        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, String.valueOf(Sensors.gyro.getAngularRateOfChange()));
         DriverStationLCD.getInstance().updateLCD();
     }
 

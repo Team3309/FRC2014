@@ -33,9 +33,11 @@ public class OneBallAuto extends CommandGroup {
 
     public OneBallAuto() {
         addSequential(new SwitchMecanum(true));
+        addSequential(new MecDriveForwardTime(2.25));
+        //addSequential(new DriveForward(1000)); //28500 is like perfect for line to one point
+        //addSequential(new WaitForHot(WaitForHot.Side.RIGHT));
         addSequential(new ExtendIntake());
         addSequential(new WaitCommand(1));
-        addSequential(new DriveForward(3));
         addSequential(new ExtendPocketPiston());
         addSequential(new WaitCommand(.5));
         addSequential(new ShootAndRetract());

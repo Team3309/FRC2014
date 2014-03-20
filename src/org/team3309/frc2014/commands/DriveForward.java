@@ -23,41 +23,60 @@
 
 package org.team3309.frc2014.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.PIDCommand;
 import org.team3309.frc2014.subsystems.Drive;
 
 /**
  * Created by vmagro on 3/18/14.
  */
-public class DriveForward extends Command {
+public class DriveForward extends PIDCommand {
 
     private Drive drive;
     private int counts;
 
+    private Timer doneTimer = new Timer();
+
     public DriveForward(int counts) {
+        super(.0001, 0, 0);
         this.counts = counts;
         drive = Drive.getInstance();
         requires(drive);
+        setSetpoint(counts);
     }
 
     protected void initialize() {
+        Drive.getInstance().resetEncoders();
     }
 
     protected void execute() {
-        Drive.getInstance().enableMecanum();
-        Drive.getInstance().driveTank(.6, 0);
+        Drive.getInstance().disableMecanum();
+        if (Math.abs(Drive.getInstance().getAverageCount() - counts) < 100) {
+            doneTimer.start();
+        } else {
+            doneTimer.stop();
+            doneTimer.reset();
+        }
     }
 
     protected boolean isFinished() {
-        return Math.abs((Math.abs(drive.leftBackCount()) + Math.abs(drive.leftFrontCount())
-                + Math.abs(drive.rightBackCount()) + Math.abs(drive.rightFrontCount())) / 4 - counts) < 50;
+        return doneTimer.get() > 100000; //.1 seconds in microseconds
     }
 
     protected void end() {
         Drive.getInstance().driveTank(0, 0);
+        System.out.println("DriveForward.end");
     }
 
     protected void interrupted() {
 
+    }
+
+    protected double returnPIDInput() {
+        return Drive.getInstance().getAverageCount();
+    }
+
+    protected void usePIDOutput(double v) {
+        Drive.getInstance().driveTank(v, 0);
     }
 }
