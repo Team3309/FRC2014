@@ -74,6 +74,7 @@ public class Gateway extends IterativeRobot {
     private int hotCounts = 0;
     private long autoStartTime = 0;
     private boolean oneBallStarted = false;
+    private boolean shouldDoOneBall = false;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -129,14 +130,19 @@ public class Gateway extends IterativeRobot {
 
         autoStartTime = System.currentTimeMillis();
 
-        if (DriverStation.getInstance().getDigitalIn(1))
+        if (DriverStation.getInstance().getDigitalIn(1)) {
             autonomousCommand = new MobilityBonus();
-        else if (DriverStation.getInstance().getDigitalIn(2))
-            autonomousCommand = new OneBallHotFirst();
-        else if (DriverStation.getInstance().getDigitalIn(3))
+            shouldDoOneBall = false;
+        } else if (DriverStation.getInstance().getDigitalIn(2)) {
+            autonomousCommand = null;
+            shouldDoOneBall = true;
+        } else if (DriverStation.getInstance().getDigitalIn(3)) {
             autonomousCommand = new TwoBallAuto();
-        else
+            shouldDoOneBall = false;
+        } else {
             autonomousCommand = new WaitCommand(8);
+            shouldDoOneBall = false;
+        }
 
         //only start if not in one ball mode
         if (!DriverStation.getInstance().getDigitalIn(2))
@@ -149,7 +155,7 @@ public class Gateway extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
 
-        if (!oneBallStarted) {
+        if (!oneBallStarted && shouldDoOneBall) {
 
             if (autonomousCommand != null && !autonomousCommand.isRunning()) {
                 System.out.println("Hot counts: " + hotCounts);
