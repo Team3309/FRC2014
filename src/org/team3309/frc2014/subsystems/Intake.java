@@ -47,11 +47,11 @@ public class Intake extends Subsystem {
     private static final Constant configIntakeMotors = new Constant("intake.motors", new double[]{7, 8, 9, 10});
     private static final Constant configIntakeMotorsReversed = new Constant("intake.motors.reversed", new double[]{2,
             0});
-    private static final Constant configSolenoid = new Constant("intake.solenoid", new double[]{1, 2});
-    private static final Constant configSolenoidModule = new Constant("intake.solenoid.module", 2);
-    private static final Constant configSolenoidOn = new Constant("intake.solenoid.on", true);
-    private static final Constant configPocketPiston = new Constant("intake.pocket", 3);
-    private static final Constant configPocketPistonModule = new Constant("intake.pocket.module", 2);
+    private static final Constant configSolenoid = new Constant("intake.solenoid", new double[]{6, 7});
+    private static final Constant configSolenoidModule = new Constant("intake.solenoid.module", 1);
+    private static final Constant configSolenoidOn = new Constant("intake.solenoid.on", false);
+    private static final Constant configPocketPiston = new Constant("intake.pocket", 5);
+    private static final Constant configPocketPistonModule = new Constant("intake.pocket.module", 1);
 
     private MultiSpeedController motors;
     private DoubleSolenoid solenoid;
@@ -83,6 +83,7 @@ public class Intake extends Subsystem {
     }
 
     public void extend() {
+        System.out.println("Extending");
         if (configSolenoidOn.getBoolean())
             solenoid.set(DoubleSolenoid.Value.kReverse);
         else
@@ -96,6 +97,7 @@ public class Intake extends Subsystem {
             return;
         }
         retractPocket();
+        System.out.println("Retracting");
         if (configSolenoidOn.getBoolean())
             solenoid.set(DoubleSolenoid.Value.kForward);
         else

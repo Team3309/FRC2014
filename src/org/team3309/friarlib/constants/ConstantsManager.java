@@ -113,7 +113,7 @@ public class ConstantsManager {
                         } else {
                             Constant c = new Constant(key);
                             c.set(val);
-                            constants.put(key, c);
+                            addConstant(c);
                         }
                     }
                 }
@@ -138,7 +138,7 @@ public class ConstantsManager {
                             c.set(false);
                         else
                             c.set(Double.parseDouble(value));
-                        constants.put(key, c);
+                        addConstant(c);
                     }
                 }
             }

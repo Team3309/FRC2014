@@ -23,8 +23,8 @@
 
 package org.team3309.frc2014.subsystems;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.team3309.frc2014.OctanumModule;
@@ -41,8 +41,8 @@ import org.team3309.friarlib.constants.Constant;
 public class Drive extends Subsystem {
 
     //first number is port A
-    private Constant configMecanumSolenoidPorts = new Constant("drive.solenoid", new double[]{6, 5});
-    private Constant configMecanumSolenoidModule = new Constant("drive.solenoid.module", 2);
+    private Constant configMecanumSolenoidPort = new Constant("drive.solenoid", 3);
+    private Constant configMecanumSolenoidModule = new Constant("drive.solenoid.module", 1);
 
     private Constant configLeftFrontPort = new Constant("drive.left.front", 1);
     private Constant configLeftBackPort = new Constant("drive.left.back", 2);
@@ -81,7 +81,7 @@ public class Drive extends Subsystem {
         return instance;
     }
 
-    private DoubleSolenoid extender;
+    private Solenoid extender;
 
     private boolean isMecanum = true;
 
@@ -90,8 +90,7 @@ public class Drive extends Subsystem {
     private FriarGyro gyro;
 
     private Drive() {
-        extender = new DoubleSolenoid(configMecanumSolenoidModule.getInt(), configMecanumSolenoidPorts.getIntList()[0],
-                configMecanumSolenoidPorts.getIntList()[1]);
+        extender = new Solenoid(configMecanumSolenoidModule.getInt(), configMecanumSolenoidPort.getInt());
 
         leftFront = new OctanumModule("leftFront", new Victor(configLeftFrontPort.getInt()), extender,
                 new Encoder(configLeftFrontEncoderA.getInt(), configLeftFrontEncoderB.getInt()), false);

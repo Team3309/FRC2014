@@ -42,7 +42,6 @@ public class ToggleIntake extends Command {
     }
 
     protected void execute() {
-        System.out.println("extended: " + Intake.getInstance().isExtended());
         if (Intake.getInstance().isExtended())
             Intake.getInstance().retract();
         else

@@ -43,7 +43,7 @@ public class OctanumModule implements PIDOutput, PIDSource {
     private static Constant configDistancePerPulse = new Constant("drive.distance_per_pulse", 1 / 300);
 
     private SpeedController motor;
-    private DoubleSolenoid solenoid;
+    private Solenoid solenoid;
     private Encoder encoder;
 
     private PIDController pidController;
@@ -57,7 +57,7 @@ public class OctanumModule implements PIDOutput, PIDSource {
      * @param solenoid the {@link edu.wpi.first.wpilibj.Solenoid} to engage/disengage the mecanum wheel
      * @param encoder  the {@link edu.wpi.first.wpilibj.Encoder} to count revolutions
      */
-    public OctanumModule(String name, SpeedController motor, DoubleSolenoid solenoid, Encoder encoder,
+    public OctanumModule(String name, SpeedController motor, Solenoid solenoid, Encoder encoder,
                          boolean encoderReverse) {
         this.encoderReverse = encoderReverse;
         this.motor = motor;
@@ -107,17 +107,11 @@ public class OctanumModule implements PIDOutput, PIDSource {
     }
 
     public void engageMecanum() {
-        if (configMecanumSolenoid.getBoolean())
-            solenoid.set(DoubleSolenoid.Value.kForward);
-        else
-            solenoid.set(DoubleSolenoid.Value.kReverse);
+        solenoid.set(configMecanumSolenoid.getBoolean());
     }
 
     public void disengageMecanum() {
-        if (configMecanumSolenoid.getBoolean())
-            solenoid.set(DoubleSolenoid.Value.kReverse);
-        else
-            solenoid.set(DoubleSolenoid.Value.kForward);
+        solenoid.set(!configMecanumSolenoid.getBoolean());
     }
 
     public Encoder getEncoder() {

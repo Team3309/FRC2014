@@ -42,6 +42,7 @@ public class Constant {
 
     protected void postConstruct() {
         if (ConstantsManager.getConstant(name) != null) {
+            System.out.println("Constant <" + name + "> is being used from the config file");
             Constant existing = ConstantsManager.getConstant(name);
             this.doubleVal = existing.doubleVal;
             this.doubleList = existing.doubleList;

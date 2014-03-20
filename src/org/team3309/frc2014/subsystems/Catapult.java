@@ -23,7 +23,10 @@
 
 package org.team3309.frc2014.subsystems;
 
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.team3309.friarlib.constants.Constant;
 import org.team3309.friarlib.motors.MultiSpeedController;
@@ -37,10 +40,10 @@ public class Catapult extends Subsystem {
 
     private static Constant configFullBackPort = new Constant("catapult.fullback.port", 10);
     private static Constant configWinchMotors = new Constant("catapult.winch.motors", new double[]{5, 6});
-    private static Constant configWinchSolenoid = new Constant("catapult.winch.solenoid", new double[]{7, 8});
-    private static Constant configWinchSolenoidModule = new Constant("catapult.winch.solenoid.module", 2);
-    private static Constant configLatchSolenoid = new Constant("catapult.latch.solenoid", 4);
-    private static Constant configLatchSolenoidModule = new Constant("catapult.latch.solenoid.module", 2);
+    private static Constant configWinchSolenoid = new Constant("catapult.winch.solenoid", 4);
+    private static Constant configWinchSolenoidModule = new Constant("catapult.winch.solenoid.module", 1);
+    private static Constant configLatchSolenoid = new Constant("catapult.latch.solenoid", 2);
+    private static Constant configLatchSolenoidModule = new Constant("catapult.latch.solenoid.module", 1);
     private static Constant configLatchSensor = new Constant("catapult.latch.sensor", 11);
 
     private static Catapult instance;
@@ -55,7 +58,7 @@ public class Catapult extends Subsystem {
     private DigitalInput fullBackSensor;
     private Solenoid latchSolenoid;
     private DigitalInput latchSensor;
-    private DoubleSolenoid winchSolenoid;
+    private Solenoid winchSolenoid;
 
     private Catapult() {
         SpeedController[] motorArr = new SpeedController[configWinchMotors.getIntList().length];
@@ -72,8 +75,7 @@ public class Catapult extends Subsystem {
         latchSolenoid = new Solenoid(configLatchSolenoidModule.getInt(), configLatchSolenoid.getInt());
         latchSensor = new DigitalInput(configLatchSensor.getInt());
 
-        winchSolenoid = new DoubleSolenoid(configWinchSolenoidModule.getInt(), configWinchSolenoid.getIntList()[0],
-                configWinchSolenoid.getIntList()[1]);
+        winchSolenoid = new Solenoid(configWinchSolenoidModule.getInt(), configWinchSolenoid.getInt());
     }
 
     protected void initDefaultCommand() {
@@ -97,10 +99,10 @@ public class Catapult extends Subsystem {
     }
 
     public void engageWinch() {
-        winchSolenoid.set(DoubleSolenoid.Value.kReverse);
+        winchSolenoid.set(true);
     }
 
     public void disengageWinch() {
-        winchSolenoid.set(DoubleSolenoid.Value.kForward);
+        winchSolenoid.set(false);
     }
 }
