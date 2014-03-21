@@ -25,13 +25,11 @@ package org.team3309.frc2014;
 
 
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.team3309.frc2014.commands.*;
 import org.team3309.frc2014.subsystems.Catapult;
@@ -106,18 +104,6 @@ public class Gateway extends IterativeRobot {
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser1, 1,
                 HotGoalDetector.getInstance().isRightHot() ? "Hot    " : "Not hot");
 
-        String autoModeName = "";
-        if (DriverStation.getInstance().getDigitalIn(1))
-            autoModeName = "Mobility Bonus";
-        else if (DriverStation.getInstance().getDigitalIn(2))
-            autoModeName = "One Ball Auto ";
-        else if (DriverStation.getInstance().getDigitalIn(3))
-            autoModeName = "Two Ball Auto ";
-        else
-            autoModeName = "Do Nothing";
-
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, autoModeName);
-
         DriverStationLCD.getInstance().updateLCD();
     }
 
@@ -127,24 +113,6 @@ public class Gateway extends IterativeRobot {
         oneBallStarted = false;
 
         autoStartTime = System.currentTimeMillis();
-
-        if (DriverStation.getInstance().getDigitalIn(1)) {
-            autonomousCommand = new MobilityBonus();
-            shouldDoOneBall = false;
-        } else if (DriverStation.getInstance().getDigitalIn(2)) {
-            autonomousCommand = null;
-            shouldDoOneBall = true;
-        } else if (DriverStation.getInstance().getDigitalIn(3)) {
-            autonomousCommand = new TwoBallAuto();
-            shouldDoOneBall = false;
-        } else {
-            autonomousCommand = new WaitCommand(8);
-            shouldDoOneBall = false;
-        }
-
-        //only start if not in one ball mode
-        if (!DriverStation.getInstance().getDigitalIn(2))
-            autonomousCommand.start();
     }
 
     /**
@@ -156,7 +124,7 @@ public class Gateway extends IterativeRobot {
         System.out.println("Should do one ball: " + shouldDoOneBall);
         System.out.println("One Ball Started: " + oneBallStarted);
 
-        if (!oneBallStarted && shouldDoOneBall) {
+        if (!oneBallStarted) {
             System.out.println("Hot counts: " + hotCounts);
 
             if (HotGoalDetector.getInstance().isRightHot()) {
@@ -183,7 +151,8 @@ public class Gateway extends IterativeRobot {
     }
 
     public void teleopInit() {
-        autonomousCommand.cancel();
+        if (autonomousCommand != null)
+            autonomousCommand.cancel();
 
         try {
             ConstantsManager.loadConstantsFromFile("/Constants.txt");
