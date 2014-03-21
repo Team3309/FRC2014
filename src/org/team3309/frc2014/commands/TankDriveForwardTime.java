@@ -24,49 +24,40 @@
 package org.team3309.frc2014.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 import org.team3309.frc2014.subsystems.Drive;
 
 /**
- * Created by vmagro on 3/17/14.
+ * Created by vmagro on 3/21/14.
  */
-public class OneBallHotFirst extends CommandGroup {
+public class TankDriveForwardTime extends Command {
 
-    public OneBallHotFirst() {
-        addSequential(new SwitchMecanum(true));
-        addSequential(new MecDriveForwardTime(2.25));
-        addParallel(new Command() {
-            private boolean finished = false;
+    private long startTime = 0;
+    private int timeoutMs = 0;
 
-            protected void initialize() {
+    public TankDriveForwardTime(double seconds) {
+        timeoutMs = (int) (seconds * 1000);
+        requires(Drive.getInstance());
+    }
 
-            }
+    protected void initialize() {
+        startTime = System.currentTimeMillis();
+    }
 
-            protected void execute() {
-                Drive.getInstance().driveTank(.1, 0);
-                finished = true;
-            }
+    protected void execute() {
+        Drive.getInstance().disableMecanum();
+        Drive.getInstance().driveTank(1, 0);
+    }
 
-            protected boolean isFinished() {
-                return finished;
-            }
+    protected boolean isFinished() {
+        return (System.currentTimeMillis() - startTime) > timeoutMs;
+    }
 
-            protected void end() {
+    protected void end() {
+        Drive.getInstance().driveTank(0, 0);
+    }
 
-            }
+    protected void interrupted() {
 
-            protected void interrupted() {
-
-            }
-        });
-        //addSequential(new DriveForward(1000)); //28500 is like perfect for line to one point
-        //addSequential(new WaitForHot(WaitForHot.Side.RIGHT));
-        addSequential(new ExtendIntake());
-        addSequential(new WaitCommand(1));
-        addSequential(new ExtendPocketPiston());
-        addSequential(new WaitCommand(.5));
-        addSequential(new ShootAndRetract());
     }
 
 }

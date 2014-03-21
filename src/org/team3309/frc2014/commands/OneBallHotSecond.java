@@ -23,8 +23,10 @@
 
 package org.team3309.frc2014.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
+import org.team3309.frc2014.subsystems.Drive;
 
 /**
  * Created by vmagro on 3/19/14.
@@ -34,8 +36,30 @@ public class OneBallHotSecond extends CommandGroup {
     public OneBallHotSecond() {
         addSequential(new SwitchMecanum(true));
         addSequential(new MecDriveForwardTime(2.25));
-        //addSequential(new DriveForward(1000)); //28500 is like perfect for line to one point
-        //addSequential(new WaitForHot(WaitForHot.Side.RIGHT));
+        addParallel(new Command() {
+            private boolean finished = false;
+
+            protected void initialize() {
+
+            }
+
+            protected void execute() {
+                Drive.getInstance().driveTank(.1, 0);
+                finished = true;
+            }
+
+            protected boolean isFinished() {
+                return finished;
+            }
+
+            protected void end() {
+
+            }
+
+            protected void interrupted() {
+
+            }
+        });
         addSequential(new ExtendIntake());
         addSequential(new WaitCommand(1));
         addSequential(new ExtendPocketPiston());
