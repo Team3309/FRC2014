@@ -100,8 +100,6 @@ public class Gateway extends IterativeRobot {
         tankButton = new JoystickButton(driver, XboxController.BUTTON_RIGHT_BUMPER);
 
         Drive.getInstance().enableMecanum();
-
-        autonomousCommand = new TwoBallAuto();
     }
 
     public void disabledPeriodic() {
@@ -155,26 +153,26 @@ public class Gateway extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
 
+        System.out.println("Should do one ball: " + shouldDoOneBall);
+        System.out.println("One Ball Started: " + oneBallStarted);
+
         if (!oneBallStarted && shouldDoOneBall) {
+            System.out.println("Hot counts: " + hotCounts);
 
-            if (autonomousCommand != null && !autonomousCommand.isRunning()) {
-                System.out.println("Hot counts: " + hotCounts);
+            if (HotGoalDetector.getInstance().isRightHot()) {
+                hotCounts++;
+            }
 
-                if (HotGoalDetector.getInstance().isRightHot()) {
-                    hotCounts++;
-                }
-
-                if (System.currentTimeMillis() - autoStartTime > 1500) {
-                    System.out.println("Hot goal timeout");
-                    autonomousCommand = new OneBallHotSecond();
-                    autonomousCommand.start();
-                    oneBallStarted = true;
-                } else if (hotCounts > 4) {
-                    System.out.println("Goal is hot");
-                    autonomousCommand = new OneBallHotFirst();
-                    autonomousCommand.start();
-                    oneBallStarted = true;
-                }
+            if (System.currentTimeMillis() - autoStartTime > 1500) {
+                System.out.println("Hot goal timeout");
+                autonomousCommand = new OneBallHotSecond();
+                autonomousCommand.start();
+                oneBallStarted = true;
+            } else if (hotCounts > 4) {
+                System.out.println("Goal is hot");
+                autonomousCommand = new OneBallHotFirst();
+                autonomousCommand.start();
+                oneBallStarted = true;
             }
         }
 
