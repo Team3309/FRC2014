@@ -21,18 +21,38 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands.drive;
+package org.team3309.frc2014.commands;
 
-import org.team3309.frc2014.commands.RunOnceCommand;
-import org.team3309.frc2014.subsystems.Drive;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Created by vmagro on 3/17/14.
+ * This is the base class for Commands where the execute method should only be called once
  */
-public class ReleaseBrake extends RunOnceCommand {
+public abstract class RunOnceCommand extends Command {
 
-    protected void run() {
-        System.out.println("Release brake");
-        Drive.getInstance().releaseBrake();
+    private boolean finished = false;
+
+    protected void initialize() {
+
     }
+
+    protected final void execute() {
+        run();
+        finished = true;
+    }
+
+    protected final boolean isFinished() {
+        return finished;
+    }
+
+    protected void end() {
+
+    }
+
+    protected void interrupted() {
+
+    }
+
+    protected abstract void run();
+
 }

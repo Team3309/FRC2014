@@ -23,38 +23,18 @@
 
 package org.team3309.frc2014.commands.drive;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.commands.RunOnceCommand;
 import org.team3309.frc2014.subsystems.Drive;
 
 /**
  * Created by vmagro on 3/18/14.
  */
-public class ToggleBrake extends Command {
+public class ToggleBrake extends RunOnceCommand {
 
-    private boolean finished = false;
-
-    protected void initialize() {
-        requires(Drive.getInstance());
-    }
-
-    protected void execute() {
+    protected void run() {
         if (Drive.getInstance().isBrake())
             Drive.getInstance().releaseBrake();
         else
             Drive.getInstance().brake();
-
-        finished = true;
-    }
-
-    protected boolean isFinished() {
-        return finished;
-    }
-
-    protected void end() {
-
-    }
-
-    protected void interrupted() {
-
     }
 }

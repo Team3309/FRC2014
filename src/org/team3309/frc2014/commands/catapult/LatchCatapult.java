@@ -23,16 +23,15 @@
 
 package org.team3309.frc2014.commands.catapult;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.commands.RunOnceCommand;
 import org.team3309.frc2014.subsystems.Catapult;
 
 /**
  * Created by vmagro on 3/4/14.
  */
-public class LatchCatapult extends Command {
+public class LatchCatapult extends RunOnceCommand {
 
     private long delayMs = 0;
-    private boolean finished = false;
 
     public LatchCatapult(long delayMs) {
         this.delayMs = delayMs;
@@ -52,20 +51,7 @@ public class LatchCatapult extends Command {
         }
     }
 
-    protected void execute() {
+    protected void run() {
         Catapult.getInstance().latch();
-        finished = true;
-    }
-
-    protected boolean isFinished() {
-        return finished;
-    }
-
-    protected void end() {
-
-    }
-
-    protected void interrupted() {
-
     }
 }

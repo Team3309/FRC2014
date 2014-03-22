@@ -23,7 +23,7 @@
 
 package org.team3309.frc2014.commands.drive;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.commands.RunOnceCommand;
 import org.team3309.frc2014.subsystems.Drive;
 
 /**
@@ -32,10 +32,9 @@ import org.team3309.frc2014.subsystems.Drive;
  *
  * @author vmagro
  */
-public class SwitchMecanum extends Command {
+public class SwitchMecanum extends RunOnceCommand {
 
     private boolean enableMecanum;
-    private boolean finished = false;
 
     /**
      * Create a new SwitchMecanum command
@@ -46,28 +45,10 @@ public class SwitchMecanum extends Command {
         this.enableMecanum = enable;
     }
 
-    protected void initialize() {
-
-    }
-
-    protected void execute() {
+    protected void run() {
         if (enableMecanum)
             Drive.getInstance().enableMecanum();
         else
             Drive.getInstance().disableMecanum();
-
-        finished = true;
-    }
-
-    protected boolean isFinished() {
-        return finished;
-    }
-
-    protected void end() {
-
-    }
-
-    protected void interrupted() {
-
     }
 }

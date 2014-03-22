@@ -23,43 +23,24 @@
 
 package org.team3309.frc2014.commands.catapult;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.commands.RunOnceCommand;
 import org.team3309.frc2014.subsystems.Catapult;
 import org.team3309.frc2014.subsystems.Intake;
 
 /**
  * Created by vmagro on 2/25/14.
  */
-public class UnlatchCatapult extends Command {
-
-    private boolean finished = false;
+public class UnlatchCatapult extends RunOnceCommand {
 
     public UnlatchCatapult() {
         requires(Catapult.getInstance());
     }
 
-    protected void initialize() {
-
-    }
-
-    protected void execute() {
+    protected void run() {
         Catapult.getInstance().disengageWinch(); //just in case
         //don't shoot unless intake is extended
         if (Intake.getInstance().isExtended()) {
             Catapult.getInstance().unlatch();
         }
-        finished = true;
-    }
-
-    protected boolean isFinished() {
-        return finished;
-    }
-
-    protected void end() {
-
-    }
-
-    protected void interrupted() {
-
     }
 }

@@ -23,41 +23,22 @@
 
 package org.team3309.frc2014.commands.intake;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.commands.RunOnceCommand;
 import org.team3309.frc2014.subsystems.Intake;
 
 /**
  * Created by vmagro on 3/14/14.
  */
-public class ToggleIntake extends Command {
-
-    private boolean finished = false;
+public class ToggleIntake extends RunOnceCommand {
 
     public ToggleIntake() {
         requires(Intake.getInstance());
     }
 
-    protected void initialize() {
-
-    }
-
-    protected void execute() {
+    protected void run() {
         if (Intake.getInstance().isExtended())
             Intake.getInstance().retract();
         else
             Intake.getInstance().extend();
-        finished = true;
-    }
-
-    protected boolean isFinished() {
-        return finished;
-    }
-
-    protected void end() {
-
-    }
-
-    protected void interrupted() {
-
     }
 }

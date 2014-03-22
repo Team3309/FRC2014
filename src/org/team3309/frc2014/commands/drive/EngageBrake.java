@@ -23,38 +23,16 @@
 
 package org.team3309.frc2014.commands.drive;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.commands.RunOnceCommand;
 import org.team3309.frc2014.subsystems.Drive;
 
 /**
  * Created by vmagro on 3/17/14.
  */
-public class EngageBrake extends Command {
+public class EngageBrake extends RunOnceCommand {
 
-    private boolean finished = false;
-
-    public EngageBrake() {
-    }
-
-    protected void initialize() {
-
-    }
-
-    protected void execute() {
+    protected void run() {
         System.out.println("Engage brake");
         Drive.getInstance().brake();
-        finished = true;
-    }
-
-    protected boolean isFinished() {
-        return finished;
-    }
-
-    protected void end() {
-
-    }
-
-    protected void interrupted() {
-
     }
 }

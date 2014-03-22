@@ -23,7 +23,7 @@
 
 package org.team3309.frc2014.commands.intake;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.commands.RunOnceCommand;
 import org.team3309.frc2014.subsystems.Intake;
 
 
@@ -33,33 +33,14 @@ import org.team3309.frc2014.subsystems.Intake;
  *
  * @author vmagro
  */
-public class RetractIntake extends Command {
-
-    private boolean finished = false;
+public class RetractIntake extends RunOnceCommand {
 
     public RetractIntake() {
         requires(Intake.getInstance());
     }
 
-    protected void initialize() {
-        finished = false;
-    }
-
-    protected void execute() {
+    protected void run() {
         Intake.getInstance().retract();
-        finished = true;
-    }
-
-    protected boolean isFinished() {
-        return finished;
-    }
-
-    protected void end() {
-
-    }
-
-    protected void interrupted() {
-
     }
 
 }
