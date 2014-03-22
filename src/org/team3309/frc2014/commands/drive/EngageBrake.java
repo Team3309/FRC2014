@@ -21,49 +21,33 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.drive;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import org.team3309.frc2014.subsystems.HotGoalDetector;
+import org.team3309.frc2014.subsystems.Drive;
 
 /**
- * This Command waits for a given goal to become hot
- *
- * @author vmagro
+ * Created by vmagro on 3/17/14.
  */
-public class WaitForHot extends Command {
+public class EngageBrake extends Command {
 
-    private Side side;
+    private boolean finished = false;
 
-    private boolean isHot = false;
-
-    /**
-     * Create a new WaitForHot command
-     *
-     * @param side which side to wait for
-     */
-    public WaitForHot(Side side) {
-        this.side = side;
+    public EngageBrake() {
     }
 
     protected void initialize() {
-        if (side.equals(Side.RIGHT)) {
-            isHot = HotGoalDetector.getInstance().isRightHot();
-        } else if (side.equals(Side.LEFT)) {
-            isHot = !HotGoalDetector.getInstance().isRightHot();
-        }
+
     }
 
     protected void execute() {
-        if (!isHot) {
-            Timer.delay(5);
-            isHot = true;
-        }
+        System.out.println("Engage brake");
+        Drive.getInstance().brake();
+        finished = true;
     }
 
     protected boolean isFinished() {
-        return isHot;
+        return finished;
     }
 
     protected void end() {
@@ -72,25 +56,5 @@ public class WaitForHot extends Command {
 
     protected void interrupted() {
 
-    }
-
-    public static class Side {
-        private static final int valLeft = -1;
-        private static final int valRight = 1;
-
-        private int val;
-
-        private Side(int val) {
-            this.val = val;
-        }
-
-        public static final Side LEFT = new Side(valLeft);
-        public static final Side RIGHT = new Side(valRight);
-
-        public boolean equals(Object another) {
-            if (another instanceof Side)
-                return ((Side) another).val == this.val;
-            return false;
-        }
     }
 }

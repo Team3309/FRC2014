@@ -21,39 +21,33 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.auto;
 
-import edu.wpi.first.wpilibj.command.Command;
-import org.team3309.frc2014.subsystems.Drive;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
+import org.team3309.frc2014.commands.catapult.ShootAndRetract;
+import org.team3309.frc2014.commands.intake.ExtendIntake;
+import org.team3309.frc2014.commands.intake.ExtendPocketPiston;
+import org.team3309.frc2014.commands.intake.RunIntake;
 
 /**
  * Created by vmagro on 2/25/14.
  */
-public class MobilityBonus extends Command {
+public class TwoBallAuto extends CommandGroup {
 
-    private long startTime = 0;
-
-    public MobilityBonus() {
-        requires(Drive.getInstance());
+    public TwoBallAuto() {
+        addSequential(new ExtendIntake());
+        addParallel(new RunIntake(.5));
+        addSequential(new WaitCommand(1));
+        addSequential(new ExtendPocketPiston());
+        addSequential(new WaitCommand(.5));
+        addSequential(new ShootAndRetract());
+        addSequential(new RunIntake(2));
+        addSequential(new WaitCommand(.5));
+        addSequential(new ExtendPocketPiston());
+        addSequential(new WaitCommand(1));
+        addSequential(new ShootAndRetract());
+        addSequential(new MobilityBonus());
     }
 
-    protected void initialize() {
-        startTime = System.currentTimeMillis();
-    }
-
-    protected void execute() {
-        Drive.getInstance().driveMecanum(0, 1, 0);
-    }
-
-    protected boolean isFinished() {
-        return (System.currentTimeMillis() - startTime) > 500;
-    }
-
-    protected void end() {
-        Drive.getInstance().driveMecanum(0, 0, 0);
-    }
-
-    protected void interrupted() {
-
-    }
 }

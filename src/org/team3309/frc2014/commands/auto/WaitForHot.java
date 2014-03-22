@@ -21,44 +21,49 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.auto;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
-import org.team3309.frc2014.subsystems.Catapult;
+import org.team3309.frc2014.subsystems.HotGoalDetector;
 
 /**
- * Created by vmagro on 3/4/14.
+ * This Command waits for a given goal to become hot
+ *
+ * @author vmagro
  */
-public class LatchCatapult extends Command {
+public class WaitForHot extends Command {
 
-    private long delayMs = 0;
-    private boolean finished = false;
+    private Side side;
 
-    public LatchCatapult(long delayMs) {
-        this.delayMs = delayMs;
+    private boolean isHot = false;
 
-        requires(Catapult.getInstance());
-    }
-
-    public LatchCatapult() {
-        this(0);
+    /**
+     * Create a new WaitForHot command
+     *
+     * @param side which side to wait for
+     */
+    public WaitForHot(Side side) {
+        this.side = side;
     }
 
     protected void initialize() {
-        try {
-            Thread.sleep(delayMs);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (side.equals(Side.RIGHT)) {
+            isHot = HotGoalDetector.getInstance().isRightHot();
+        } else if (side.equals(Side.LEFT)) {
+            isHot = !HotGoalDetector.getInstance().isRightHot();
         }
     }
 
     protected void execute() {
-        Catapult.getInstance().latch();
-        finished = true;
+        if (!isHot) {
+            Timer.delay(5);
+            isHot = true;
+        }
     }
 
     protected boolean isFinished() {
-        return finished;
+        return isHot;
     }
 
     protected void end() {
@@ -67,5 +72,25 @@ public class LatchCatapult extends Command {
 
     protected void interrupted() {
 
+    }
+
+    public static class Side {
+        private static final int valLeft = -1;
+        private static final int valRight = 1;
+
+        private int val;
+
+        private Side(int val) {
+            this.val = val;
+        }
+
+        public static final Side LEFT = new Side(valLeft);
+        public static final Side RIGHT = new Side(valRight);
+
+        public boolean equals(Object another) {
+            if (another instanceof Side)
+                return ((Side) another).val == this.val;
+            return false;
+        }
     }
 }

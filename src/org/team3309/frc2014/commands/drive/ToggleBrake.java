@@ -21,50 +21,40 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 import org.team3309.frc2014.subsystems.Drive;
 
 /**
- * Created by vmagro on 3/19/14.
+ * Created by vmagro on 3/18/14.
  */
-public class OneBallHotSecond extends CommandGroup {
+public class ToggleBrake extends Command {
 
-    public OneBallHotSecond() {
-        addSequential(new SwitchMecanum(true));
-        addSequential(new MecDriveForwardTime(2.25));
-        addParallel(new Command() {
-            private boolean finished = false;
+    private boolean finished = false;
 
-            protected void initialize() {
-
-            }
-
-            protected void execute() {
-                Drive.getInstance().driveTank(.25, 0);
-                finished = true;
-            }
-
-            protected boolean isFinished() {
-                return finished;
-            }
-
-            protected void end() {
-
-            }
-
-            protected void interrupted() {
-
-            }
-        });
-        addSequential(new ExtendIntake());
-        addSequential(new WaitCommand(1));
-        addSequential(new ExtendPocketPiston());
-        addSequential(new WaitCommand(3));
-        addSequential(new ShootAndRetract());
+    protected void initialize() {
+        requires(Drive.getInstance());
     }
 
+    protected void execute() {
+        if (Drive.getInstance().isBrake())
+            Drive.getInstance().releaseBrake();
+        else
+            Drive.getInstance().brake();
+
+        finished = true;
+    }
+
+    protected boolean isFinished() {
+        return finished;
+    }
+
+    protected void end() {
+
+    }
+
+    protected void interrupted() {
+
+    }
 }

@@ -21,7 +21,7 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.intake;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.subsystems.Intake;
@@ -29,11 +29,11 @@ import org.team3309.frc2014.subsystems.Intake;
 /**
  * Created by vmagro on 3/14/14.
  */
-public class RetractPocketPiston extends Command {
+public class TogglePocketPiston extends Command {
 
     private boolean finished = false;
 
-    public RetractPocketPiston() {
+    public TogglePocketPiston() {
         requires(Intake.getInstance());
     }
 
@@ -42,7 +42,10 @@ public class RetractPocketPiston extends Command {
     }
 
     protected void execute() {
-        Intake.getInstance().retractPocket();
+        if (Intake.getInstance().isPocketExtended())
+            Intake.getInstance().retractPocket();
+        else
+            Intake.getInstance().extendPocket();
         finished = true;
     }
 

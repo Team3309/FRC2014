@@ -21,40 +21,41 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.intake;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.subsystems.Intake;
 
-public class RunIntake extends Command {
 
-    private long startTime = 0;
-    private long lengthMs = -1;
+/**
+ * This Command retracts the {@link org.team3309.frc2014.subsystems.Intake}
+ * Fairly self-explanatory
+ *
+ * @author vmagro
+ */
+public class RetractIntake extends Command {
 
-    public RunIntake(double lengthSeconds) {
-        this.lengthMs = (int) (lengthSeconds * 1000d);
-    }
+    private boolean finished = false;
 
-    public RunIntake() {
-        this.lengthMs = -1;
+    public RetractIntake() {
+        requires(Intake.getInstance());
     }
 
     protected void initialize() {
-        startTime = System.currentTimeMillis();
+        finished = false;
     }
 
     protected void execute() {
-        Intake.getInstance().set(1);
+        Intake.getInstance().retract();
+        finished = true;
     }
 
     protected boolean isFinished() {
-        if (lengthMs == -1)
-            return false;
-        return (System.currentTimeMillis() - startTime) > lengthMs;
+        return finished;
     }
 
     protected void end() {
-        Intake.getInstance().set(0);
+
     }
 
     protected void interrupted() {

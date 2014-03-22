@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import org.team3309.frc2014.OctanumModule;
 import org.team3309.frc2014.Sensors;
-import org.team3309.frc2014.commands.TeleopDrive;
+import org.team3309.frc2014.commands.drive.TeleopDrive;
 import org.team3309.friarlib.FriarGyro;
 import org.team3309.friarlib.constants.Constant;
 

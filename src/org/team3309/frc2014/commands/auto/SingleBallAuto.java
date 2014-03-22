@@ -21,55 +21,25 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.auto;
 
-import edu.wpi.first.wpilibj.command.Command;
-import org.team3309.frc2014.subsystems.Catapult;
-import org.team3309.frc2014.subsystems.Intake;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
+import org.team3309.frc2014.commands.catapult.ShootAndRetract;
 
 /**
- * Command to prepare a shot, not actually shoot
+ * This is a CommandGroup for a single ball autonomous mode.
+ * This auto mode waits for the goal on the right side to be hot and then shoots
  *
  * @author vmagro
  */
-public class PrepShot extends Command {
+public class SingleBallAuto extends CommandGroup {
 
-    private static final double speed = -1;
-
-    private long startTime = 0;
-
-    public PrepShot() {
-        requires(Catapult.getInstance());
+    public SingleBallAuto() {
+        addSequential(new WaitForHot(WaitForHot.Side.RIGHT));
+        addSequential(new ShootAndRetract());
+        addSequential(new WaitCommand(.5));
+        addSequential(new MobilityBonus());
     }
 
-    protected void initialize() {
-        Catapult.getInstance().latch();
-        startTime = System.currentTimeMillis();
-        Catapult.getInstance().engageWinch();
-    }
-
-    protected void execute() {
-        if (!Intake.getInstance().isExtended()) {
-            cancel(); //cancel the command if the intake is not extended
-            return;
-        }
-        Catapult.getInstance().engageWinch();
-        Catapult.getInstance().set(speed);
-    }
-
-    protected boolean isFinished() {
-        //return (System.currentTimeMillis() - startTime) > 1000 || Catapult.getInstance().isFullBack();
-        return Catapult.getInstance().isFullBack();
-    }
-
-    protected void end() {
-        System.out.println("PrepShot.end");
-        Catapult.getInstance().set(0);
-        Catapult.getInstance().disengageWinch();
-    }
-
-    protected void interrupted() {
-        System.out.println("PrepShot.interrupted");
-        Catapult.getInstance().set(0);
-    }
 }

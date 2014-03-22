@@ -21,50 +21,36 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.subsystems.Drive;
 
 /**
- * This Command switches to/from mecanum mode. The constructor determines whether or not the Command will enable or
- * disable mecanum.
- *
- * @author vmagro
+ * Created by vmagro on 2/25/14.
  */
-public class SwitchMecanum extends Command {
+public class MobilityBonus extends Command {
 
-    private boolean enableMecanum;
-    private boolean finished = false;
+    private long startTime = 0;
 
-    /**
-     * Create a new SwitchMecanum command
-     *
-     * @param enable true to engage mecanum when run, false to engage high-traction when run
-     */
-    public SwitchMecanum(boolean enable) {
-        this.enableMecanum = enable;
+    public MobilityBonus() {
+        requires(Drive.getInstance());
     }
 
     protected void initialize() {
-
+        startTime = System.currentTimeMillis();
     }
 
     protected void execute() {
-        if (enableMecanum)
-            Drive.getInstance().enableMecanum();
-        else
-            Drive.getInstance().disableMecanum();
-
-        finished = true;
+        Drive.getInstance().driveMecanum(0, 1, 0);
     }
 
     protected boolean isFinished() {
-        return finished;
+        return (System.currentTimeMillis() - startTime) > 500;
     }
 
     protected void end() {
-
+        Drive.getInstance().driveMecanum(0, 0, 0);
     }
 
     protected void interrupted() {

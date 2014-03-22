@@ -21,32 +21,31 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.intake;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.subsystems.Intake;
 
-
 /**
- * This Command retracts the {@link org.team3309.frc2014.subsystems.Intake}
- * Fairly self-explanatory
- *
- * @author vmagro
+ * Created by vmagro on 3/14/14.
  */
-public class RetractIntake extends Command {
+public class ToggleIntake extends Command {
 
     private boolean finished = false;
 
-    public RetractIntake() {
+    public ToggleIntake() {
         requires(Intake.getInstance());
     }
 
     protected void initialize() {
-        finished = false;
+
     }
 
     protected void execute() {
-        Intake.getInstance().retract();
+        if (Intake.getInstance().isExtended())
+            Intake.getInstance().retract();
+        else
+            Intake.getInstance().extend();
         finished = true;
     }
 
@@ -61,5 +60,4 @@ public class RetractIntake extends Command {
     protected void interrupted() {
 
     }
-
 }

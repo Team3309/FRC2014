@@ -21,40 +21,55 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
+import org.team3309.frc2014.commands.catapult.ShootAndRetract;
+import org.team3309.frc2014.commands.drive.MecDriveForwardTime;
+import org.team3309.frc2014.commands.drive.SwitchMecanum;
+import org.team3309.frc2014.commands.intake.ExtendIntake;
+import org.team3309.frc2014.commands.intake.ExtendPocketPiston;
 import org.team3309.frc2014.subsystems.Drive;
 
 /**
  * Created by vmagro on 3/17/14.
  */
-public class ReleaseBrake extends Command {
+public class OneBallHotFirst extends CommandGroup {
 
-    private boolean finished = false;
+    public OneBallHotFirst() {
+        addSequential(new SwitchMecanum(true));
+        addSequential(new MecDriveForwardTime(2.25));
+        addParallel(new Command() {
+            private boolean finished = false;
 
-    public ReleaseBrake() {
+            protected void initialize() {
+
+            }
+
+            protected void execute() {
+                Drive.getInstance().driveTank(.25, 0);
+                finished = true;
+            }
+
+            protected boolean isFinished() {
+                return finished;
+            }
+
+            protected void end() {
+
+            }
+
+            protected void interrupted() {
+
+            }
+        });
+        addSequential(new ExtendIntake());
+        addSequential(new WaitCommand(1));
+        addSequential(new ExtendPocketPiston());
+        addSequential(new WaitCommand(1)); //changed from .5 to 1
+        addSequential(new ShootAndRetract());
     }
 
-    protected void initialize() {
-
-    }
-
-    protected void execute() {
-        System.out.println("Release brake");
-        Drive.getInstance().releaseBrake();
-        finished = true;
-    }
-
-    protected boolean isFinished() {
-        return finished;
-    }
-
-    protected void end() {
-
-    }
-
-    protected void interrupted() {
-
-    }
 }

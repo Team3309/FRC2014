@@ -21,62 +21,77 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.drive;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.PIDCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.team3309.frc2014.Sensors;
 import org.team3309.frc2014.subsystems.Drive;
+import org.team3309.friarlib.constants.Constant;
 
 /**
- * Created by vmagro on 3/18/14.
+ * This command changes the angle of the drivebase relative to the current angle.
+ * The PID constants are set using {@link org.team3309.friarlib.constants.Constant}s "pid.setrobotangle.p/i/d" (3 separate Constants)
+ *
+ * @author vmagro
  */
-public class DriveForward extends PIDCommand {
+public class ChangeRobotAngle extends PIDCommand {
+
+    private static Constant configKp = new Constant("pid.setrobotangle.p", .01);
+    private static Constant configKi = new Constant("pid.setrobotangle.i", 0);
+    private static Constant configKd = new Constant("pid.setrobotangle.d", 0);
 
     private Drive drive;
-    private int counts;
 
     private Timer doneTimer = new Timer();
 
-    public DriveForward(int counts) {
-        super(.0001, 0, 0);
-        this.counts = counts;
+    public static ChangeRobotAngle create(double angle) {
+        return new ChangeRobotAngle(configKp.getDouble(), configKi.getDouble(), configKd.getDouble(), angle);
+    }
+
+    public ChangeRobotAngle(double p, double i, double d, double angle) {
+        super(p, i, d);
         drive = Drive.getInstance();
         requires(drive);
-        setSetpoint(counts);
+        changeAngle(angle);
+        SmartDashboard.putData(this);
+    }
+
+    public void changeAngle(double delta) {
+        setSetpointRelative(delta);
+    }
+
+    protected double returnPIDInput() {
+        return Sensors.gyro.getAngle();
+    }
+
+    protected void usePIDOutput(double v) {
+        drive.driveAuto(0, 0, v);
     }
 
     protected void initialize() {
-        Drive.getInstance().resetEncoders();
     }
 
     protected void execute() {
-        Drive.getInstance().disableMecanum();
-        if (Math.abs(Drive.getInstance().getAverageCount() - counts) < 100) {
+        if (Math.abs(Sensors.gyro.getAngle() - getSetpoint()) < 2)
             doneTimer.start();
-        } else {
+        else {
             doneTimer.stop();
             doneTimer.reset();
         }
     }
 
     protected boolean isFinished() {
-        return doneTimer.get() > 100000; //.1 seconds in microseconds
+        return doneTimer.get() > 500000; //.5 seconds in microseconds
     }
 
     protected void end() {
-        Drive.getInstance().driveTank(0, 0);
-        System.out.println("DriveForward.end");
+
     }
 
     protected void interrupted() {
 
     }
 
-    protected double returnPIDInput() {
-        return Drive.getInstance().getAverageCount();
-    }
-
-    protected void usePIDOutput(double v) {
-        Drive.getInstance().driveTank(v, 0);
-    }
 }

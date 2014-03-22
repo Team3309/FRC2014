@@ -21,24 +21,43 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.drive;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.subsystems.Drive;
 
 /**
- * This is a CommandGroup for a single ball autonomous mode.
- * This auto mode waits for the goal on the right side to be hot and then shoots
- *
- * @author vmagro
+ * Created by vmagro on 3/21/14.
  */
-public class SingleBallAuto extends CommandGroup {
+public class TankDriveForwardTime extends Command {
 
-    public SingleBallAuto() {
-        addSequential(new WaitForHot(WaitForHot.Side.RIGHT));
-        addSequential(new ShootAndRetract());
-        addSequential(new WaitCommand(.5));
-        addSequential(new MobilityBonus());
+    private long startTime = 0;
+    private int timeoutMs = 0;
+
+    public TankDriveForwardTime(double seconds) {
+        timeoutMs = (int) (seconds * 1000);
+        requires(Drive.getInstance());
+    }
+
+    protected void initialize() {
+        startTime = System.currentTimeMillis();
+    }
+
+    protected void execute() {
+        Drive.getInstance().disableMecanum();
+        Drive.getInstance().driveTank(1, 0);
+    }
+
+    protected boolean isFinished() {
+        return (System.currentTimeMillis() - startTime) > timeoutMs;
+    }
+
+    protected void end() {
+        Drive.getInstance().driveTank(0, 0);
+    }
+
+    protected void interrupted() {
+
     }
 
 }

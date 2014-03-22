@@ -21,29 +21,51 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.catapult;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.subsystems.Catapult;
 
 /**
- * Created by vmagro on 2/25/14.
+ * Created by vmagro on 3/4/14.
  */
-public class TwoBallAuto extends CommandGroup {
+public class LatchCatapult extends Command {
 
-    public TwoBallAuto() {
-        addSequential(new ExtendIntake());
-        addParallel(new RunIntake(.5));
-        addSequential(new WaitCommand(1));
-        addSequential(new ExtendPocketPiston());
-        addSequential(new WaitCommand(.5));
-        addSequential(new ShootAndRetract());
-        addSequential(new RunIntake(2));
-        addSequential(new WaitCommand(.5));
-        addSequential(new ExtendPocketPiston());
-        addSequential(new WaitCommand(1));
-        addSequential(new ShootAndRetract());
-        addSequential(new MobilityBonus());
+    private long delayMs = 0;
+    private boolean finished = false;
+
+    public LatchCatapult(long delayMs) {
+        this.delayMs = delayMs;
+
+        requires(Catapult.getInstance());
     }
 
+    public LatchCatapult() {
+        this(0);
+    }
+
+    protected void initialize() {
+        try {
+            Thread.sleep(delayMs);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void execute() {
+        Catapult.getInstance().latch();
+        finished = true;
+    }
+
+    protected boolean isFinished() {
+        return finished;
+    }
+
+    protected void end() {
+
+    }
+
+    protected void interrupted() {
+
+    }
 }

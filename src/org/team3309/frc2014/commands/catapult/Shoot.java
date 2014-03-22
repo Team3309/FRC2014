@@ -21,43 +21,20 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.catapult;
 
-import edu.wpi.first.wpilibj.command.Command;
-import org.team3309.frc2014.subsystems.Intake;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
+import org.team3309.frc2014.commands.intake.RetractPocketPiston;
 
 /**
  * Created by vmagro on 3/14/14.
  */
-public class TogglePocketPiston extends Command {
+public class Shoot extends CommandGroup {
 
-    private boolean finished = false;
-
-    public TogglePocketPiston() {
-        requires(Intake.getInstance());
-    }
-
-    protected void initialize() {
-
-    }
-
-    protected void execute() {
-        if (Intake.getInstance().isPocketExtended())
-            Intake.getInstance().retractPocket();
-        else
-            Intake.getInstance().extendPocket();
-        finished = true;
-    }
-
-    protected boolean isFinished() {
-        return finished;
-    }
-
-    protected void end() {
-
-    }
-
-    protected void interrupted() {
-
+    public Shoot() {
+        addSequential(new RetractPocketPiston());
+        addSequential(new WaitCommand(.05));
+        addSequential(new UnlatchCatapult());
     }
 }

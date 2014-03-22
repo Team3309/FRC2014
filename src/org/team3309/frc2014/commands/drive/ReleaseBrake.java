@@ -21,21 +21,19 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.team3309.frc2014.subsystems.Catapult;
-import org.team3309.frc2014.subsystems.Intake;
+import org.team3309.frc2014.subsystems.Drive;
 
 /**
- * Created by vmagro on 2/25/14.
+ * Created by vmagro on 3/17/14.
  */
-public class UnlatchCatapult extends Command {
+public class ReleaseBrake extends Command {
 
     private boolean finished = false;
 
-    public UnlatchCatapult() {
-        requires(Catapult.getInstance());
+    public ReleaseBrake() {
     }
 
     protected void initialize() {
@@ -43,11 +41,8 @@ public class UnlatchCatapult extends Command {
     }
 
     protected void execute() {
-        Catapult.getInstance().disengageWinch(); //just in case
-        //don't shoot unless intake is extended
-        if (Intake.getInstance().isExtended()) {
-            Catapult.getInstance().unlatch();
-        }
+        System.out.println("Release brake");
+        Drive.getInstance().releaseBrake();
         finished = true;
     }
 

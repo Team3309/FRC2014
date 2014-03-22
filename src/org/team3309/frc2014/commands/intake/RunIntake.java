@@ -21,43 +21,44 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.intake;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.subsystems.Intake;
 
-/**
- * Created by vmagro on 3/14/14.
- */
-public class ToggleIntake extends Command {
+public class RunIntake extends Command {
 
-    private boolean finished = false;
+    private long startTime = 0;
+    private long lengthMs = -1;
 
-    public ToggleIntake() {
-        requires(Intake.getInstance());
+    public RunIntake(double lengthSeconds) {
+        this.lengthMs = (int) (lengthSeconds * 1000d);
+    }
+
+    public RunIntake() {
+        this.lengthMs = -1;
     }
 
     protected void initialize() {
-
+        startTime = System.currentTimeMillis();
     }
 
     protected void execute() {
-        if (Intake.getInstance().isExtended())
-            Intake.getInstance().retract();
-        else
-            Intake.getInstance().extend();
-        finished = true;
+        Intake.getInstance().set(1);
     }
 
     protected boolean isFinished() {
-        return finished;
+        if (lengthMs == -1)
+            return false;
+        return (System.currentTimeMillis() - startTime) > lengthMs;
     }
 
     protected void end() {
-
+        Intake.getInstance().set(0);
     }
 
     protected void interrupted() {
 
     }
+
 }

@@ -21,31 +21,28 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.intake;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.subsystems.Intake;
 
 /**
- * This Command extends the {@link org.team3309.frc2014.subsystems.Intake}
- * Fairly self-explanatory
- *
- * @author vmagro
+ * Created by vmagro on 3/14/14.
  */
-public class ExtendIntake extends Command {
+public class RetractPocketPiston extends Command {
 
     private boolean finished = false;
 
-    public ExtendIntake() {
+    public RetractPocketPiston() {
         requires(Intake.getInstance());
     }
 
     protected void initialize() {
-        finished = false;
+
     }
 
     protected void execute() {
-        Intake.getInstance().extend();
+        Intake.getInstance().retractPocket();
         finished = true;
     }
 
@@ -60,5 +57,4 @@ public class ExtendIntake extends Command {
     protected void interrupted() {
 
     }
-
 }

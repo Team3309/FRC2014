@@ -21,39 +21,40 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.intake;
 
 import edu.wpi.first.wpilibj.command.Command;
-import org.team3309.frc2014.subsystems.Drive;
+import org.team3309.frc2014.subsystems.Intake;
 
 /**
- * Created by vmagro on 3/21/14.
+ * This Command extends the {@link org.team3309.frc2014.subsystems.Intake}
+ * Fairly self-explanatory
+ *
+ * @author vmagro
  */
-public class TankDriveForwardTime extends Command {
+public class ExtendIntake extends Command {
 
-    private long startTime = 0;
-    private int timeoutMs = 0;
+    private boolean finished = false;
 
-    public TankDriveForwardTime(double seconds) {
-        timeoutMs = (int) (seconds * 1000);
-        requires(Drive.getInstance());
+    public ExtendIntake() {
+        requires(Intake.getInstance());
     }
 
     protected void initialize() {
-        startTime = System.currentTimeMillis();
+        finished = false;
     }
 
     protected void execute() {
-        Drive.getInstance().disableMecanum();
-        Drive.getInstance().driveTank(1, 0);
+        Intake.getInstance().extend();
+        finished = true;
     }
 
     protected boolean isFinished() {
-        return (System.currentTimeMillis() - startTime) > timeoutMs;
+        return finished;
     }
 
     protected void end() {
-        Drive.getInstance().driveTank(0, 0);
+
     }
 
     protected void interrupted() {

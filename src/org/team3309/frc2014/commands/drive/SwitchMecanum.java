@@ -21,19 +21,29 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.subsystems.Drive;
 
 /**
- * Created by vmagro on 3/17/14.
+ * This Command switches to/from mecanum mode. The constructor determines whether or not the Command will enable or
+ * disable mecanum.
+ *
+ * @author vmagro
  */
-public class EngageBrake extends Command {
+public class SwitchMecanum extends Command {
 
+    private boolean enableMecanum;
     private boolean finished = false;
 
-    public EngageBrake() {
+    /**
+     * Create a new SwitchMecanum command
+     *
+     * @param enable true to engage mecanum when run, false to engage high-traction when run
+     */
+    public SwitchMecanum(boolean enable) {
+        this.enableMecanum = enable;
     }
 
     protected void initialize() {
@@ -41,8 +51,11 @@ public class EngageBrake extends Command {
     }
 
     protected void execute() {
-        System.out.println("Engage brake");
-        Drive.getInstance().brake();
+        if (enableMecanum)
+            Drive.getInstance().enableMecanum();
+        else
+            Drive.getInstance().disableMecanum();
+
         finished = true;
     }
 

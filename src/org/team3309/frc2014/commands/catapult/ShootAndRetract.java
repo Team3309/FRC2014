@@ -21,42 +21,24 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.catapult;
 
-import edu.wpi.first.wpilibj.command.Command;
-import org.team3309.frc2014.subsystems.Drive;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
+import org.team3309.frc2014.commands.intake.ExtendIntake;
 
 /**
- * Created by vmagro on 3/19/14.
+ * Sequence of commands to execute a shot, including the winch-back to prepare for the next
+ *
+ * @author vmagro
  */
-public class MecDriveForwardTime extends Command {
+public class ShootAndRetract extends CommandGroup {
 
-    private long startTime = 0;
-    private int timeoutMs = 0;
-
-    public MecDriveForwardTime(double seconds) {
-        timeoutMs = (int) (seconds * 1000);
-        requires(Drive.getInstance());
+    public ShootAndRetract() {
+        addSequential(new Shoot());
+        addSequential(new WaitCommand(.5));
+        addSequential(new ExtendIntake());
+        addSequential(new PrepShot());
     }
 
-    protected void initialize() {
-        startTime = System.currentTimeMillis();
-    }
-
-    protected void execute() {
-        Drive.getInstance().enableMecanum();
-        Drive.getInstance().driveTank(.7, 0);
-    }
-
-    protected boolean isFinished() {
-        return (System.currentTimeMillis() - startTime) > timeoutMs;
-    }
-
-    protected void end() {
-        Drive.getInstance().driveTank(0, 0);
-    }
-
-    protected void interrupted() {
-
-    }
 }

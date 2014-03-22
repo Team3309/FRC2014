@@ -21,19 +21,40 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.intake;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.WaitCommand;
+import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.subsystems.Intake;
 
 /**
  * Created by vmagro on 3/14/14.
  */
-public class Shoot extends CommandGroup {
+public class ExtendPocketPiston extends Command {
 
-    public Shoot() {
-        addSequential(new RetractPocketPiston());
-        addSequential(new WaitCommand(.05));
-        addSequential(new UnlatchCatapult());
+    private boolean finished = false;
+
+    public ExtendPocketPiston() {
+        requires(Intake.getInstance());
+    }
+
+    protected void initialize() {
+
+    }
+
+    protected void execute() {
+        Intake.getInstance().extendPocket();
+        finished = true;
+    }
+
+    protected boolean isFinished() {
+        return finished;
+    }
+
+    protected void end() {
+
+    }
+
+    protected void interrupted() {
+
     }
 }
