@@ -44,7 +44,7 @@ public class OneBallHotSecond extends CommandGroup {
             }
 
             protected void execute() {
-                Drive.getInstance().driveTank(.1, 0);
+                Drive.getInstance().driveTank(.25, 0);
                 finished = true;
             }
 
