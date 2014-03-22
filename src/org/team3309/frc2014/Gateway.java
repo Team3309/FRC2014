@@ -27,6 +27,7 @@ package org.team3309.frc2014;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStationLCD;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -113,6 +114,9 @@ public class Gateway extends IterativeRobot {
         oneBallStarted = false;
 
         autoStartTime = System.currentTimeMillis();
+
+        //delay to let hot goal detector switch
+        Timer.delay(.25);
     }
 
     /**
