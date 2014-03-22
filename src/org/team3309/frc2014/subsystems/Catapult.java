@@ -95,7 +95,13 @@ public class Catapult extends Subsystem {
     }
 
     public void unlatch() {
-        latchSolenoid.set(true);
+        disengageWinch(); //just in case
+        //don't shoot unless intake is extended
+        if (Intake.getInstance().isExtended()) {
+            latchSolenoid.set(true);
+        } else {
+            System.out.println("Can't shoot if intake is retracted");
+        }
     }
 
     public void engageWinch() {

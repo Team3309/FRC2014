@@ -25,7 +25,6 @@ package org.team3309.frc2014.commands.catapult;
 
 import org.team3309.frc2014.commands.RunOnceCommand;
 import org.team3309.frc2014.subsystems.Catapult;
-import org.team3309.frc2014.subsystems.Intake;
 
 /**
  * Created by vmagro on 2/25/14.
@@ -37,10 +36,6 @@ public class UnlatchCatapult extends RunOnceCommand {
     }
 
     protected void run() {
-        Catapult.getInstance().disengageWinch(); //just in case
-        //don't shoot unless intake is extended
-        if (Intake.getInstance().isExtended()) {
-            Catapult.getInstance().unlatch();
-        }
+        Catapult.getInstance().unlatch();
     }
 }
