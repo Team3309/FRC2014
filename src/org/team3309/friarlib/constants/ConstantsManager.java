@@ -77,7 +77,7 @@ public class ConstantsManager {
         loadConstants(fileConnection.openInputStream());
     }
 
-    public static void loadConstants(InputStream inputStream) throws IOException {
+    public static void loadConstants(InputStream inputStream) {
         try {
             String line = null;
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));

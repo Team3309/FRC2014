@@ -72,17 +72,8 @@ public class OctanumModule implements PIDOutput, PIDSource {
         pidController.disable();
     }
 
-    public void enable() {
-        //pidController.enable();
-    }
-
     public void set(double x) {
         motor.set(x);
-        //pidController.setSetpoint(x);
-    }
-
-    public void setPositionSetpoint(double inches) {
-        pidController.setSetpoint(inches);
     }
 
     public void pidWrite(double v) {
