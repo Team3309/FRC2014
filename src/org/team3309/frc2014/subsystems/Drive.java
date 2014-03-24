@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import org.team3309.frc2014.MaxSonarEZ4;
 import org.team3309.frc2014.OctanumModule;
 import org.team3309.frc2014.Sensors;
 import org.team3309.frc2014.commands.drive.TeleopDrive;
@@ -63,9 +64,9 @@ public class Drive extends Subsystem {
     private Constant gyroKp = new Constant("drive.gyro.kp", .01);
     private Constant maxAngularVelocity = new Constant("drive.gyro.max_angular_velocity", 720);
 
+    private Constant configSonarPort = new Constant("drive.sonar.port", 12);
+
     private static Drive instance;
-    private boolean wasInMecanumBeforeBrake = false;
-    private boolean brake = false;
 
     /**
      * Get the singleton instance of the drivetrain
@@ -89,6 +90,11 @@ public class Drive extends Subsystem {
 
     private FriarGyro gyro;
 
+    private boolean wasInMecanumBeforeBrake = false;
+    private boolean brake = false;
+
+    private MaxSonarEZ4 sonar;
+
     private Drive() {
         extender = new Solenoid(configMecanumSolenoidModule.getInt(), configMecanumSolenoidPort.getInt());
 
@@ -102,6 +108,8 @@ public class Drive extends Subsystem {
                 new Encoder(configRightBackEncoderA.getInt(), configRightBackEncoderB.getInt()), true);
 
         gyro = Sensors.gyro;
+
+        sonar = new MaxSonarEZ4(configSonarPort.getInt());
     }
 
     protected void initDefaultCommand() {
@@ -275,6 +283,10 @@ public class Drive extends Subsystem {
         return brake;
     }
 
+    public double getUltrasonicInches() {
+        return sonar.getInches();
+    }
+
     /**
      * Normalize a set of input values between -1.0 and 1.0, with the largest value being 1.0
      *
@@ -355,4 +367,5 @@ public class Drive extends Subsystem {
         rightBack.resetEncoder();
         rightFront.resetEncoder();
     }
+
 }
