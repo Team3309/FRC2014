@@ -31,14 +31,15 @@ import org.team3309.friarlib.constants.Constant;
 /**
  * Created by vmagro on 3/24/14.
  */
-public class DriveToLowGoal extends Command {
+public class DriveToDistance extends Command {
 
     private static Constant configKp = new Constant("auto.drive.kp", .01);
-    private static Constant configStopDistance = new Constant("auto.drive.stop", 2); //inches
 
     private Drive drive;
+    private double stopDistance;
 
-    public DriveToLowGoal() {
+    public DriveToDistance(double stopDistance) {
+        this.stopDistance = stopDistance;
         drive = Drive.getInstance();
         requires(drive);
     }
@@ -48,14 +49,13 @@ public class DriveToLowGoal extends Command {
     }
 
     protected void execute() {
-        double err = configStopDistance.getDouble() - drive.getUltrasonicInches();
+        double err = stopDistance - drive.getUltrasonicInches();
         double output = configKp.getDouble() * err;
         drive.driveTank(output, 0);
     }
 
     protected boolean isFinished() {
-        return !DriverStation.getInstance().isAutonomous() || drive.getUltrasonicInches() <= configStopDistance
-                .getDouble();
+        return !DriverStation.getInstance().isAutonomous() || drive.getUltrasonicInches() <= stopDistance;
     }
 
     protected void end() {
