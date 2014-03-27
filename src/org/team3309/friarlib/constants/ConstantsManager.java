@@ -73,7 +73,7 @@ public class ConstantsManager {
      * @return
      */
     protected static boolean contains(String key) {
-        return constantsValues.contains(key);
+        return constantsValues.containsKey(key);
     }
 
     /**
