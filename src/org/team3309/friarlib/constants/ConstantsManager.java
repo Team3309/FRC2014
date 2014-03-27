@@ -36,6 +36,8 @@ import java.util.Vector;
 
 public class ConstantsManager {
 
+    private static Hashtable constantsValues = new Hashtable();
+
     static {
         try {
             loadConstantsFromFile("/Constants.txt");
@@ -43,8 +45,6 @@ public class ConstantsManager {
             e.printStackTrace();
         }
     }
-
-    private static Hashtable constantsValues = new Hashtable();
 
     /**
      * Add constant to the map
