@@ -37,7 +37,7 @@ public class Constant {
     public Constant(String name, double defaultVal) {
         this(name);
         if (!ConstantsManager.contains(name))
-            ConstantsManager.addValue(name, (Double) defaultVal);
+            ConstantsManager.addValue(name, Double.valueOf(defaultVal));
     }
 
     public Constant(String name, double[] defaultList) {
@@ -49,7 +49,7 @@ public class Constant {
     public Constant(String name, boolean defaultVal) {
         this(name);
         if (!ConstantsManager.contains(name))
-            ConstantsManager.addValue(name, (Boolean) defaultVal);
+            ConstantsManager.addValue(name, Boolean.valueOf(defaultVal));
     }
 
     public String getName() {
@@ -73,8 +73,8 @@ public class Constant {
         return arr;
     }
 
-    public Boolean getBoolean() {
-        return (Boolean) ConstantsManager.getValue(name);
+    public boolean getBoolean() {
+        return ((Boolean) ConstantsManager.getValue(name)).booleanValue();
     }
 
     public int getInt() {

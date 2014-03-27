@@ -68,6 +68,7 @@ public class ConstantsManager {
 
     /**
      * Is there a constant with this name?
+     *
      * @param key
      * @return
      */
@@ -127,11 +128,11 @@ public class ConstantsManager {
                         continue;
                     }
                     if (value.equals("true"))
-                        addValue(key, (Boolean) true);
+                        addValue(key, Boolean.valueOf(true));
                     else if (value.equals("false"))
-                        addValue(key, (Boolean) false);
+                        addValue(key, Boolean.valueOf(false));
                     else
-                        addValue(key, (Double) Double.parseDouble(value));
+                        addValue(key, Double.valueOf(value));
                 }
             }
         } catch (Exception ex) {
