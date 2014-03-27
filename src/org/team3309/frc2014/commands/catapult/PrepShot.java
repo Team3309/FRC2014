@@ -58,8 +58,7 @@ public class PrepShot extends Command {
     }
 
     protected boolean isFinished() {
-        //return (System.currentTimeMillis() - startTime) > 1000 || Catapult.getInstance().isFullBack();
-        return Catapult.getInstance().isFullBack();
+        return (System.currentTimeMillis() - startTime) > 2000 || Catapult.getInstance().isFullBack();
     }
 
     protected void end() {
