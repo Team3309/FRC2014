@@ -24,15 +24,13 @@
 package org.team3309.frc2014;
 
 
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DriverStationLCD;
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.team3309.frc2014.commands.*;
+import org.team3309.frc2014.commands.autonomous.kinect.HulaOneHot;
 import org.team3309.frc2014.subsystems.Catapult;
 import org.team3309.frc2014.subsystems.Drive;
 import org.team3309.frc2014.subsystems.HotGoalDetector;
@@ -135,7 +133,13 @@ public class Gateway extends IterativeRobot {
                 hotCounts++;
             }
 
-            if (System.currentTimeMillis() - autoStartTime > 1500) {
+            //if(Kinect.getInstance().getNumberOfPlayers() > 0) {
+                System.out.println("Time for the Hula!");
+                autonomousCommand = new HulaOneHot();
+                autonomousCommand.start();
+            //}
+            /*
+            else if (System.currentTimeMillis() - autoStartTime > 1500) {
                 System.out.println("Hot goal timeout");
                 autonomousCommand = new OneBallHotSecond();
                 autonomousCommand.start();
@@ -146,8 +150,8 @@ public class Gateway extends IterativeRobot {
                 autonomousCommand.start();
                 oneBallStarted = true;
             }
+            */
         }
-
 
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser1, 1, String.valueOf(Drive.getInstance().getAverageCount()));
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, String.valueOf(Sensors.gyro.getAngularRateOfChange()));

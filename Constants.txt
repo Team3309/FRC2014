@@ -4,7 +4,6 @@ catapult.winch.solenoid=4
 catapult.winch.solenoid.module=1
 catapult.latch.solenoid=2
 catapult.latch.solenoid.module=1
-catapult.latch.sensor=11
 
 drive.left.front=1
 drive.left.back=2

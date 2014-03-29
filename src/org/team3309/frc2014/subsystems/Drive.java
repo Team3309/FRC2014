@@ -42,7 +42,7 @@ public class Drive extends Subsystem {
 
     //first number is port A
     private Constant configMecanumSolenoidPort = new Constant("drive.solenoid", 3);
-    private Constant configMecanumSolenoidModule = new Constant("drive.solenoid.module", 1);
+    private Constant configMecanumSolenoidModule = new Constant("drive.solenoid.module", 2);
 
     private Constant configLeftFrontPort = new Constant("drive.left.front", 1);
     private Constant configLeftBackPort = new Constant("drive.left.back", 2);

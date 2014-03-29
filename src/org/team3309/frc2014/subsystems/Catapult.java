@@ -41,9 +41,9 @@ public class Catapult extends Subsystem {
     private static Constant configFullBackPort = new Constant("catapult.fullback.port", 10);
     private static Constant configWinchMotors = new Constant("catapult.winch.motors", new double[]{5, 6});
     private static Constant configWinchSolenoid = new Constant("catapult.winch.solenoid", 4);
-    private static Constant configWinchSolenoidModule = new Constant("catapult.winch.solenoid.module", 1);
+    private static Constant configWinchSolenoidModule = new Constant("catapult.winch.solenoid.module", 2);
     private static Constant configLatchSolenoid = new Constant("catapult.latch.solenoid", 2);
-    private static Constant configLatchSolenoidModule = new Constant("catapult.latch.solenoid.module", 1);
+    private static Constant configLatchSolenoidModule = new Constant("catapult.latch.solenoid.module", 2);
     private static Constant configLatchSensor = new Constant("catapult.latch.sensor", 11);
 
     private static Catapult instance;
