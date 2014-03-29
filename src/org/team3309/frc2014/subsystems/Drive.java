@@ -64,7 +64,7 @@ public class Drive extends Subsystem {
     private Constant gyroKp = new Constant("drive.gyro.kp", .01);
     private Constant maxAngularVelocity = new Constant("drive.gyro.max_angular_velocity", 720);
 
-    private Constant configSonarPort = new Constant("drive.sonar.port", 12);
+    private Constant configSonarPort = new Constant("drive.sonar.port", 3);
 
     private static Drive instance;
 
