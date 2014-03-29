@@ -23,6 +23,8 @@
 
 package org.team3309.friarlib.constants;
 
+import org.team3309.friarlib.util.Util;
+
 public class Constant {
 
     private String name;
@@ -37,7 +39,7 @@ public class Constant {
     public Constant(String name, double defaultVal) {
         this(name);
         if (!ConstantsManager.contains(name))
-            ConstantsManager.addValue(name, Double.valueOf(defaultVal));
+            ConstantsManager.addValue(name, String.valueOf(defaultVal));
     }
 
     public Constant(String name, double[] defaultList) {
@@ -49,7 +51,7 @@ public class Constant {
     public Constant(String name, boolean defaultVal) {
         this(name);
         if (!ConstantsManager.contains(name))
-            ConstantsManager.addValue(name, Boolean.valueOf(defaultVal));
+            ConstantsManager.addValue(name, String.valueOf(defaultVal));
     }
 
     public String getName() {
@@ -57,11 +59,20 @@ public class Constant {
     }
 
     public double getDouble() {
-        return ((Double) ConstantsManager.getValue(name)).doubleValue();
+        return Double.valueOf(ConstantsManager.getValue(name).toString()).doubleValue();
     }
 
     public double[] getDoubleList() {
-        return (double[]) ConstantsManager.getValue(name);
+        String value = ConstantsManager.getValue(name).toString();
+        String[] valStrings = Util.split(value, ",");
+        double[] val = new double[valStrings.length];
+        for (int i = 0; i < valStrings.length; i++) {
+            if (valStrings[i].equals(""))
+                val[i] = 0;
+            else
+                val[i] = Double.parseDouble(valStrings[i]);
+        }
+        return val;
     }
 
     public int[] getIntList() {
@@ -74,7 +85,11 @@ public class Constant {
     }
 
     public boolean getBoolean() {
-        return ((Boolean) ConstantsManager.getValue(name)).booleanValue();
+        String s = ConstantsManager.getValue(name).toString();
+        if (s.equalsIgnoreCase("false"))
+            return false;
+        else
+            return true;
     }
 
     public int getInt() {

@@ -104,36 +104,7 @@ public class ConstantsManager {
                 String key = line.substring(0, line.indexOf("=")).trim();
                 String value = line.substring(line.indexOf("=") + 1);
 
-                //value is a list
-                if (Util.contains(value, ",")) {
-                    String[] valStrings = split(value, ",");
-                    boolean successful = true;
-                    double[] val = new double[valStrings.length];
-                    for (int i = 0; i < valStrings.length; i++) {
-                        if (valStrings[i].equals("")) {
-                            System.err.println("Malformed line <" + line + "> empty string in array");
-                            successful = false;
-                            break;
-                        }
-                        val[i] = Double.parseDouble(valStrings[i]);
-                    }
-                    if (successful) {
-                        addValue(key, val);
-                    }
-                }
-                //not a list
-                else {
-                    if (value.equals("")) {
-                        System.err.println("Malformed line <" + line + "> empty string as value");
-                        continue;
-                    }
-                    if (value.equals("true"))
-                        addValue(key, Boolean.valueOf(true));
-                    else if (value.equals("false"))
-                        addValue(key, Boolean.valueOf(false));
-                    else
-                        addValue(key, Double.valueOf(value));
-                }
+                addValue(key, value);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
