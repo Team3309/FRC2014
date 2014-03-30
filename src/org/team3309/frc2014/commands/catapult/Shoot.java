@@ -36,5 +36,7 @@ public class Shoot extends CommandGroup {
         addSequential(new RetractPocketPiston());
         addSequential(new WaitCommand(.05));
         addSequential(new UnlatchCatapult());
+        addSequential(new WaitCommand(.05));
+        addSequential(new LatchCatapult());
     }
 }
