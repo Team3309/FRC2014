@@ -23,10 +23,11 @@
 
 package org.team3309.frc2014.commands.auto;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.team3309.frc2014.commands.drive.MecDriveForwardTime;
-import org.team3309.frc2014.subsystems.Drive;
+import edu.wpi.first.wpilibj.command.WaitCommand;
+import org.team3309.frc2014.commands.intake.ExtendIntake;
+import org.team3309.frc2014.commands.intake.ExtendPocketPiston;
+import org.team3309.frc2014.commands.intake.RetractPocketPiston;
 
 /**
  * Created by vmagro on 3/24/14.
@@ -34,36 +35,16 @@ import org.team3309.frc2014.subsystems.Drive;
 public class KinectOneHot extends CommandGroup {
 
     public KinectOneHot() {
-        addSequential(new MecDriveForwardTime(2.25));
-
-        //keep driving even after hitting the wall
-        addSequential(new Command() {
-            private boolean finished = false;
-
-            protected void initialize() {
-
-            }
-
-            protected void execute() {
-                Drive.getInstance().driveTank(.25, 0);
-                finished = true;
-            }
-
-            protected boolean isFinished() {
-                return finished;
-            }
-
-            protected void end() {
-
-            }
-
-            protected void interrupted() {
-
-            }
-        });
-
-        //because this runs after the robot drives forward, the driver can hold his hands up the whole time if it is hot first without it affecting anything
+        addSequential(new ExtendIntake());
+        addSequential(new WaitCommand(1));
+        addSequential(new ExtendPocketPiston());
+        addSequential(new WaitCommand(.25));
+        addSequential(new RetractPocketPiston());
+        //because this runs after everything else, the driver can hold his hands up the whole time if it is hot first
+        // without it affecting anything
         addSequential(new ShootWithKinect());
+        addSequential(new WaitCommand(.25));
+        addSequential(new MobilityBonus());
     }
 
 }
