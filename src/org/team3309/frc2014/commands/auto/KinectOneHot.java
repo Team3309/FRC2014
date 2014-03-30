@@ -23,8 +23,10 @@
 
 package org.team3309.frc2014.commands.auto;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.team3309.frc2014.commands.drive.MecDriveForwardTime;
+import org.team3309.frc2014.subsystems.Drive;
 
 /**
  * Created by vmagro on 3/24/14.
@@ -33,6 +35,32 @@ public class KinectOneHot extends CommandGroup {
 
     public KinectOneHot() {
         addSequential(new MecDriveForwardTime(2.25));
+
+        //keep driving even after hitting the wall
+        addSequential(new Command() {
+            private boolean finished = false;
+
+            protected void initialize() {
+
+            }
+
+            protected void execute() {
+                Drive.getInstance().driveTank(.25, 0);
+                finished = true;
+            }
+
+            protected boolean isFinished() {
+                return finished;
+            }
+
+            protected void end() {
+
+            }
+
+            protected void interrupted() {
+
+            }
+        });
 
         //because this runs after the robot drives forward, the driver can hold his hands up the whole time if it is hot first without it affecting anything
         addSequential(new ShootWithKinect());
