@@ -24,16 +24,12 @@
 package org.team3309.frc2014;
 
 
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DriverStationLCD;
-import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.team3309.frc2014.commands.auto.OneBallHotFirst;
-import org.team3309.frc2014.commands.auto.OneBallHotSecond;
+import org.team3309.frc2014.commands.auto.*;
 import org.team3309.frc2014.commands.catapult.PrepShot;
 import org.team3309.frc2014.commands.catapult.Shoot;
 import org.team3309.frc2014.commands.catapult.ShootAndRetract;
@@ -121,12 +117,35 @@ public class Gateway extends IterativeRobot {
     public void autonomousInit() {
         Sensors.gyro.reset();
 
+        DriverStation ds = DriverStation.getInstance();
+        if (ds.getDigitalIn(1)) {
+            autonomousCommand = new MobilityBonus();
+            shouldDoOneBall = false;
+        } else if (ds.getDigitalIn(2)) {
+            autonomousCommand = null;
+            shouldDoOneBall = true;
+        } else if (ds.getDigitalIn(3)) {
+            autonomousCommand = new KinectRunningAuto();
+            shouldDoOneBall = false;
+        } else if (ds.getDigitalIn(4)) {
+            autonomousCommand = new KinectRunningAuto();
+            shouldDoOneBall = false;
+        } else {
+            autonomousCommand = new MobilityBonus();
+            shouldDoOneBall = false;
+        }
+
         oneBallStarted = false;
 
         autoStartTime = System.currentTimeMillis();
 
-        //delay to let hot goal detector switch
-        Timer.delay(.25);
+        if (!shouldDoOneBall && autonomousCommand != null)
+            autonomousCommand.start();
+
+        if (shouldDoOneBall) {
+            //delay to let hot goal detector switch
+            Timer.delay(.25);
+        }
     }
 
     /**
@@ -135,26 +154,28 @@ public class Gateway extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
 
-        System.out.println("Should do one ball: " + shouldDoOneBall);
-        System.out.println("One Ball Started: " + oneBallStarted);
+        if (shouldDoOneBall) {
+            System.out.println("Going to do one ball");
+            System.out.println("One Ball Started: " + oneBallStarted);
 
-        if (!oneBallStarted) {
-            System.out.println("Hot counts: " + hotCounts);
+            if (!oneBallStarted) {
+                System.out.println("Hot counts: " + hotCounts);
 
-            if (HotGoalDetector.getInstance().isRightHot()) {
-                hotCounts++;
-            }
+                if (HotGoalDetector.getInstance().isRightHot()) {
+                    hotCounts++;
+                }
 
-            if (System.currentTimeMillis() - autoStartTime > 1500) {
-                System.out.println("Hot goal timeout");
-                autonomousCommand = new OneBallHotSecond();
-                autonomousCommand.start();
-                oneBallStarted = true;
-            } else if (hotCounts > 4) {
-                System.out.println("Goal is hot");
-                autonomousCommand = new OneBallHotFirst();
-                autonomousCommand.start();
-                oneBallStarted = true;
+                if (System.currentTimeMillis() - autoStartTime > 1500) {
+                    System.out.println("Hot goal timeout");
+                    autonomousCommand = new OneBallHotSecond();
+                    autonomousCommand.start();
+                    oneBallStarted = true;
+                } else if (hotCounts > 4) {
+                    System.out.println("Goal is hot");
+                    autonomousCommand = new OneBallHotFirst();
+                    autonomousCommand.start();
+                    oneBallStarted = true;
+                }
             }
         }
 
