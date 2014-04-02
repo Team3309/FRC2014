@@ -190,6 +190,14 @@ public class Drive extends Subsystem {
             return;
         }
 
+        double desiredRotation = turn * 720;
+        double actualRotation = getAngularVelocity();
+        double rotateError = desiredRotation - actualRotation;
+        if (Math.abs(y) < .1)
+            turn = .005 * rotateError;
+        else
+            turn = .01 * rotateError;
+
         double[] speeds = new double[4];
         speeds[0] = x + y + turn; //left front
         speeds[1] = -x + y + turn; //left back
