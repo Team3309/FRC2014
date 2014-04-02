@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.commands.catapult.ShootAndRetract;
 import org.team3309.frc2014.subsystems.Drive;
+import org.team3309.frc2014.subsystems.Intake;
 
 /**
  * Created by vmagro on 4/1/14.
@@ -37,8 +38,9 @@ import org.team3309.frc2014.subsystems.Drive;
 public class KinectLayup extends Command {
 
     private static final int STATE_DRIVING = 0;
-    private static final int STATE_WAITING_FOR_SHOT = 1;
-    private static final int STATE_DONE = 2;
+    private static final int STATE_DONE_DRIVING = 1;
+    private static final int STATE_WAITING_FOR_SHOT = 2;
+    private static final int STATE_DONE = 3;
 
     private Drive drive;
     private Kinect kinect;
@@ -62,6 +64,13 @@ public class KinectLayup extends Command {
             drive.enableMecanum();
             drive.driveTank(.7, 0);
             Timer.delay(2.25);
+            state = STATE_DONE_DRIVING;
+            stateTimer.reset();
+        } else if (state == STATE_DONE_DRIVING) {
+            Intake.getInstance().extend();
+            Timer.delay(1);
+            Intake.getInstance().extendPocket();
+            Timer.delay(1);
             state = STATE_WAITING_FOR_SHOT;
             stateTimer.reset();
         } else if (state == STATE_WAITING_FOR_SHOT) {

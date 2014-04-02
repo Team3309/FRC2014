@@ -30,14 +30,15 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.commands.catapult.ShootAndRetract;
 import org.team3309.frc2014.subsystems.Drive;
+import org.team3309.frc2014.subsystems.Intake;
 
 /**
  * Created by vmagro on 4/1/14.
  */
 public class KinectRunningAuto extends Command {
 
-    private static final int STATE_WAITING = 0;
-    private static final int STATE_SHOOTING = 1;
+    private static final int STATE_INIT = 0;
+    private static final int STATE_WAITING = 1;
     private static final int STATE_DONE = 2;
 
     private Drive drive;
@@ -58,6 +59,13 @@ public class KinectRunningAuto extends Command {
     }
 
     protected void execute() {
+        if (state == STATE_INIT) {
+            Intake.getInstance().extend();
+            Timer.delay(1);
+            Intake.getInstance().extendPocket();
+            state = STATE_WAITING;
+            stateTimer.reset();
+        }
         if (state == STATE_WAITING) {
             Skeleton skeleton = kinect.getSkeleton();
             Skeleton.Joint leftHand = skeleton.GetHandLeft();
