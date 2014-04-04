@@ -190,6 +190,13 @@ public class Gateway extends IterativeRobot {
 
         intake.set(-operator.getLeftY());
 
+        if (driver.getAButton()) {
+            Drive.getInstance().resetGyro();
+        }
+        if (driver.getBButton()) {
+            Drive.getInstance().disableGyro();
+        }
+
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Is brake: " + (Drive.getInstance()
                 .isBrake() ? "true" : "false"));
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, String.valueOf(Sensors.gyro.getAngularRateOfChange()));

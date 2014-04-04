@@ -66,6 +66,7 @@ public class Drive extends Subsystem {
     private static Drive instance;
     private boolean wasInMecanumBeforeBrake = false;
     private boolean brake = false;
+    private boolean gyroDisabled = false;
 
     /**
      * Get the singleton instance of the drivetrain
@@ -210,6 +211,7 @@ public class Drive extends Subsystem {
         if (isBrake()) {
             return;
         }
+        double originalTurn = turn;
 
         double desiredAngularVelocity = turn * maxAngularVelocity.getDouble();
         double angularVelocity = getAngularVelocity();
@@ -219,6 +221,9 @@ public class Drive extends Subsystem {
             turn = (desiredAngularVelocity - angularVelocity) * gyroKp.getDouble();
         else
             turn = (desiredAngularVelocity - angularVelocity) * (gyroKp.getDouble() / 2);
+
+        if(gyroDisabled)
+            turn = originalTurn;
 
         double t_left = throttle + turn;
         double t_right = throttle - turn;
@@ -354,5 +359,17 @@ public class Drive extends Subsystem {
         leftFront.resetEncoder();
         rightBack.resetEncoder();
         rightFront.resetEncoder();
+    }
+
+    public void resetGyro() {
+        gyro.reset();
+    }
+
+    public void disableGyro() {
+        gyroDisabled = true;
+    }
+
+    public boolean isGyroDisabled() {
+        return gyroDisabled;
     }
 }

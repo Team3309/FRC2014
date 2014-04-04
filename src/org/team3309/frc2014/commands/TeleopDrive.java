@@ -88,6 +88,9 @@ public class TeleopDrive extends Command {
             else
                 turnOutput = .01 * rotateError;
 
+            if(drive.isGyroDisabled())
+                turnOutput = rightX;
+
             drive.driveMecanum(leftX, leftY, turnOutput);
         }
         // high traction wheels engaged
