@@ -191,6 +191,8 @@ public class Drive extends Subsystem {
             return;
         }
 
+        double originalTurn = turn;
+
         double desiredRotation = turn * 720;
         double actualRotation = getAngularVelocity();
         double rotateError = desiredRotation - actualRotation;
@@ -198,6 +200,9 @@ public class Drive extends Subsystem {
             turn = .005 * rotateError;
         else
             turn = .01 * rotateError;
+
+        if (gyroDisabled)
+            turn = originalTurn;
 
         double[] speeds = new double[4];
         speeds[0] = x + y + turn; //left front

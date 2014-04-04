@@ -79,19 +79,7 @@ public class TeleopDrive extends Command {
 
         // the mecanum wheels are engaged
         if (drive.isMecanum()) {
-            double desiredRotation = rightX * 720;
-            double actualRotation = drive.getAngularVelocity();
-            double rotateError = desiredRotation - actualRotation;
-            double turnOutput = 0;
-            if (Math.abs(leftY) < .1)
-                turnOutput = .005 * rotateError;
-            else
-                turnOutput = .01 * rotateError;
-
-            if(drive.isGyroDisabled())
-                turnOutput = rightX;
-
-            drive.driveMecanum(leftX, leftY, turnOutput);
+            drive.driveMecanum(leftX, leftY, rightX);
         }
         // high traction wheels engaged
         else {
