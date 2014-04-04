@@ -38,8 +38,9 @@ import org.team3309.frc2014.subsystems.Intake;
 public class KinectRunningAuto extends Command {
 
     private static final int STATE_INIT = 0;
-    private static final int STATE_WAITING = 1;
-    private static final int STATE_DONE = 2;
+    private static final int STATE_DRIVING = 1;
+    private static final int STATE_WAITING = 2;
+    private static final int STATE_DONE = 3;
 
     private Drive drive;
     private Kinect kinect;
@@ -74,12 +75,19 @@ public class KinectRunningAuto extends Command {
 
             //this will require the drive to raise their hands roughly vertical to get it to shoot or timeout after 5 seconds
             if ((leftHand.getY() > head.getY() && rightHand.getY() > head.getY()) || stateTimer.get() > 5) {
+                state = STATE_DRIVING;
+                stateTimer.reset();
+            }
+        }
+        if (state == STATE_DRIVING) {
+            if (stateTimer.get() < 1) {
                 drive.driveTank(1, 0);
-                Timer.delay(1.5);
+            } else {
                 new ShootAndRetract().start();
                 state = STATE_DONE;
             }
-        } else if (state == STATE_DONE) {
+        }
+        if (state == STATE_DONE) {
             drive.driveTank(0, 0);
         }
     }
