@@ -26,7 +26,6 @@ package org.team3309.frc2014.commands.drive;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.team3309.frc2014.ControlBoard;
-import org.team3309.frc2014.Sensors;
 import org.team3309.frc2014.subsystems.Drive;
 import org.team3309.friarlib.constants.Constant;
 
@@ -70,9 +69,6 @@ public class TeleopDrive extends Command {
         double leftY = controls.driver.getLeftY();
         double rightX = controls.driver.getRightX();
         double rightY = controls.driver.getRightY();
-
-        if (controls.driver.getAButton())
-            Sensors.gyro.reset();
 
         SmartDashboard.putNumber("gyro", drive.getGyroAngle());
         SmartDashboard.putNumber("rotation", drive.getAngularVelocity());
