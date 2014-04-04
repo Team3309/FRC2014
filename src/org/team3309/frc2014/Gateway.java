@@ -196,6 +196,9 @@ public class Gateway extends IterativeRobot {
         if (driver.getBButton()) {
             Drive.getInstance().disableGyro();
         }
+        if (driver.getXButton()) {
+            Drive.getInstance().enableGyro();
+        }
 
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Is brake: " + (Drive.getInstance()
                 .isBrake() ? "true" : "false"));

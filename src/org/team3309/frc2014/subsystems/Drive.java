@@ -222,7 +222,7 @@ public class Drive extends Subsystem {
         else
             turn = (desiredAngularVelocity - angularVelocity) * (gyroKp.getDouble() / 2);
 
-        if(gyroDisabled)
+        if (gyroDisabled)
             turn = originalTurn;
 
         double t_left = throttle + turn;
@@ -367,6 +367,10 @@ public class Drive extends Subsystem {
 
     public void disableGyro() {
         gyroDisabled = true;
+    }
+
+    public void enableGyro() {
+        gyroDisabled = false;
     }
 
     public boolean isGyroDisabled() {
