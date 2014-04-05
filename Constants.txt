@@ -33,7 +33,7 @@ drive.i=0
 drive.mecanum.on=false
 
 intake.motors=7,8,9,10
-intake.motors.reversed=2,0
+intake.motors.reversed=1,2
 intake.solenoid=6,7
 intake.solenoid.module=2
 intake.pocket=5
