@@ -146,9 +146,6 @@ public class Gateway extends IterativeRobot {
         } else if (ds.getDigitalIn(4)) {
             autonomousCommand = new KinectRunningAuto();
             shouldDoOneBall = false;
-        } else if (ds.getDigitalIn(5)) {
-            autonomousCommand = new OneBallHotLayup();
-            shouldDoOneBall = false;
         } else {
             autonomousCommand = null;
             shouldDoOneBall = false;
