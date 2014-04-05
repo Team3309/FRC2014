@@ -94,6 +94,7 @@ public class Gateway extends IterativeRobot {
         driver = ControlBoard.getInstance().driver;
         operator = ControlBoard.getInstance().operator;
 
+        //bind buttons to JoystickButton objects
         winchButton = new JoystickButton(operator, XboxController.BUTTON_Y);
         fireButton = new JoystickButton(operator, XboxController.BUTTON_A);
         toggleIntakeButton = new JoystickButton(operator, XboxController.BUTTON_B);
@@ -102,6 +103,20 @@ public class Gateway extends IterativeRobot {
 
         brakeButton = new JoystickButton(driver, XboxController.BUTTON_LEFT_BUMPER);
         tankButton = new JoystickButton(driver, XboxController.BUTTON_RIGHT_BUMPER);
+
+
+        //button binding to actions
+        winchButton.whenPressed(new PrepShot());
+        fireButton.whenPressed(new Shoot());
+        toggleIntakeButton.whenPressed(new ToggleIntake());
+        togglePocketPistonButton.whenPressed(new TogglePocketPiston());
+        autoShootButton.whenPressed(new ShootAndRetract());
+
+        brakeButton.whenPressed(new EngageBrake());
+        brakeButton.whenReleased(new ReleaseBrake());
+        tankButton.whenPressed(new SwitchMecanum(false));
+        tankButton.whenReleased(new SwitchMecanum(true));
+
 
         Drive.getInstance().enableMecanum();
     }
@@ -199,17 +214,6 @@ public class Gateway extends IterativeRobot {
         Drive.getInstance().enableMecanum();
         //start the TeleopDrive command
         TeleopDrive.getInstance().start();
-
-        winchButton.whenPressed(new PrepShot());
-        fireButton.whenPressed(new Shoot());
-        toggleIntakeButton.whenPressed(new ToggleIntake());
-        togglePocketPistonButton.whenPressed(new TogglePocketPiston());
-        autoShootButton.whenPressed(new ShootAndRetract());
-
-        brakeButton.whenPressed(new EngageBrake());
-        brakeButton.whenReleased(new ReleaseBrake());
-        tankButton.whenPressed(new SwitchMecanum(false));
-        tankButton.whenReleased(new SwitchMecanum(true));
     }
 
     /**
