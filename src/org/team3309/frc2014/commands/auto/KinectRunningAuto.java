@@ -74,7 +74,7 @@ public class KinectRunningAuto extends Command {
             Skeleton.Joint head = skeleton.GetHead();
 
             //this will require the drive to raise their hands roughly vertical to get it to shoot or timeout after 5 seconds
-            if ((leftHand.getY() > head.getY() && rightHand.getY() > head.getY()) || stateTimer.get() > 5) {
+            if ((leftHand.getY() > head.getY() && rightHand.getY() > head.getY()) || stateTimer.get() > 5000000) {
                 state = STATE_DRIVING;
                 stateTimer.reset();
             }

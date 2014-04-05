@@ -59,7 +59,7 @@ public class ShootWithKinect extends Command {
         Skeleton.Joint head = skeleton.GetHead();
 
         //this will require the drive to raise their hands roughly vertical to get it to shoot
-        if (leftHand.getY() > head.getY() && rightHand.getY() > head.getY() || timer.get() > 5) {
+        if (leftHand.getY() > head.getY() && rightHand.getY() > head.getY() || timer.get() > 5000000) {
             new ShootAndRetract().start();
             finished = true;
         }
