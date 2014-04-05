@@ -61,7 +61,7 @@ public class Drive extends Subsystem {
 
     private Constant skimGain = new Constant("drive.skim_gain", .25);
 
-    private Constant gyroKp = new Constant("drive.gyro.kp", .01);
+    private Constant gyroKp = new Constant("drive.gyro.kp", .015);
     private Constant maxAngularVelocity = new Constant("drive.gyro.max_angular_velocity", 720);
 
     private Constant configSonarPort = new Constant("drive.sonar.port", 3);
@@ -197,9 +197,9 @@ public class Drive extends Subsystem {
         double actualRotation = getAngularVelocity();
         double rotateError = desiredRotation - actualRotation;
         if (Math.abs(y) < .1)
-            turn = .005 * rotateError;
+            turn = (gyroKp.getDouble() / 2) * rotateError;
         else
-            turn = .01 * rotateError;
+            turn = gyroKp.getDouble() * rotateError;
 
         if (gyroDisabled)
             turn = originalTurn;

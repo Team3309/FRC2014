@@ -24,7 +24,7 @@ drive.solenoid=3
 drive.solenoid.module=1
 
 drive.skim_gain=.25
-drive.gyro.kp=.01
+drive.gyro.kp=.015
 drive.gyro.max_angular_velocity=720
 
 drive.p=-.02
