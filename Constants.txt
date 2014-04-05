@@ -24,7 +24,8 @@ drive.solenoid=3
 drive.solenoid.module=1
 
 drive.skim_gain=.25
-drive.gyro.kp=.01
+drive.gyro.kp.auto=.02
+drive.gyro.kp.tele=.01
 drive.gyro.max_angular_velocity=720
 
 drive.p=-.02
@@ -33,7 +34,7 @@ drive.i=0
 drive.mecanum.on=false
 
 intake.motors=7,8,9,10
-intake.motors.reversed=2,0
+intake.motors.reversed=1,2
 intake.solenoid=6,7
 intake.solenoid.module=1
 intake.pocket=5

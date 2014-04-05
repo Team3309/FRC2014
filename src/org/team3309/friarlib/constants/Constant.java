@@ -23,15 +23,11 @@
 
 package org.team3309.friarlib.constants;
 
+import org.team3309.friarlib.util.Util;
+
 public class Constant {
 
     private String name;
-
-    private double doubleVal;
-
-    private double[] doubleList;
-
-    private boolean booleanVal;
 
     protected Constant(String name) {
         if (name == null) {
@@ -40,33 +36,22 @@ public class Constant {
         this.name = name;
     }
 
-    protected void postConstruct() {
-        if (ConstantsManager.getConstant(name) != null) {
-            System.out.println("Constant <" + name + "> is being used from the config file");
-            Constant existing = ConstantsManager.getConstant(name);
-            this.doubleVal = existing.doubleVal;
-            this.doubleList = existing.doubleList;
-            this.booleanVal = existing.booleanVal;
-        } else
-            ConstantsManager.addConstant(this);
-    }
-
     public Constant(String name, double defaultVal) {
         this(name);
-        this.doubleVal = defaultVal;
-        postConstruct();
+        if (!ConstantsManager.contains(name))
+            ConstantsManager.addValue(name, String.valueOf(defaultVal));
     }
 
     public Constant(String name, double[] defaultList) {
         this(name);
-        this.doubleList = defaultList;
-        postConstruct();
+        if (!ConstantsManager.contains(name))
+            ConstantsManager.addValue(name, defaultList);
     }
 
     public Constant(String name, boolean defaultVal) {
         this(name);
-        this.booleanVal = defaultVal;
-        postConstruct();
+        if (!ConstantsManager.contains(name))
+            ConstantsManager.addValue(name, String.valueOf(defaultVal));
     }
 
     public String getName() {
@@ -74,14 +59,24 @@ public class Constant {
     }
 
     public double getDouble() {
-        return doubleVal;
+        return Double.valueOf(ConstantsManager.getValue(name).toString()).doubleValue();
     }
 
     public double[] getDoubleList() {
-        return doubleList;
+        String value = ConstantsManager.getValue(name).toString();
+        String[] valStrings = Util.split(value, ",");
+        double[] val = new double[valStrings.length];
+        for (int i = 0; i < valStrings.length; i++) {
+            if (valStrings[i].equals(""))
+                val[i] = 0;
+            else
+                val[i] = Double.parseDouble(valStrings[i]);
+        }
+        return val;
     }
 
     public int[] getIntList() {
+        double[] doubleList = getDoubleList();
         int[] arr = new int[doubleList.length];
         for (int i = 0; i < doubleList.length; i++) {
             arr[i] = (int) doubleList[i];
@@ -90,38 +85,19 @@ public class Constant {
     }
 
     public boolean getBoolean() {
-        return booleanVal;
+        String s = ConstantsManager.getValue(name).toString();
+        if (s.equalsIgnoreCase("false"))
+            return false;
+        else
+            return true;
     }
 
     public int getInt() {
         return (int) getDouble();
     }
 
-    public void set(double val) {
-        this.doubleVal = val;
-    }
-
-    public void set(double[] list) {
-        this.doubleList = list;
-    }
-
-    public void set(boolean val) {
-        this.booleanVal = val;
-    }
-
     public String toString() {
-        String s = "Constant: " + getName() + " = ";
-        if (doubleList == null) {
-            s += doubleVal;
-        } else {
-            s += "[";
-            for (int i = 0; i < doubleList.length - 1; i++) {
-                s += doubleList[i] + ", ";
-            }
-            s += doubleList[doubleList.length - 1];
-            s += "]";
-        }
-        return s;
+        return "Constant: " + getName() + " = " + ConstantsManager.getValue(name);
     }
 
 }

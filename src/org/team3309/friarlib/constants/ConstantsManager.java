@@ -36,8 +36,9 @@ import java.util.Vector;
 
 public class ConstantsManager {
 
+    private static Hashtable constantsValues = new Hashtable();
+
     static {
-        constants = new Hashtable();
         try {
             loadConstantsFromFile("/Constants.txt");
         } catch (IOException e) {
@@ -45,15 +46,14 @@ public class ConstantsManager {
         }
     }
 
-    private static Hashtable constants = new Hashtable();
-
     /**
      * Add constant to the map
      *
-     * @param c
+     * @param name
+     * @param o
      */
-    protected static void addConstant(Constant c) {
-        constants.put(c.getName(), c);
+    protected static void addValue(String name, Object o) {
+        constantsValues.put(name, o);
     }
 
     /**
@@ -62,8 +62,18 @@ public class ConstantsManager {
      * @param key
      * @return
      */
-    protected static Constant getConstant(String key) {
-        return (Constant) constants.get(key);
+    protected static Object getValue(String key) {
+        return constantsValues.get(key);
+    }
+
+    /**
+     * Is there a constant with this name?
+     *
+     * @param key
+     * @return
+     */
+    protected static boolean contains(String key) {
+        return constantsValues.containsKey(key);
     }
 
     /**
@@ -77,7 +87,7 @@ public class ConstantsManager {
         loadConstants(fileConnection.openInputStream());
     }
 
-    public static void loadConstants(InputStream inputStream) throws IOException {
+    public static void loadConstants(InputStream inputStream) {
         try {
             String line = null;
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -94,53 +104,7 @@ public class ConstantsManager {
                 String key = line.substring(0, line.indexOf("=")).trim();
                 String value = line.substring(line.indexOf("=") + 1);
 
-                //value is a list
-                if (Util.contains(value, ",")) {
-                    String[] valStrings = split(value, ",");
-                    boolean successful = true;
-                    double[] val = new double[valStrings.length];
-                    for (int i = 0; i < valStrings.length; i++) {
-                        if (valStrings[i].equals("")) {
-                            System.err.println("Malformed line <" + line + "> empty string in array");
-                            successful = false;
-                            break;
-                        }
-                        val[i] = Double.parseDouble(valStrings[i]);
-                    }
-                    if (successful) {
-                        if (constants.containsKey(key)) {
-                            ((Constant) constants.get(key)).set(val);
-                        } else {
-                            Constant c = new Constant(key);
-                            c.set(val);
-                            addConstant(c);
-                        }
-                    }
-                }
-                //not a list
-                else {
-                    if (value.equals("")) {
-                        System.err.println("Malformed line <" + line + "> empty string as value");
-                        continue;
-                    }
-                    if (constants.containsKey(key)) {
-                        if (value.equals("true"))
-                            ((Constant) constants.get(key)).set(true);
-                        else if (value.equals("false"))
-                            ((Constant) constants.get(key)).set(false);
-                        else
-                            ((Constant) constants.get(key)).set(Double.parseDouble(value));
-                    } else {
-                        Constant c = new Constant(key);
-                        if (value.equals("true"))
-                            c.set(true);
-                        else if (value.equals("false"))
-                            c.set(false);
-                        else
-                            c.set(Double.parseDouble(value));
-                        addConstant(c);
-                    }
-                }
+                addValue(key, value);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
