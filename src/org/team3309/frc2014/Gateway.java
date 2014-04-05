@@ -112,7 +112,7 @@ public class Gateway extends IterativeRobot {
 
         DriverStationLCD.getInstance().updateLCD();
 
-        //Drive.getInstance().printEncoders();
+        Drive.getInstance().printEncoders();
     }
 
     public void autonomousInit() {
@@ -131,8 +131,11 @@ public class Gateway extends IterativeRobot {
         } else if (ds.getDigitalIn(4)) {
             autonomousCommand = new KinectRunningAuto();
             shouldDoOneBall = false;
+        } else if (ds.getDigitalIn(5)) {
+            autonomousCommand = new OneBallHotLayup();
+            shouldDoOneBall = false;
         } else {
-            autonomousCommand = new MobilityBonus();
+            autonomousCommand = null;
             shouldDoOneBall = false;
         }
 
@@ -163,12 +166,12 @@ public class Gateway extends IterativeRobot {
             if (!oneBallStarted) {
                 if (HotGoalDetector.getInstance().isRightHot()) {
                     System.out.println("Goal is hot");
-                    autonomousCommand = new OneBallHotFirstLong();
+                    autonomousCommand = new OneBallHotFirstLayup();
                     autonomousCommand.start();
                     oneBallStarted = true;
                 } else {
                     System.out.println("Not hot");
-                    autonomousCommand = new OneBallHotSecondLong();
+                    autonomousCommand = new OneBallHotSecondLayup();
                     autonomousCommand.start();
                     oneBallStarted = true;
                 }

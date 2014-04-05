@@ -24,7 +24,8 @@ drive.solenoid=3
 drive.solenoid.module=1
 
 drive.skim_gain=.25
-drive.gyro.kp=.015
+drive.gyro.kp.auto=.02
+drive.gyro.kp.tele=.01
 drive.gyro.max_angular_velocity=720
 
 drive.p=-.02
@@ -42,4 +43,4 @@ intake.pocket.module=1
 compressor.relay=1
 compressor.sensor=1
 
-hotgoal.right.port=14r
+hotgoal.right.port=14

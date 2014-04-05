@@ -23,6 +23,7 @@
 
 package org.team3309.frc2014.subsystems;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
@@ -61,7 +62,8 @@ public class Drive extends Subsystem {
 
     private Constant skimGain = new Constant("drive.skim_gain", .25);
 
-    private Constant gyroKp = new Constant("drive.gyro.kp", .015);
+    private Constant gyroKpAuto = new Constant("drive.gyro.kp.auto", .015);
+    private Constant gyroKpTele = new Constant("drive.gyro.kp.tele", .01);
     private Constant maxAngularVelocity = new Constant("drive.gyro.max_angular_velocity", 720);
 
     private Constant configSonarPort = new Constant("drive.sonar.port", 3);
@@ -196,10 +198,17 @@ public class Drive extends Subsystem {
         double desiredRotation = turn * 720;
         double actualRotation = getAngularVelocity();
         double rotateError = desiredRotation - actualRotation;
-        if (Math.abs(y) < .1)
-            turn = (gyroKp.getDouble() / 2) * rotateError;
-        else
-            turn = gyroKp.getDouble() * rotateError;
+        if (Math.abs(y) < .1) {
+            if (DriverStation.getInstance().isAutonomous())
+                turn = (gyroKpAuto.getDouble() / 2) * rotateError;
+            else
+                turn = (gyroKpTele.getDouble() / 2) * rotateError;
+        } else {
+            if (DriverStation.getInstance().isAutonomous())
+                turn = gyroKpAuto.getDouble() * rotateError;
+            else
+                turn = (gyroKpTele.getDouble() / 2) * rotateError;
+        }
 
         if (gyroDisabled)
             turn = originalTurn;
@@ -238,10 +247,17 @@ public class Drive extends Subsystem {
         double angularVelocity = getAngularVelocity();
 
         //proportional correction
-        if (Math.abs(throttle) > .1)
-            turn = (desiredAngularVelocity - angularVelocity) * gyroKp.getDouble();
-        else
-            turn = (desiredAngularVelocity - angularVelocity) * (gyroKp.getDouble() / 2);
+        if (Math.abs(throttle) > .1) {
+            if (DriverStation.getInstance().isAutonomous())
+                turn = (desiredAngularVelocity - angularVelocity) * gyroKpAuto.getDouble();
+            else
+                turn = (desiredAngularVelocity - angularVelocity) * gyroKpTele.getDouble();
+        } else {
+            if (DriverStation.getInstance().isAutonomous())
+                turn = (desiredAngularVelocity - angularVelocity) * (gyroKpAuto.getDouble() / 2);
+            else
+                turn = (desiredAngularVelocity - angularVelocity) * (gyroKpTele.getDouble() / 2);
+        }
 
         if (gyroDisabled)
             turn = originalTurn;
