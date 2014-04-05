@@ -26,6 +26,7 @@ package org.team3309.frc2014.commands.auto;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Kinect;
 import edu.wpi.first.wpilibj.Skeleton;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.commands.catapult.ShootAndRetract;
 import org.team3309.frc2014.subsystems.Catapult;
@@ -39,6 +40,8 @@ public class ShootWithKinect extends Command {
 
     private Kinect kinect = null;
 
+    private Timer timer = new Timer();
+
     public ShootWithKinect() {
         requires(Catapult.getInstance());
 
@@ -46,7 +49,7 @@ public class ShootWithKinect extends Command {
     }
 
     protected void initialize() {
-
+        timer.start();
     }
 
     protected void execute() {
@@ -56,7 +59,7 @@ public class ShootWithKinect extends Command {
         Skeleton.Joint head = skeleton.GetHead();
 
         //this will require the drive to raise their hands roughly vertical to get it to shoot
-        if (leftHand.getY() > head.getY() && rightHand.getY() > head.getY()) {
+        if (leftHand.getY() > head.getY() && rightHand.getY() > head.getY() || timer.get() > 5) {
             new ShootAndRetract().start();
             finished = true;
         }
