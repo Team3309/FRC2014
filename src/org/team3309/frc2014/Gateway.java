@@ -76,10 +76,9 @@ public class Gateway extends IterativeRobot {
 
     private Command autonomousCommand;
 
-    private int hotCounts = 0;
-    private long autoStartTime = 0;
     private boolean oneBallStarted = false;
     private boolean shouldDoOneBall = false;
+    private boolean extendedIntake = false;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -112,6 +111,8 @@ public class Gateway extends IterativeRobot {
                 HotGoalDetector.getInstance().isRightHot() ? "Hot    " : "Not hot");
 
         DriverStationLCD.getInstance().updateLCD();
+
+        //Drive.getInstance().printEncoders();
     }
 
     public void autonomousInit() {
@@ -136,16 +137,11 @@ public class Gateway extends IterativeRobot {
         }
 
         oneBallStarted = false;
-
-        autoStartTime = System.currentTimeMillis();
+        extendedIntake = false;
 
         if (!shouldDoOneBall && autonomousCommand != null)
             autonomousCommand.start();
 
-        if (shouldDoOneBall) {
-            //delay to let hot goal detector switch
-            Timer.delay(.25);
-        }
     }
 
     /**
@@ -155,24 +151,24 @@ public class Gateway extends IterativeRobot {
         Scheduler.getInstance().run();
 
         if (shouldDoOneBall) {
-            System.out.println("Going to do one ball");
-            System.out.println("One Ball Started: " + oneBallStarted);
+            if (!extendedIntake) {
+                Intake.getInstance().extend();
+                Timer.delay(.5);
+                extendedIntake = true;
+
+                System.out.println("Waiting for hot goal after extending intake");
+                Timer.delay(1); //delay for hot goal to switch
+            }
 
             if (!oneBallStarted) {
-                System.out.println("Hot counts: " + hotCounts);
-
                 if (HotGoalDetector.getInstance().isRightHot()) {
-                    hotCounts++;
-                }
-
-                if (System.currentTimeMillis() - autoStartTime > 1500) {
-                    System.out.println("Hot goal timeout");
-                    autonomousCommand = new OneBallHotSecond();
+                    System.out.println("Goal is hot");
+                    autonomousCommand = new OneBallHotFirstLong();
                     autonomousCommand.start();
                     oneBallStarted = true;
-                } else if (hotCounts > 4) {
-                    System.out.println("Goal is hot");
-                    autonomousCommand = new OneBallHotFirst();
+                } else {
+                    System.out.println("Not hot");
+                    autonomousCommand = new OneBallHotSecondLong();
                     autonomousCommand.start();
                     oneBallStarted = true;
                 }

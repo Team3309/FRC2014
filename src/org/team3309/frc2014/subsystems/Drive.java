@@ -104,9 +104,9 @@ public class Drive extends Subsystem {
         leftBack = new OctanumModule("leftBack", new Victor(configLeftBackPort.getInt()), extender,
                 new Encoder(configLeftBackEncoderA.getInt(), configLeftBackEncoderB.getInt()), false);
         rightFront = new OctanumModule("rightFront", new Victor(configFrontRightPort.getInt()), extender,
-                new Encoder(configRightFrontEncoderA.getInt(), configRightFrontEncoderB.getInt()), true);
+                new Encoder(configRightFrontEncoderA.getInt(), configRightFrontEncoderB.getInt()), false);
         rightBack = new OctanumModule("rightBack", new Victor(configRightBackPort.getInt()), extender,
-                new Encoder(configRightBackEncoderA.getInt(), configRightBackEncoderB.getInt()), true);
+                new Encoder(configRightBackEncoderA.getInt(), configRightBackEncoderB.getInt()), false);
 
         gyro = Sensors.gyro;
 
