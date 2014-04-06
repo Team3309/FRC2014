@@ -70,6 +70,7 @@ public class OneBallHotFirstLayup extends CommandGroup {
         addSequential(new ExtendPocketPiston());
         addSequential(new WaitCommand(1)); //changed from .5 to 1
         addSequential(new ShootAndRetract());
+        addSequential(new MobilityBonus());
     }
 
 }
