@@ -122,12 +122,36 @@ public class Gateway extends IterativeRobot {
     }
 
     public void disabledPeriodic() {
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser1, 1,
-                HotGoalDetector.getInstance().isRightHot() ? "Hot    " : "Not hot");
-
-        DriverStationLCD.getInstance().updateLCD();
-
         Drive.getInstance().printEncoders();
+
+        DriverStationLCD lcd = DriverStationLCD.getInstance();
+        AutoInterpreter.AutoScript[] scripts = AutoInterpreter.getAllScripts();
+        for (int i = 0; i < scripts.length; i++) {
+            DriverStationLCD.Line line = null;
+            switch (scripts[i].getChooserNumber()) {
+                case 1:
+                    line = DriverStationLCD.Line.kUser1;
+                    break;
+                case 2:
+                    line = DriverStationLCD.Line.kUser2;
+                    break;
+                case 3:
+                    line = DriverStationLCD.Line.kUser3;
+                    break;
+                case 4:
+                    line = DriverStationLCD.Line.kUser4;
+                    break;
+                case 5:
+                    line = DriverStationLCD.Line.kUser5;
+                    break;
+                case 6:
+                    line = DriverStationLCD.Line.kUser6;
+                    break;
+            }
+            lcd.println(line, 3, scripts[i].getName());
+            if (DriverStation.getInstance().getDigitalIn(scripts[i].getChooserNumber()))
+                lcd.println(line, 1, "*");
+        }
     }
 
     public void autonomousInit() {
