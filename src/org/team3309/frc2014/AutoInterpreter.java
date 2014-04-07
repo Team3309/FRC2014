@@ -219,9 +219,9 @@ public class AutoInterpreter {
         if (line.startsWith("drive")) {
             String after = getAfter(line, "drive");
             String[] params = Util.split(after, ",");
-            double x = Double.parseDouble(params[0]);
-            double y = Double.parseDouble(params[1]);
-            System.out.println("TODO drive x=" + x + " y=" + y);
+            double throttle = Double.parseDouble(params[0]);
+            double turn = Double.parseDouble(params[1]);
+            System.out.println("TODO drive throttle=" + throttle + " turn=" + turn);
         }
 
         //extend command syntactic sugar
