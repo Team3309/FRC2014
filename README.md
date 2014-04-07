@@ -10,19 +10,19 @@ Download Netbeans and install the FRC plugins.
 
 Now clone this repository.
 
-To just compile (and not download)
+To just compile (and not download)  
 ```ant suite```
 
-To compile and download to the robot
+To compile and download to the robot  
 ```ant deploy```
 
-To download constants file and auto modes
+To download constants file and auto modes  
 ```ant deploy-files```
 
 Constants
 ---------
 
-Constants are stored in res/Constants.txt, this file should be copied to the cRIO with FTP
+Constants are stored in res/Constants.txt, this file will be copied to the cRIO via FTP with the ant target ```deploy-files```.
 
 Constants should be in this format:
 ```
@@ -31,7 +31,7 @@ name=value
 //Comments can also start with double-slashes
 ```
 
-Supported values are integers, doubles, booleans and double/integer arrays
+Supported values are integers, doubles, booleans and double/integer arrays.
 
 Examples
 ```
@@ -47,7 +47,7 @@ To use a Constant in code, instantiate a Constant object
 Constant configMecanumOn = new Constant("drive.mecanum.on", false);
 ```
 
-The first argument is the name of the Constant (will be used to look up in the file) and the second argument is a default value in case a constant with that name wasn't found
+The first argument is the name of the Constant (will be used to look up in the file) and the second argument is a default value in case a constant with that name wasn't found.
 
 
 Autonomous Scripts
@@ -86,4 +86,4 @@ print <message>
 ```
 
 Comments can either be on their own line prefixed by // OR # or can be at the end of a line when prefixed by // OR #.
-There are currently no block comments implemented
+There are currently no block comments implemented.
