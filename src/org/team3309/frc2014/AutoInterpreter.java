@@ -175,13 +175,16 @@ public class AutoInterpreter {
         }
 
         //wait command
-        if (line.startsWith("wait")) {
+        if (line.startsWith("wait") || line.startsWith("delay")) {
             if (Util.contains(line, "for hot")) {
                 System.out.println("TODO wait for hot sensor");
             } else if (Util.contains(line, "for kinect")) {
                 System.out.println("TODO wait for kinect gesture");
             } else {
-                double delay = Double.parseDouble(getAfter(line, "wait"));
+                String prefix = "wait";
+                if (line.startsWith("delay"))
+                    prefix = "delay";
+                double delay = Double.parseDouble(getAfter(line, prefix));
                 try {
                     Thread.sleep((long) (delay * 1000));
                 } catch (InterruptedException e) {
