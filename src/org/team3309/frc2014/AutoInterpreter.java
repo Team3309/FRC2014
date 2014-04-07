@@ -68,6 +68,7 @@ public class AutoInterpreter {
     public static void run(AutoScript script) {
         try {
             InputStream is = ((FileConnection) Connector.open("file:///" + script.getFile())).openInputStream();
+            interpret(is);
         } catch (IOException e) {
             e.printStackTrace();
         }
