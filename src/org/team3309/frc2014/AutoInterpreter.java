@@ -110,6 +110,12 @@ public class AutoInterpreter {
             return false;
         }
 
+        public AutoScript getHotOption() {
+            String hotName = getFile().substring(0, getFile().indexOf(".txt"));
+            hotName += "_hot.txt";
+            return new AutoScript(chooserNumber, name, hotName);
+        }
+
         public Command getCommand() {
             return new RunOnceCommand() {
                 protected void run() {
