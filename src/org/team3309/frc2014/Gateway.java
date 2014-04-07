@@ -76,10 +76,9 @@ public class Gateway extends IterativeRobot {
 
     private Command autonomousCommand;
 
-    private int hotCounts = 0;
-    private long autoStartTime = 0;
     private boolean oneBallStarted = false;
     private boolean shouldDoOneBall = false;
+    private boolean extendedIntake = false;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -95,6 +94,7 @@ public class Gateway extends IterativeRobot {
         driver = ControlBoard.getInstance().driver;
         operator = ControlBoard.getInstance().operator;
 
+        //bind buttons to JoystickButton objects
         winchButton = new JoystickButton(operator, XboxController.BUTTON_Y);
         fireButton = new JoystickButton(operator, XboxController.BUTTON_A);
         toggleIntakeButton = new JoystickButton(operator, XboxController.BUTTON_B);
@@ -104,6 +104,20 @@ public class Gateway extends IterativeRobot {
         brakeButton = new JoystickButton(driver, XboxController.BUTTON_LEFT_BUMPER);
         tankButton = new JoystickButton(driver, XboxController.BUTTON_RIGHT_BUMPER);
 
+
+        //button binding to actions
+        winchButton.whenPressed(new PrepShot());
+        fireButton.whenPressed(new Shoot());
+        toggleIntakeButton.whenPressed(new ToggleIntake());
+        togglePocketPistonButton.whenPressed(new TogglePocketPiston());
+        autoShootButton.whenPressed(new ShootAndRetract());
+
+        brakeButton.whenPressed(new EngageBrake());
+        brakeButton.whenReleased(new ReleaseBrake());
+        tankButton.whenPressed(new SwitchMecanum(false));
+        tankButton.whenReleased(new SwitchMecanum(true));
+
+
         Drive.getInstance().enableMecanum();
     }
 
@@ -112,6 +126,8 @@ public class Gateway extends IterativeRobot {
                 HotGoalDetector.getInstance().isRightHot() ? "Hot    " : "Not hot");
 
         DriverStationLCD.getInstance().updateLCD();
+
+        Drive.getInstance().printEncoders();
     }
 
     public void autonomousInit() {
@@ -131,21 +147,16 @@ public class Gateway extends IterativeRobot {
             autonomousCommand = new KinectRunningAuto();
             shouldDoOneBall = false;
         } else {
-            autonomousCommand = new MobilityBonus();
+            autonomousCommand = null;
             shouldDoOneBall = false;
         }
 
         oneBallStarted = false;
-
-        autoStartTime = System.currentTimeMillis();
+        extendedIntake = false;
 
         if (!shouldDoOneBall && autonomousCommand != null)
             autonomousCommand.start();
 
-        if (shouldDoOneBall) {
-            //delay to let hot goal detector switch
-            Timer.delay(.25);
-        }
     }
 
     /**
@@ -155,24 +166,24 @@ public class Gateway extends IterativeRobot {
         Scheduler.getInstance().run();
 
         if (shouldDoOneBall) {
-            System.out.println("Going to do one ball");
-            System.out.println("One Ball Started: " + oneBallStarted);
+            if (!extendedIntake) {
+                Intake.getInstance().extend();
+                Timer.delay(.5);
+                extendedIntake = true;
+
+                System.out.println("Waiting for hot goal after extending intake");
+                Timer.delay(1); //delay for hot goal to switch
+            }
 
             if (!oneBallStarted) {
-                System.out.println("Hot counts: " + hotCounts);
-
                 if (HotGoalDetector.getInstance().isRightHot()) {
-                    hotCounts++;
-                }
-
-                if (System.currentTimeMillis() - autoStartTime > 1500) {
-                    System.out.println("Hot goal timeout");
-                    autonomousCommand = new OneBallHotSecond();
+                    System.out.println("Goal is hot");
+                    autonomousCommand = new OneBallHotFirstLayup();
                     autonomousCommand.start();
                     oneBallStarted = true;
-                } else if (hotCounts > 4) {
-                    System.out.println("Goal is hot");
-                    autonomousCommand = new OneBallHotFirst();
+                } else {
+                    System.out.println("Not hot");
+                    autonomousCommand = new OneBallHotSecondLayup();
                     autonomousCommand.start();
                     oneBallStarted = true;
                 }
@@ -200,17 +211,6 @@ public class Gateway extends IterativeRobot {
         Drive.getInstance().enableMecanum();
         //start the TeleopDrive command
         TeleopDrive.getInstance().start();
-
-        winchButton.whenPressed(new PrepShot());
-        fireButton.whenPressed(new Shoot());
-        toggleIntakeButton.whenPressed(new ToggleIntake());
-        togglePocketPistonButton.whenPressed(new TogglePocketPiston());
-        autoShootButton.whenPressed(new ShootAndRetract());
-
-        brakeButton.whenPressed(new EngageBrake());
-        brakeButton.whenReleased(new ReleaseBrake());
-        tankButton.whenPressed(new SwitchMecanum(false));
-        tankButton.whenReleased(new SwitchMecanum(true));
     }
 
     /**
@@ -220,6 +220,16 @@ public class Gateway extends IterativeRobot {
         Scheduler.getInstance().run();
 
         intake.set(-operator.getLeftY());
+
+        if (driver.getAButton()) {
+            Drive.getInstance().resetGyro();
+        }
+        if (driver.getBButton()) {
+            Drive.getInstance().disableGyro();
+        }
+        if (driver.getXButton()) {
+            Drive.getInstance().enableGyro();
+        }
 
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Is brake: " + (Drive.getInstance()
                 .isBrake() ? "true" : "false"));

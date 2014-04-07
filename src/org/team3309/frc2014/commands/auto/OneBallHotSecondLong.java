@@ -26,20 +26,23 @@ package org.team3309.frc2014.commands.auto;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import org.team3309.frc2014.commands.catapult.ShootAndRetract;
+import org.team3309.frc2014.commands.intake.ExtendPocketPiston;
+import org.team3309.frc2014.commands.intake.RetractPocketPiston;
 
 /**
- * This is a CommandGroup for a single ball autonomous mode.
- * This auto mode waits for the goal on the right side to be hot and then shoots
- *
- * @author vmagro
+ * Created by vmagro on 4/4/14.
  */
-public class SingleBallAuto extends CommandGroup {
+public class OneBallHotSecondLong extends CommandGroup {
 
-    public SingleBallAuto() {
-        addSequential(new WaitForHot(WaitForHot.Side.RIGHT));
+    public OneBallHotSecondLong() {
+        DriveCounts dc = new DriveCounts(950);
+        dc.setTimeouts(5);
+        addSequential(dc);
+        addSequential(new WaitCommand(1));
+        addSequential(new ExtendPocketPiston());
+        addSequential(new WaitCommand(.25));
+        addSequential(new RetractPocketPiston());
         addSequential(new ShootAndRetract());
-        addSequential(new WaitCommand(.5));
-        addSequential(new MobilityBonus());
     }
 
 }

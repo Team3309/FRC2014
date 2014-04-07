@@ -63,10 +63,13 @@ public class KinectLayup extends Command {
         if (state == STATE_DRIVING) {
             drive.enableMecanum();
             drive.driveTank(.7, 0);
-            Timer.delay(2.25);
-            state = STATE_DONE_DRIVING;
-            stateTimer.reset();
+            System.out.println("timer: " + stateTimer.get());
+            if (stateTimer.get() > 2.25) { //2.25 seconds
+                state = STATE_DONE_DRIVING;
+                stateTimer.reset();
+            }
         } else if (state == STATE_DONE_DRIVING) {
+            drive.driveTank(.3, 0);
             Intake.getInstance().extend();
             Timer.delay(1);
             Intake.getInstance().extendPocket();
@@ -81,7 +84,7 @@ public class KinectLayup extends Command {
             Skeleton.Joint head = skeleton.GetHead();
 
             //this will require the drive to raise their hands roughly vertical to get it to shoot or timeout after 5 seconds
-            if ((leftHand.getY() > head.getY() && rightHand.getY() > head.getY()) || stateTimer.get() > 5) {
+            if ((leftHand.getY() > head.getY() && rightHand.getY() > head.getY()) || stateTimer.get() > 3) {
                 new ShootAndRetract().start();
                 state = STATE_DONE;
             }

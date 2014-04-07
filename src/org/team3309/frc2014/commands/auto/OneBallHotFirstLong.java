@@ -23,52 +23,24 @@
 
 package org.team3309.frc2014.commands.auto;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import org.team3309.frc2014.commands.catapult.ShootAndRetract;
-import org.team3309.frc2014.commands.drive.MecDriveForwardTime;
-import org.team3309.frc2014.commands.drive.SwitchMecanum;
-import org.team3309.frc2014.commands.intake.ExtendIntake;
 import org.team3309.frc2014.commands.intake.ExtendPocketPiston;
-import org.team3309.frc2014.subsystems.Drive;
+import org.team3309.frc2014.commands.intake.RetractPocketPiston;
 
 /**
- * Created by vmagro on 3/19/14.
+ * Created by vmagro on 4/4/14.
  */
-public class OneBallHotSecond extends CommandGroup {
+public class OneBallHotFirstLong extends CommandGroup {
 
-    public OneBallHotSecond() {
-        addSequential(new SwitchMecanum(true));
-        addSequential(new MecDriveForwardTime(2.25));
-        addParallel(new Command() {
-            private boolean finished = false;
-
-            protected void initialize() {
-
-            }
-
-            protected void execute() {
-                Drive.getInstance().driveTank(.25, 0);
-                finished = true;
-            }
-
-            protected boolean isFinished() {
-                return finished;
-            }
-
-            protected void end() {
-
-            }
-
-            protected void interrupted() {
-
-            }
-        });
-        addSequential(new ExtendIntake());
-        addSequential(new WaitCommand(1));
+    public OneBallHotFirstLong() {
+        DriveCounts dc = new DriveCounts(950);
+        dc.setTimeouts(3);
+        addSequential(dc);
         addSequential(new ExtendPocketPiston());
-        addSequential(new WaitCommand(3));
+        addSequential(new WaitCommand(.25));
+        addSequential(new RetractPocketPiston());
         addSequential(new ShootAndRetract());
     }
 

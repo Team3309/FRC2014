@@ -23,6 +23,7 @@
 
 package org.team3309.frc2014.subsystems;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
@@ -61,7 +62,8 @@ public class Drive extends Subsystem {
 
     private Constant skimGain = new Constant("drive.skim_gain", .25);
 
-    private Constant gyroKp = new Constant("drive.gyro.kp", .01);
+    private Constant gyroKpAuto = new Constant("drive.gyro.kp.auto", .015);
+    private Constant gyroKpTele = new Constant("drive.gyro.kp.tele", .01);
     private Constant maxAngularVelocity = new Constant("drive.gyro.max_angular_velocity", 720);
 
     private Constant configSonarPort = new Constant("drive.sonar.port", 3);
@@ -92,6 +94,7 @@ public class Drive extends Subsystem {
 
     private boolean wasInMecanumBeforeBrake = false;
     private boolean brake = false;
+    private boolean gyroDisabled = false;
 
     private MaxSonarEZ4 sonar;
 
@@ -103,9 +106,9 @@ public class Drive extends Subsystem {
         leftBack = new OctanumModule("leftBack", new Victor(configLeftBackPort.getInt()), extender,
                 new Encoder(configLeftBackEncoderA.getInt(), configLeftBackEncoderB.getInt()), false);
         rightFront = new OctanumModule("rightFront", new Victor(configFrontRightPort.getInt()), extender,
-                new Encoder(configRightFrontEncoderA.getInt(), configRightFrontEncoderB.getInt()), true);
+                new Encoder(configRightFrontEncoderA.getInt(), configRightFrontEncoderB.getInt()), false);
         rightBack = new OctanumModule("rightBack", new Victor(configRightBackPort.getInt()), extender,
-                new Encoder(configRightBackEncoderA.getInt(), configRightBackEncoderB.getInt()), true);
+                new Encoder(configRightBackEncoderA.getInt(), configRightBackEncoderB.getInt()), false);
 
         gyro = Sensors.gyro;
 
@@ -190,13 +193,25 @@ public class Drive extends Subsystem {
             return;
         }
 
+        double originalTurn = turn;
+
         double desiredRotation = turn * 720;
         double actualRotation = getAngularVelocity();
         double rotateError = desiredRotation - actualRotation;
-        if (Math.abs(y) < .1)
-            turn = .005 * rotateError;
-        else
-            turn = .01 * rotateError;
+        if (Math.abs(y) < .1) {
+            if (DriverStation.getInstance().isAutonomous())
+                turn = (gyroKpAuto.getDouble() / 2) * rotateError;
+            else
+                turn = (gyroKpTele.getDouble() / 2) * rotateError;
+        } else {
+            if (DriverStation.getInstance().isAutonomous())
+                turn = gyroKpAuto.getDouble() * rotateError;
+            else
+                turn = (gyroKpTele.getDouble() / 2) * rotateError;
+        }
+
+        if (gyroDisabled)
+            turn = originalTurn;
 
         double[] speeds = new double[4];
         speeds[0] = x + y + turn; //left front
@@ -226,15 +241,26 @@ public class Drive extends Subsystem {
         if (isBrake()) {
             return;
         }
+        double originalTurn = turn;
 
         double desiredAngularVelocity = turn * maxAngularVelocity.getDouble();
         double angularVelocity = getAngularVelocity();
 
         //proportional correction
-        if (Math.abs(throttle) > .1)
-            turn = (desiredAngularVelocity - angularVelocity) * gyroKp.getDouble();
-        else
-            turn = (desiredAngularVelocity - angularVelocity) * (gyroKp.getDouble() / 2);
+        if (Math.abs(throttle) > .1) {
+            if (DriverStation.getInstance().isAutonomous())
+                turn = (desiredAngularVelocity - angularVelocity) * gyroKpAuto.getDouble();
+            else
+                turn = (desiredAngularVelocity - angularVelocity) * gyroKpTele.getDouble();
+        } else {
+            if (DriverStation.getInstance().isAutonomous())
+                turn = (desiredAngularVelocity - angularVelocity) * (gyroKpAuto.getDouble() / 2);
+            else
+                turn = (desiredAngularVelocity - angularVelocity) * (gyroKpTele.getDouble() / 2);
+        }
+
+        if (gyroDisabled)
+            turn = originalTurn;
 
         double t_left = throttle + turn;
         double t_right = throttle - turn;
@@ -376,4 +402,19 @@ public class Drive extends Subsystem {
         rightFront.resetEncoder();
     }
 
+    public void resetGyro() {
+        gyro.reset();
+    }
+
+    public void disableGyro() {
+        gyroDisabled = true;
+    }
+
+    public void enableGyro() {
+        gyroDisabled = false;
+    }
+
+    public boolean isGyroDisabled() {
+        return gyroDisabled;
+    }
 }

@@ -23,50 +23,47 @@
 
 package org.team3309.frc2014.commands.auto;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Kinect;
-import edu.wpi.first.wpilibj.Skeleton;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
-import org.team3309.frc2014.commands.catapult.ShootAndRetract;
-import org.team3309.frc2014.subsystems.Catapult;
+import edu.wpi.first.wpilibj.command.PIDCommand;
+import org.team3309.frc2014.subsystems.Drive;
 
 /**
- * Created by vmagro on 3/24/14.
+ * Created by vmagro on 4/4/14.
  */
-public class ShootWithKinect extends Command {
+public class DriveCounts extends PIDCommand {
 
-    private boolean finished = false;
+    private Drive drive;
+    private Timer doneTimer = new Timer();
 
-    private Kinect kinect = null;
+    public DriveCounts(int counts) {
+        super(.002, 0, 0);
+        drive = Drive.getInstance();
 
-    private Timer timer = new Timer();
+        requires(drive);
 
-    public ShootWithKinect() {
-        requires(Catapult.getInstance());
+        drive.resetEncoders();
+        setSetpoint(counts);
 
-        kinect = Kinect.getInstance();
+        setTimeout(5);
     }
 
     protected void initialize() {
-        timer.start();
+        drive.resetEncoders();
     }
 
     protected void execute() {
-        Skeleton skeleton = kinect.getSkeleton();
-        Skeleton.Joint leftHand = skeleton.GetHandLeft();
-        Skeleton.Joint rightHand = skeleton.GetHandRight();
-        Skeleton.Joint head = skeleton.GetHead();
-
-        //this will require the drive to raise their hands roughly vertical to get it to shoot
-        if (leftHand.getY() > head.getY() && rightHand.getY() > head.getY() || timer.get() > 5000000) {
-            new ShootAndRetract().start();
-            finished = true;
+        System.out.println("Encoder error: " + Math.abs(drive.getAverageCount() - getSetpoint()));
+        drive.printEncoders();
+        if (Math.abs(drive.getAverageCount() - getSetpoint()) < 10) {
+            doneTimer.start();
+        } else {
+            doneTimer.stop();
+            doneTimer.reset();
         }
     }
 
     protected boolean isFinished() {
-        return finished || !DriverStation.getInstance().isAutonomous();
+        return isTimedOut() || (doneTimer.get() > 500000); //.5 seconds
     }
 
     protected void end() {
@@ -75,5 +72,18 @@ public class ShootWithKinect extends Command {
 
     protected void interrupted() {
 
+    }
+
+    protected double returnPIDInput() {
+        return drive.getAverageCount();
+    }
+
+    protected void usePIDOutput(double v) {
+        drive.driveMecanum(0, v, 0);
+    }
+
+
+    public void setTimeouts(double seconds) {
+        super.setTimeout(seconds);
     }
 }

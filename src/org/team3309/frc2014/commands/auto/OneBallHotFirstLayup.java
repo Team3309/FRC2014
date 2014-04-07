@@ -23,57 +23,54 @@
 
 package org.team3309.frc2014.commands.auto;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Kinect;
-import edu.wpi.first.wpilibj.Skeleton;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 import org.team3309.frc2014.commands.catapult.ShootAndRetract;
-import org.team3309.frc2014.subsystems.Catapult;
+import org.team3309.frc2014.commands.drive.MecDriveForwardTime;
+import org.team3309.frc2014.commands.drive.SwitchMecanum;
+import org.team3309.frc2014.commands.intake.ExtendIntake;
+import org.team3309.frc2014.commands.intake.ExtendPocketPiston;
+import org.team3309.frc2014.subsystems.Drive;
 
 /**
- * Created by vmagro on 3/24/14.
+ * Created by vmagro on 3/17/14.
  */
-public class ShootWithKinect extends Command {
+public class OneBallHotFirstLayup extends CommandGroup {
 
-    private boolean finished = false;
+    public OneBallHotFirstLayup() {
+        addSequential(new SwitchMecanum(true));
+        addSequential(new MecDriveForwardTime(2.25));
+        addParallel(new Command() {
+            private boolean finished = false;
 
-    private Kinect kinect = null;
+            protected void initialize() {
 
-    private Timer timer = new Timer();
+            }
 
-    public ShootWithKinect() {
-        requires(Catapult.getInstance());
+            protected void execute() {
+                Drive.getInstance().driveTank(.25, 0);
+                finished = true;
+            }
 
-        kinect = Kinect.getInstance();
+            protected boolean isFinished() {
+                return finished;
+            }
+
+            protected void end() {
+
+            }
+
+            protected void interrupted() {
+
+            }
+        });
+        addSequential(new ExtendIntake());
+        addSequential(new WaitCommand(1));
+        addSequential(new ExtendPocketPiston());
+        addSequential(new WaitCommand(1)); //changed from .5 to 1
+        addSequential(new ShootAndRetract());
+        addSequential(new MobilityBonus());
     }
 
-    protected void initialize() {
-        timer.start();
-    }
-
-    protected void execute() {
-        Skeleton skeleton = kinect.getSkeleton();
-        Skeleton.Joint leftHand = skeleton.GetHandLeft();
-        Skeleton.Joint rightHand = skeleton.GetHandRight();
-        Skeleton.Joint head = skeleton.GetHead();
-
-        //this will require the drive to raise their hands roughly vertical to get it to shoot
-        if (leftHand.getY() > head.getY() && rightHand.getY() > head.getY() || timer.get() > 5000000) {
-            new ShootAndRetract().start();
-            finished = true;
-        }
-    }
-
-    protected boolean isFinished() {
-        return finished || !DriverStation.getInstance().isAutonomous();
-    }
-
-    protected void end() {
-
-    }
-
-    protected void interrupted() {
-
-    }
 }
