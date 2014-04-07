@@ -38,11 +38,55 @@ import java.util.Vector;
 /**
  * Created by vmagro on 4/6/14.
  */
-public class AutoInterpreter {
+public class AutoScript {
 
-    private AutoInterpreter() {
+    private int chooserNumber;
+    private String name, file;
 
+    private AutoScript(int chooserNumber, String name, String file) {
+        this.chooserNumber = chooserNumber;
+        this.name = name;
+        this.file = file;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getChooserNumber() {
+        return chooserNumber;
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public boolean hasHotOption() {
+        try {
+            String hotName = getFile().substring(0, getFile().indexOf(".txt"));
+            hotName += "_hot.txt";
+            return ((FileConnection) Connector.open("file:///" + hotName)).exists();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public AutoScript getHotOption() {
+        String hotName = getFile().substring(0, getFile().indexOf(".txt"));
+        hotName += "_hot.txt";
+        return new AutoScript(chooserNumber, name, hotName);
+    }
+
+    public Command getCommand() {
+        return new RunOnceCommand() {
+            protected void run() {
+                org.team3309.frc2014.AutoScript.run(AutoScript.this);
+            }
+        };
+    }
+
+    // below is static functionality
 
     public static AutoScript[] getAllScripts() {
         Vector vector = new Vector();
@@ -67,63 +111,13 @@ public class AutoInterpreter {
         return array;
     }
 
-    public static void run(AutoScript script) {
+    private static void run(AutoScript script) {
         try {
             InputStream is = ((FileConnection) Connector.open("file:///" + script.getFile())).openInputStream();
             interpret(is);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public static class AutoScript {
-
-        private int chooserNumber;
-        private String name, file;
-
-        public AutoScript(int chooserNumber, String name, String file) {
-            this.chooserNumber = chooserNumber;
-            this.name = name;
-            this.file = file;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public int getChooserNumber() {
-            return chooserNumber;
-        }
-
-        public String getFile() {
-            return file;
-        }
-
-        public boolean hasHotOption() {
-            try {
-                String hotName = getFile().substring(0, getFile().indexOf(".txt"));
-                hotName += "_hot.txt";
-                return ((FileConnection) Connector.open("file:///" + hotName)).exists();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return false;
-        }
-
-        public AutoScript getHotOption() {
-            String hotName = getFile().substring(0, getFile().indexOf(".txt"));
-            hotName += "_hot.txt";
-            return new AutoScript(chooserNumber, name, hotName);
-        }
-
-        public Command getCommand() {
-            return new RunOnceCommand() {
-                protected void run() {
-                    AutoInterpreter.run(AutoScript.this);
-                }
-            };
-        }
-
     }
 
     private static void interpret(InputStream is) throws IOException {

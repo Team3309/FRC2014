@@ -73,7 +73,7 @@ public class Gateway extends IterativeRobot {
     private JoystickButton brakeButton;
     private JoystickButton tankButton;
 
-    private AutoInterpreter.AutoScript autoScript;
+    private AutoScript autoScript;
     private Command autonomousCommand;
 
     private boolean hotStarted = false;
@@ -125,7 +125,7 @@ public class Gateway extends IterativeRobot {
         Drive.getInstance().printEncoders();
 
         DriverStationLCD lcd = DriverStationLCD.getInstance();
-        AutoInterpreter.AutoScript[] scripts = AutoInterpreter.getAllScripts();
+        AutoScript[] scripts = AutoScript.getAllScripts();
         for (int i = 0; i < scripts.length; i++) {
             DriverStationLCD.Line line = null;
             switch (scripts[i].getChooserNumber()) {
@@ -157,7 +157,7 @@ public class Gateway extends IterativeRobot {
     public void autonomousInit() {
         Sensors.gyro.reset();
 
-        AutoInterpreter.AutoScript[] scripts = AutoInterpreter.getAllScripts();
+        AutoScript[] scripts = AutoScript.getAllScripts();
         for (int i = 0; i < scripts.length; i++) {
             if (DriverStation.getInstance().getDigitalIn(scripts[i].getChooserNumber())) {
                 autoScript = scripts[i];
