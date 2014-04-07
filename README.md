@@ -84,6 +84,14 @@ winch
 
 print <message>
 ```
+There is also a special command ```timeout``` which is used to run a set of commands for a certain amount of time.
+For example: to drive forward for 2.25 seconds, we would use:  
+```
+#this will drive forward at 70% for 2.25 seconds
+timeout 2.25 {
+  drive 0,.7
+}
+```
 
 Comments can either be on their own line prefixed by // OR # or can be at the end of a line when prefixed by // OR #.
 There are currently no block comments implemented.
