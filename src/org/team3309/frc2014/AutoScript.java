@@ -265,6 +265,14 @@ public class AutoScript {
                 System.out.println("TODO retracting pocket");
             }
         }
+
+        //run command syntactic sugar
+        if(line.startsWith("run")){
+            String after = getAfter(line, "run");
+            if(after.equals("intake")){
+                System.out.println("TODO running intake");
+            }
+        }
     }
 
     private static String preprocess(String line) {
