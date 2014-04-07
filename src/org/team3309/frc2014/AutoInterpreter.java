@@ -110,7 +110,7 @@ public class AutoInterpreter {
 
     }
 
-    public static void interpret(InputStream is) throws IOException {
+    private static void interpret(InputStream is) throws IOException {
         boolean inTimeoutBlock = false;
         double timeout = 0;
         long startTimeoutTime = 0;
