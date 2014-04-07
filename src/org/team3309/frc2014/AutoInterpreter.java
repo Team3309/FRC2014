@@ -96,6 +96,17 @@ public class AutoInterpreter {
             return file;
         }
 
+        public boolean hasHotOption() {
+            try {
+                String hotName = getFile().substring(0, getFile().indexOf(".txt"));
+                hotName += "_hot.txt";
+                return ((FileConnection) Connector.open("file:///" + hotName)).exists();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
     }
 
     public static void interpret(InputStream is) throws IOException {
