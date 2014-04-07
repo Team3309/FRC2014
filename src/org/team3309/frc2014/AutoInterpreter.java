@@ -25,6 +25,8 @@ package org.team3309.frc2014;
 
 import com.sun.squawk.io.BufferedReader;
 import com.sun.squawk.microedition.io.FileConnection;
+import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.commands.RunOnceCommand;
 import org.team3309.friarlib.util.Util;
 
 import javax.microedition.io.Connector;
@@ -106,6 +108,14 @@ public class AutoInterpreter {
                 e.printStackTrace();
             }
             return false;
+        }
+
+        public Command getCommand() {
+            return new RunOnceCommand() {
+                protected void run() {
+                    AutoInterpreter.run(AutoScript.this);
+                }
+            };
         }
 
     }
