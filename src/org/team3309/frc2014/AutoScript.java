@@ -27,6 +27,10 @@ import com.sun.squawk.io.BufferedReader;
 import com.sun.squawk.microedition.io.FileConnection;
 import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.commands.RunOnceCommand;
+import org.team3309.frc2014.commands.catapult.PrepShot;
+import org.team3309.frc2014.commands.catapult.Shoot;
+import org.team3309.frc2014.commands.intake.*;
+import org.team3309.frc2014.subsystems.Drive;
 import org.team3309.friarlib.util.Util;
 
 import javax.microedition.io.Connector;
@@ -190,10 +194,10 @@ public class AutoScript {
 
         //catapult commands
         if (line.startsWith("shoot")) {
-            System.out.println("TODO Shoot");
+            new Shoot().start();
         }
         if (line.startsWith("winch")) {
-            System.out.println("TODO Winching");
+            new PrepShot().start();
         }
 
         //wait command
@@ -219,11 +223,11 @@ public class AutoScript {
         if (line.startsWith("intake")) {
             String after = getAfter(line, "intake");
             if (after.equals("extend")) {
-                System.out.println("TODO Extending intake");
+                new ExtendIntake().start();
             } else if (after.equals("retract")) {
-                System.out.println("TODO Retracting intake");
+                new RetractIntake().start();
             } else if (after.equals("run")) {
-                System.out.println("TODO Running intake");
+                new RunIntake().start();
             }
         }
 
@@ -231,9 +235,9 @@ public class AutoScript {
         if (line.startsWith("pocket")) {
             String after = getAfter(line, "pocket");
             if (after.equals("extend")) {
-                System.out.println("TODO Extending pocket");
+                new ExtendPocketPiston().start();
             } else if (after.equals("retract")) {
-                System.out.println("TODO Retracting pocket");
+                new RetractPocketPiston().start();
             }
         }
 
@@ -243,16 +247,16 @@ public class AutoScript {
             String[] params = Util.split(after, ",");
             double throttle = Double.parseDouble(params[0]);
             double turn = Double.parseDouble(params[1]);
-            System.out.println("TODO drive throttle=" + throttle + " turn=" + turn);
+            Drive.getInstance().driveTank(throttle, turn);
         }
 
         //extend command syntactic sugar
         if (line.startsWith("extend")) {
             String after = getAfter(line, "extend");
             if (after.equals("intake")) {
-                System.out.println("TODO Extending intake");
+                new ExtendIntake().start();
             } else if (after.equals("pocket")) {
-                System.out.println("TODO Extending pocket");
+                new ExtendPocketPiston().start();
             }
         }
 
@@ -260,17 +264,17 @@ public class AutoScript {
         if (line.startsWith("retract")) {
             String after = getAfter(line, "retract");
             if (after.equals("intake")) {
-                System.out.println("TODO retracting intake");
+                new RetractIntake().start();
             } else if (after.equals("pocket")) {
-                System.out.println("TODO retracting pocket");
+                new RetractPocketPiston().start();
             }
         }
 
         //run command syntactic sugar
-        if(line.startsWith("run")){
+        if (line.startsWith("run")) {
             String after = getAfter(line, "run");
-            if(after.equals("intake")){
-                System.out.println("TODO running intake");
+            if (after.equals("intake")) {
+                new RunIntake().start();
             }
         }
     }
