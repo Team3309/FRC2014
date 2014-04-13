@@ -1,0 +1,4 @@
+timeout .5 {
+    drive 0,.7
+}
+drive 0,0

@@ -29,7 +29,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.team3309.frc2014.commands.auto.*;
 import org.team3309.frc2014.commands.catapult.PrepShot;
 import org.team3309.frc2014.commands.catapult.Shoot;
 import org.team3309.frc2014.commands.catapult.ShootAndRetract;
@@ -74,9 +73,10 @@ public class Gateway extends IterativeRobot {
     private JoystickButton brakeButton;
     private JoystickButton tankButton;
 
+    private AutoScript autoScript;
     private Command autonomousCommand;
 
-    private boolean oneBallStarted = false;
+    private boolean hotStarted = false;
     private boolean shouldDoOneBall = false;
     private boolean extendedIntake = false;
 
@@ -122,41 +122,51 @@ public class Gateway extends IterativeRobot {
     }
 
     public void disabledPeriodic() {
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser1, 1,
-                HotGoalDetector.getInstance().isRightHot() ? "Hot    " : "Not hot");
-
-        DriverStationLCD.getInstance().updateLCD();
-
         Drive.getInstance().printEncoders();
+
+        DriverStationLCD lcd = DriverStationLCD.getInstance();
+        AutoScript[] scripts = AutoScript.getAllScripts();
+        for (int i = 0; i < scripts.length; i++) {
+            DriverStationLCD.Line line = null;
+            switch (scripts[i].getChooserNumber()) {
+                case 1:
+                    line = DriverStationLCD.Line.kUser1;
+                    break;
+                case 2:
+                    line = DriverStationLCD.Line.kUser2;
+                    break;
+                case 3:
+                    line = DriverStationLCD.Line.kUser3;
+                    break;
+                case 4:
+                    line = DriverStationLCD.Line.kUser4;
+                    break;
+                case 5:
+                    line = DriverStationLCD.Line.kUser5;
+                    break;
+                case 6:
+                    line = DriverStationLCD.Line.kUser6;
+                    break;
+            }
+            lcd.println(line, 3, scripts[i].getName());
+            if (DriverStation.getInstance().getDigitalIn(scripts[i].getChooserNumber()))
+                lcd.println(line, 1, "*");
+        }
     }
 
     public void autonomousInit() {
         Sensors.gyro.reset();
 
-        DriverStation ds = DriverStation.getInstance();
-        if (ds.getDigitalIn(1)) {
-            autonomousCommand = new MobilityBonus();
-            shouldDoOneBall = false;
-        } else if (ds.getDigitalIn(2)) {
-            autonomousCommand = null;
-            shouldDoOneBall = true;
-        } else if (ds.getDigitalIn(3)) {
-            autonomousCommand = new KinectLayup();
-            shouldDoOneBall = false;
-        } else if (ds.getDigitalIn(4)) {
-            autonomousCommand = new KinectRunningAuto();
-            shouldDoOneBall = false;
-        } else {
-            autonomousCommand = null;
-            shouldDoOneBall = false;
+        AutoScript[] scripts = AutoScript.getAllScripts();
+        for (int i = 0; i < scripts.length; i++) {
+            if (DriverStation.getInstance().getDigitalIn(scripts[i].getChooserNumber())) {
+                autoScript = scripts[i];
+                autonomousCommand = scripts[i].getCommand();
+            }
         }
 
-        oneBallStarted = false;
-        extendedIntake = false;
-
-        if (!shouldDoOneBall && autonomousCommand != null)
+        if (autonomousCommand != null)
             autonomousCommand.start();
-
     }
 
     /**
@@ -165,7 +175,7 @@ public class Gateway extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
 
-        if (shouldDoOneBall) {
+        if (autoScript != null && autoScript.hasHotOption()) {
             if (!extendedIntake) {
                 Intake.getInstance().extend();
                 Timer.delay(.5);
@@ -175,17 +185,18 @@ public class Gateway extends IterativeRobot {
                 Timer.delay(1); //delay for hot goal to switch
             }
 
-            if (!oneBallStarted) {
+            if (!hotStarted) {
                 if (HotGoalDetector.getInstance().isRightHot()) {
                     System.out.println("Goal is hot");
-                    autonomousCommand = new OneBallHotFirstLayup();
+                    autoScript = autoScript.getHotOption();
+                    autonomousCommand = autoScript.getCommand();
                     autonomousCommand.start();
-                    oneBallStarted = true;
+                    hotStarted = true;
                 } else {
                     System.out.println("Not hot");
-                    autonomousCommand = new OneBallHotSecondLayup();
+                    autonomousCommand = autoScript.getCommand();
                     autonomousCommand.start();
-                    oneBallStarted = true;
+                    hotStarted = true;
                 }
             }
         }
