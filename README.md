@@ -3,6 +3,9 @@ FRC TEAM 3309
 
 This is FRC Team 3309's code for the 2014 FRC game, Aerial Assist.
 
+The master branch should be used for __stable__ code that is suitable for use during the competition.
+To develop new features, make a new branch and submit a pull request when it is suitable for merging into master.
+
 Compilation
 -----------
 
