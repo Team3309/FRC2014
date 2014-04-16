@@ -1,10 +1,12 @@
 catapult.fullback.port=10
 catapult.winch.motors=5,6
 catapult.winch.solenoid=4
-catapult.winch.solenoid.module=1
+catapult.winch.solenoid.module=2
 catapult.latch.solenoid=2
-catapult.latch.solenoid.module=1
+catapult.latch.solenoid.module=2
 catapult.latch.sensor=11
+catapult.adjust.solenoid=1
+catapult.adjust.solenoid.module=2
 
 drive.left.front=1
 drive.left.back=2
@@ -21,7 +23,7 @@ drive.encoder.right.back.a=2
 drive.encoder.right.back.b=3
 
 drive.solenoid=3
-drive.solenoid.module=1
+drive.solenoid.module=2
 
 drive.skim_gain=.25
 drive.gyro.kp.auto=.02
@@ -36,9 +38,9 @@ drive.mecanum.on=false
 intake.motors=7,8,9,10
 intake.motors.reversed=1,2
 intake.solenoid=6,7
-intake.solenoid.module=1
+intake.solenoid.module=2
 intake.pocket=5
-intake.pocket.module=1
+intake.pocket.module=2
 
 compressor.relay=1
 compressor.sensor=1
