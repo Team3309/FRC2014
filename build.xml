@@ -93,4 +93,12 @@
     For more information on using ant, see http://ant.apache.org.
 
     -->
+
+    <target name="deploy-files">
+        <ftp server="10.33.9.2"
+             userid="anonymous"
+             password="">
+            <fileset dir="res"/>
+        </ftp>
+    </target>
 </project>

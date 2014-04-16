@@ -1,0 +1,7 @@
+timeout 2.25 {
+    drive .7,0
+}
+drive .25,0
+shoot
+winch
+drive 0,0
