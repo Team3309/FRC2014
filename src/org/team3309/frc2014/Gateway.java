@@ -114,11 +114,11 @@ public class Gateway extends IterativeRobot {
         layupButton = new JoystickButton(operator, XboxController.BUTTON_BACK);
 
         //guitar bindings
-        winchButton = new JoystickButton(guitar, Guitar.YELLOW_LOW);
-        fireButton = new JoystickButton(guitar, Guitar.RED_LOW);
-        toggleIntakeButton = new JoystickButton(guitar, Guitar.GREEN);
-        togglePocketPistonButton = new JoystickButton(guitar, Guitar.GREEN_LOW);
-        autoShootButton = new JoystickButton(guitar, Guitar.BLUE_LOW);
+        gwinchButton = new JoystickButton(guitar, Guitar.YELLOW_LOW);
+        gfireButton = new JoystickButton(guitar, Guitar.RED_LOW);
+        gtoggleIntakeButton = new JoystickButton(guitar, Guitar.GREEN);
+        gtogglePocketPistonButton = new JoystickButton(guitar, Guitar.GREEN_LOW);
+        gautoShootButton = new JoystickButton(guitar, Guitar.BLUE_LOW);
         //TODO shot adjust buttons
 
         brakeButton = new JoystickButton(driver, XboxController.BUTTON_LEFT_BUMPER);
