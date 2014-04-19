@@ -61,6 +61,7 @@ public class Gateway extends IterativeRobot {
     private Intake intake;
     private XboxController driver;
     private XboxController operator;
+    private Guitar guitar;
 
     private JoystickButton winchButton;
     private JoystickButton fireButton;
@@ -69,6 +70,14 @@ public class Gateway extends IterativeRobot {
     private JoystickButton autoShootButton;
     private JoystickButton longShotButton;
     private JoystickButton layupButton;
+
+    private JoystickButton gwinchButton;
+    private JoystickButton gfireButton;
+    private JoystickButton gtoggleIntakeButton;
+    private JoystickButton gtogglePocketPistonButton;
+    private JoystickButton gautoShootButton;
+    private JoystickButton glongShotButton;
+    private JoystickButton glayupButton;
 
     private JoystickButton brakeButton;
     private JoystickButton tankButton;
@@ -93,6 +102,7 @@ public class Gateway extends IterativeRobot {
         intake = Intake.getInstance();
         driver = ControlBoard.getInstance().driver;
         operator = ControlBoard.getInstance().operator;
+        guitar = ControlBoard.getInstance().guitar;
 
         //bind buttons to JoystickButton objects
         winchButton = new JoystickButton(operator, XboxController.BUTTON_Y);
@@ -102,6 +112,14 @@ public class Gateway extends IterativeRobot {
         autoShootButton = new JoystickButton(operator, XboxController.BUTTON_LEFT_BUMPER);
         longShotButton = new JoystickButton(operator, XboxController.BUTTON_START);
         layupButton = new JoystickButton(operator, XboxController.BUTTON_BACK);
+
+        //guitar bindings
+        winchButton = new JoystickButton(guitar, Guitar.YELLOW_LOW);
+        fireButton = new JoystickButton(guitar, Guitar.RED_LOW);
+        toggleIntakeButton = new JoystickButton(guitar, Guitar.GREEN);
+        togglePocketPistonButton = new JoystickButton(guitar, Guitar.GREEN_LOW);
+        autoShootButton = new JoystickButton(guitar, Guitar.BLUE_LOW);
+        //TODO shot adjust buttons
 
         brakeButton = new JoystickButton(driver, XboxController.BUTTON_LEFT_BUMPER);
         tankButton = new JoystickButton(driver, XboxController.BUTTON_RIGHT_BUMPER);

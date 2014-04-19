@@ -35,9 +35,11 @@ public class ControlBoard {
 
     private Constant configDriverController = new Constant("js.driver", 1);
     private Constant configOperatorController = new Constant("js.operator", 2);
+    private Constant configGuitarController = new Constant("js.guitar", 3);
 
     public XboxController driver = new XboxController(configDriverController.getInt());
     public XboxController operator = new XboxController(configOperatorController.getInt());
+    public Guitar guitar = new Guitar(configGuitarController.getInt());
 
     private static ControlBoard instance;
 
