@@ -97,25 +97,24 @@ public class Guitar extends GenericHID {
     }
 
     public boolean getGreen() {
-        return getRawButton(GREEN);
+        return getRawButton(GREEN) && !isLow();
     }
 
     public boolean getRed() {
-        return getRawButton(RED);
+        return getRawButton(RED) && !isLow();
     }
 
     public boolean getYellow() {
-        return getRawButton(YELLOW);
+        return getRawButton(YELLOW) && !isLow();
     }
 
     public boolean getBlue() {
-        return getRawButton(BLUE);
+        return getRawButton(BLUE) && !isLow();
     }
 
     public boolean getOrange() {
-        return getRawButton(ORANGE);
+        return getRawButton(ORANGE) && !isLow();
     }
-
 
     public boolean getGreenLow() {
         return getRawButton(GREEN_LOW);
@@ -137,6 +136,9 @@ public class Guitar extends GenericHID {
         return getRawButton(ORANGE_LOW);
     }
 
+    public boolean isLow() {
+        return getRawButton(9);
+    }
 
     public boolean getStart() {
         return getRawButton(START);
