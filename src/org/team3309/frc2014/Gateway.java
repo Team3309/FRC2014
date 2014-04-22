@@ -29,7 +29,9 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.team3309.frc2014.commands.catapult.*;
+import org.team3309.frc2014.commands.catapult.PrepShot;
+import org.team3309.frc2014.commands.catapult.Shoot;
+import org.team3309.frc2014.commands.catapult.ShootAndRetract;
 import org.team3309.frc2014.commands.drive.EngageBrake;
 import org.team3309.frc2014.commands.drive.ReleaseBrake;
 import org.team3309.frc2014.commands.drive.SwitchMecanum;
@@ -68,8 +70,6 @@ public class Gateway extends IterativeRobot {
     private JoystickButton toggleIntakeButton;
     private JoystickButton togglePocketPistonButton;
     private JoystickButton autoShootButton;
-    private JoystickButton longShotButton;
-    private JoystickButton layupButton;
 
     private JoystickButton gwinchButton;
     private JoystickButton gfireButton;
@@ -110,8 +110,6 @@ public class Gateway extends IterativeRobot {
         toggleIntakeButton = new JoystickButton(operator, XboxController.BUTTON_B);
         togglePocketPistonButton = new JoystickButton(operator, XboxController.BUTTON_RIGHT_BUMPER);
         autoShootButton = new JoystickButton(operator, XboxController.BUTTON_LEFT_BUMPER);
-        longShotButton = new JoystickButton(operator, XboxController.BUTTON_START);
-        layupButton = new JoystickButton(operator, XboxController.BUTTON_BACK);
 
         //guitar bindings
         gwinchButton = new JoystickButton(guitar, Guitar.YELLOW_LOW);
@@ -131,8 +129,6 @@ public class Gateway extends IterativeRobot {
         toggleIntakeButton.whenPressed(new ToggleIntake());
         togglePocketPistonButton.whenPressed(new TogglePocketPiston());
         autoShootButton.whenPressed(new ShootAndRetract());
-        longShotButton.whenPressed(new ActivateLongShot());
-        layupButton.whenPressed(new ActivateLayupShot());
 
         brakeButton.whenPressed(new EngageBrake());
         brakeButton.whenReleased(new ReleaseBrake());
