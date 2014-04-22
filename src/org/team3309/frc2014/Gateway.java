@@ -64,19 +64,12 @@ public class Gateway extends IterativeRobot {
     private XboxController operator;
     private Guitar guitar;
 
-    private JoystickButton winchButton;
-    private JoystickButton fireButton;
-    private JoystickButton toggleIntakeButton;
-    private JoystickButton togglePocketPistonButton;
-    private JoystickButton autoShootButton;
-    private JoystickButton dropGoalieButton;
-
-    private JoystickButton gwinchButton;
-    private JoystickButton gfireButton;
-    private JoystickButton gtoggleIntakeButton;
-    private JoystickButton gtogglePocketPistonButton;
-    private JoystickButton gautoShootButton;
-    private JoystickButton gDropGoalieButton;
+    private OperatorButton winchButton;
+    private OperatorButton fireButton;
+    private OperatorButton toggleIntakeButton;
+    private OperatorButton togglePocketPistonButton;
+    private OperatorButton autoShootButton;
+    private OperatorButton dropGoalieButton;
 
     private JoystickButton brakeButton;
     private JoystickButton tankButton;
@@ -102,22 +95,15 @@ public class Gateway extends IterativeRobot {
         operator = ControlBoard.getInstance().operator;
         guitar = ControlBoard.getInstance().guitar;
 
-        //bind buttons to JoystickButton objects
-        winchButton = new JoystickButton(operator, XboxController.BUTTON_Y);
-        fireButton = new JoystickButton(operator, XboxController.BUTTON_A);
-        toggleIntakeButton = new JoystickButton(operator, XboxController.BUTTON_B);
-        togglePocketPistonButton = new JoystickButton(operator, XboxController.BUTTON_RIGHT_BUMPER);
-        autoShootButton = new JoystickButton(operator, XboxController.BUTTON_LEFT_BUMPER);
-        dropGoalieButton = new JoystickButton(operator, XboxController.BUTTON_START);
+        //bind buttons to OperatorButton objects
+        winchButton = new OperatorButton(operator, XboxController.BUTTON_Y, guitar, Guitar.YELLOW_LOW);
+        fireButton = new OperatorButton(operator, XboxController.BUTTON_A, guitar, Guitar.RED_LOW);
+        toggleIntakeButton = new OperatorButton(operator, XboxController.BUTTON_B, guitar, Guitar.GREEN);
+        togglePocketPistonButton = new OperatorButton(operator, XboxController.BUTTON_RIGHT_BUMPER, guitar, Guitar.GREEN_LOW);
+        autoShootButton = new OperatorButton(operator, XboxController.BUTTON_LEFT_BUMPER, guitar, Guitar.BLUE_LOW);
+        dropGoalieButton = new OperatorButton(operator, XboxController.BUTTON_START, guitar, Guitar.START);
 
-        //guitar bindings
-        gwinchButton = new JoystickButton(guitar, Guitar.YELLOW_LOW);
-        gfireButton = new JoystickButton(guitar, Guitar.RED_LOW);
-        gtoggleIntakeButton = new JoystickButton(guitar, Guitar.GREEN);
-        gtogglePocketPistonButton = new JoystickButton(guitar, Guitar.GREEN_LOW);
-        gautoShootButton = new JoystickButton(guitar, Guitar.BLUE_LOW);
-        gDropGoalieButton = new JoystickButton(guitar, Guitar.START);
-
+        //driver button mapping
         brakeButton = new JoystickButton(driver, XboxController.BUTTON_LEFT_BUMPER);
         tankButton = new JoystickButton(driver, XboxController.BUTTON_RIGHT_BUMPER);
 
@@ -129,14 +115,6 @@ public class Gateway extends IterativeRobot {
         togglePocketPistonButton.whenPressed(new TogglePocketPiston());
         autoShootButton.whenPressed(new ShootAndRetract());
         dropGoalieButton.whenPressed(new DropGoaliePole());
-
-        //guitar button binding to actions
-        gwinchButton.whenPressed(new PrepShot());
-        gfireButton.whenPressed(new Shoot());
-        gtoggleIntakeButton.whenPressed(new ToggleIntake());
-        gtogglePocketPistonButton.whenPressed(new TogglePocketPiston());
-        gautoShootButton.whenPressed(new ShootAndRetract());
-        gDropGoalieButton.whenPressed(new DropGoaliePole());
 
         //driver button bindings
         brakeButton.whenPressed(new EngageBrake());
