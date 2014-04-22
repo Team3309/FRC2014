@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import org.team3309.frc2014.commands.catapult.DropGoaliePole;
 import org.team3309.frc2014.commands.catapult.PrepShot;
 import org.team3309.frc2014.commands.catapult.Shoot;
 import org.team3309.frc2014.commands.catapult.ShootAndRetract;
@@ -68,12 +69,14 @@ public class Gateway extends IterativeRobot {
     private JoystickButton toggleIntakeButton;
     private JoystickButton togglePocketPistonButton;
     private JoystickButton autoShootButton;
+    private JoystickButton dropGoalieButton;
 
     private JoystickButton gwinchButton;
     private JoystickButton gfireButton;
     private JoystickButton gtoggleIntakeButton;
     private JoystickButton gtogglePocketPistonButton;
     private JoystickButton gautoShootButton;
+    private JoystickButton gDropGoalieButton;
 
     private JoystickButton brakeButton;
     private JoystickButton tankButton;
@@ -105,6 +108,7 @@ public class Gateway extends IterativeRobot {
         toggleIntakeButton = new JoystickButton(operator, XboxController.BUTTON_B);
         togglePocketPistonButton = new JoystickButton(operator, XboxController.BUTTON_RIGHT_BUMPER);
         autoShootButton = new JoystickButton(operator, XboxController.BUTTON_LEFT_BUMPER);
+        dropGoalieButton = new JoystickButton(operator, XboxController.BUTTON_START);
 
         //guitar bindings
         gwinchButton = new JoystickButton(guitar, Guitar.YELLOW_LOW);
@@ -112,6 +116,7 @@ public class Gateway extends IterativeRobot {
         gtoggleIntakeButton = new JoystickButton(guitar, Guitar.GREEN);
         gtogglePocketPistonButton = new JoystickButton(guitar, Guitar.GREEN_LOW);
         gautoShootButton = new JoystickButton(guitar, Guitar.BLUE_LOW);
+        gDropGoalieButton = new JoystickButton(guitar, Guitar.START);
 
         brakeButton = new JoystickButton(driver, XboxController.BUTTON_LEFT_BUMPER);
         tankButton = new JoystickButton(driver, XboxController.BUTTON_RIGHT_BUMPER);
@@ -123,6 +128,7 @@ public class Gateway extends IterativeRobot {
         toggleIntakeButton.whenPressed(new ToggleIntake());
         togglePocketPistonButton.whenPressed(new TogglePocketPiston());
         autoShootButton.whenPressed(new ShootAndRetract());
+        dropGoalieButton.whenPressed(new DropGoaliePole());
 
         //guitar button binding to actions
         gwinchButton.whenPressed(new PrepShot());
@@ -130,6 +136,7 @@ public class Gateway extends IterativeRobot {
         gtoggleIntakeButton.whenPressed(new ToggleIntake());
         gtogglePocketPistonButton.whenPressed(new TogglePocketPiston());
         gautoShootButton.whenPressed(new ShootAndRetract());
+        gDropGoalieButton.whenPressed(new DropGoaliePole());
 
         //driver button bindings
         brakeButton.whenPressed(new EngageBrake());
