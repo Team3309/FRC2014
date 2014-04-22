@@ -58,8 +58,6 @@ public class Gateway extends IterativeRobot {
     private static Constant configCompressorRelay = new Constant("compressor.relay", 1);
     private static Constant configCompressorSensor = new Constant("compressor.sensor", 1);
 
-    private Compressor compressor;
-    private Catapult catapult;
     private Intake intake;
     private XboxController driver;
     private XboxController operator;
@@ -76,8 +74,6 @@ public class Gateway extends IterativeRobot {
     private JoystickButton gtoggleIntakeButton;
     private JoystickButton gtogglePocketPistonButton;
     private JoystickButton gautoShootButton;
-    private JoystickButton glongShotButton;
-    private JoystickButton glayupButton;
 
     private JoystickButton brakeButton;
     private JoystickButton tankButton;
@@ -86,7 +82,6 @@ public class Gateway extends IterativeRobot {
     private Command autonomousCommand;
 
     private boolean hotStarted = false;
-    private boolean shouldDoOneBall = false;
     private boolean extendedIntake = false;
 
     /**
@@ -95,10 +90,10 @@ public class Gateway extends IterativeRobot {
      */
     public void robotInit() {
         // Initialize all subsystems
-        compressor = new Compressor(configCompressorRelay.getInt(), configCompressorSensor.getInt());
+        Compressor compressor = new Compressor(configCompressorRelay.getInt(), configCompressorSensor.getInt());
         compressor.start();
 
-        catapult = Catapult.getInstance();
+        Catapult.getInstance();
         intake = Intake.getInstance();
         driver = ControlBoard.getInstance().driver;
         operator = ControlBoard.getInstance().operator;
