@@ -117,7 +117,6 @@ public class Gateway extends IterativeRobot {
         gtoggleIntakeButton = new JoystickButton(guitar, Guitar.GREEN);
         gtogglePocketPistonButton = new JoystickButton(guitar, Guitar.GREEN_LOW);
         gautoShootButton = new JoystickButton(guitar, Guitar.BLUE_LOW);
-        //TODO shot adjust buttons
 
         brakeButton = new JoystickButton(driver, XboxController.BUTTON_LEFT_BUMPER);
         tankButton = new JoystickButton(driver, XboxController.BUTTON_RIGHT_BUMPER);
@@ -130,11 +129,18 @@ public class Gateway extends IterativeRobot {
         togglePocketPistonButton.whenPressed(new TogglePocketPiston());
         autoShootButton.whenPressed(new ShootAndRetract());
 
+        //guitar button binding to actions
+        gwinchButton.whenPressed(new PrepShot());
+        gfireButton.whenPressed(new Shoot());
+        gtoggleIntakeButton.whenPressed(new ToggleIntake());
+        gtogglePocketPistonButton.whenPressed(new TogglePocketPiston());
+        gautoShootButton.whenPressed(new ShootAndRetract());
+
+        //driver button bindings
         brakeButton.whenPressed(new EngageBrake());
         brakeButton.whenReleased(new ReleaseBrake());
         tankButton.whenPressed(new SwitchMecanum(false));
         tankButton.whenReleased(new SwitchMecanum(true));
-
 
         Drive.getInstance().enableMecanum();
     }
