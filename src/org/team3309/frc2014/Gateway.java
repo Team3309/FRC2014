@@ -24,11 +24,19 @@
 package org.team3309.frc2014;
 
 
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStationLCD;
+import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import org.team3309.frc2014.commands.AutoCommand;
+import org.team3309.frc2014.commands.OneBallLayupCheesy;
+import org.team3309.frc2014.commands.auto.MobilityBonus;
+import org.team3309.frc2014.commands.auto.OneBallHotFirstLayup;
 import org.team3309.frc2014.commands.catapult.PrepShot;
 import org.team3309.frc2014.commands.catapult.Shoot;
 import org.team3309.frc2014.commands.catapult.ShootAndRetract;
@@ -40,7 +48,6 @@ import org.team3309.frc2014.commands.intake.ToggleIntake;
 import org.team3309.frc2014.commands.intake.TogglePocketPiston;
 import org.team3309.frc2014.subsystems.Catapult;
 import org.team3309.frc2014.subsystems.Drive;
-import org.team3309.frc2014.subsystems.HotGoalDetector;
 import org.team3309.frc2014.subsystems.Intake;
 import org.team3309.friarlib.XboxController;
 import org.team3309.friarlib.constants.Constant;
@@ -72,8 +79,14 @@ public class Gateway extends IterativeRobot {
     private JoystickButton brakeButton;
     private JoystickButton tankButton;
 
-    private AutoScript autoScript;
-    private Command autonomousCommand;
+    private AutoCommand[] autoCommands = new AutoCommand[]{
+            new AutoCommand("Mobility Bonus", new MobilityBonus()),
+            new AutoCommand("One Ball Layup (no hot)", new OneBallHotFirstLayup()),
+            new AutoCommand("One Ball Layup (Cheesy)", new OneBallLayupCheesy()),
+            new AutoCommand("Do nothing", new WaitCommand(8))
+    };
+
+    private Command autoCommand;
 
     private boolean hotStarted = false;
     private boolean extendedIntake = false;
@@ -125,10 +138,9 @@ public class Gateway extends IterativeRobot {
         Drive.getInstance().printEncoders();
 
         DriverStationLCD lcd = DriverStationLCD.getInstance();
-        AutoScript[] scripts = AutoScript.getAllScripts();
-        for (int i = 0; i < scripts.length; i++) {
+        for (int i = 0; i < autoCommands.length; i++) {
             DriverStationLCD.Line line = null;
-            switch (scripts[i].getChooserNumber()) {
+            switch (i) {
                 case 1:
                     line = DriverStationLCD.Line.kUser1;
                     break;
@@ -148,8 +160,8 @@ public class Gateway extends IterativeRobot {
                     line = DriverStationLCD.Line.kUser6;
                     break;
             }
-            lcd.println(line, 3, scripts[i].getName());
-            if (DriverStation.getInstance().getDigitalIn(scripts[i].getChooserNumber()))
+            lcd.println(line, 3, autoCommands[i].getName());
+            if (DriverStation.getInstance().getDigitalIn(i))
                 lcd.println(line, 1, "*");
         }
     }
@@ -157,16 +169,14 @@ public class Gateway extends IterativeRobot {
     public void autonomousInit() {
         Sensors.gyro.reset();
 
-        AutoScript[] scripts = AutoScript.getAllScripts();
-        for (int i = 0; i < scripts.length; i++) {
-            if (DriverStation.getInstance().getDigitalIn(scripts[i].getChooserNumber())) {
-                autoScript = scripts[i];
-                autonomousCommand = scripts[i].getCommand();
+        for (int i = 0; i < autoCommands.length; i++) {
+            if (DriverStation.getInstance().getDigitalIn(i)) {
+                autoCommand = autoCommands[i].getCommand();
             }
         }
 
-        if (autonomousCommand != null)
-            autonomousCommand.start();
+        if (autoCommand != null)
+            autoCommand.start();
     }
 
     /**
@@ -175,41 +185,14 @@ public class Gateway extends IterativeRobot {
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
 
-        if (autoScript != null && autoScript.hasHotOption()) {
-            if (!extendedIntake) {
-                Intake.getInstance().extend();
-                Timer.delay(.5);
-                extendedIntake = true;
-
-                System.out.println("Waiting for hot goal after extending intake");
-                Timer.delay(1); //delay for hot goal to switch
-            }
-
-            if (!hotStarted) {
-                if (HotGoalDetector.getInstance().isRightHot()) {
-                    System.out.println("Goal is hot");
-                    autoScript = autoScript.getHotOption();
-                    autonomousCommand = autoScript.getCommand();
-                    autonomousCommand.start();
-                    hotStarted = true;
-                } else {
-                    System.out.println("Not hot");
-                    autonomousCommand = autoScript.getCommand();
-                    autonomousCommand.start();
-                    hotStarted = true;
-                }
-            }
-        }
-
-
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser1, 1, String.valueOf(Drive.getInstance().getAverageCount()));
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, String.valueOf(Sensors.gyro.getAngularRateOfChange()));
         DriverStationLCD.getInstance().updateLCD();
     }
 
     public void teleopInit() {
-        if (autonomousCommand != null)
-            autonomousCommand.cancel();
+        if (autoCommand != null)
+            autoCommand.cancel();
 
         try {
             ConstantsManager.loadConstantsFromFile("/Constants.txt");
