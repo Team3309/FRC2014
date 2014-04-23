@@ -110,7 +110,7 @@ public class Gateway extends IterativeRobot {
         winchButton = new OperatorButton(operator, XboxController.BUTTON_Y, guitar, Guitar.YELLOW_LOW);
         fireButton = new OperatorButton(operator, XboxController.BUTTON_A, guitar, Guitar.RED_LOW);
         toggleIntakeButton = new OperatorButton(operator, XboxController.BUTTON_B, guitar, Guitar.GREEN);
-        togglePocketPistonButton = new OperatorButton(operator, XboxController.BUTTON_RIGHT_BUMPER, guitar, Guitar.GREEN_LOW);
+        togglePocketPistonButton = new OperatorButton(operator, XboxController.BUTTON_RIGHT_BUMPER, guitar, Guitar.ORANGE_LOW);
         autoShootButton = new OperatorButton(operator, XboxController.BUTTON_LEFT_BUMPER, guitar, Guitar.BLUE_LOW);
 
         //driver button mapping
@@ -140,7 +140,7 @@ public class Gateway extends IterativeRobot {
         DriverStationLCD lcd = DriverStationLCD.getInstance();
         for (int i = 0; i < autoCommands.length; i++) {
             DriverStationLCD.Line line = null;
-            switch (i) {
+            switch (i + 1) {
                 case 1:
                     line = DriverStationLCD.Line.kUser1;
                     break;
@@ -224,6 +224,11 @@ public class Gateway extends IterativeRobot {
         if (driver.getXButton()) {
             Drive.getInstance().enableGyro();
         }
+        if (guitar.getRed())
+            intake.set(1);
+        if (guitar.getYellow())
+            intake.set(-1);
+
 
         DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Is brake: " + (Drive.getInstance()
                 .isBrake() ? "true" : "false"));
