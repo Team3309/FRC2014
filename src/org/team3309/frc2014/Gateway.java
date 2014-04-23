@@ -184,10 +184,6 @@ public class Gateway extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser1, 1, String.valueOf(Drive.getInstance().getAverageCount()));
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, String.valueOf(Sensors.gyro.getAngularRateOfChange()));
-        DriverStationLCD.getInstance().updateLCD();
     }
 
     public void teleopInit() {
@@ -229,11 +225,6 @@ public class Gateway extends IterativeRobot {
         if (guitar.getYellow())
             intake.set(-1);
 
-
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser3, 1, "Is brake: " + (Drive.getInstance()
-                .isBrake() ? "true" : "false"));
-        DriverStationLCD.getInstance().println(DriverStationLCD.Line.kUser2, 1, String.valueOf(Sensors.gyro.getAngularRateOfChange()));
-        DriverStationLCD.getInstance().updateLCD();
     }
 
     public void disabledInit() {
