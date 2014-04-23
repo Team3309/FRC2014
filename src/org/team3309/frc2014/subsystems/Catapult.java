@@ -45,8 +45,6 @@ public class Catapult extends Subsystem {
     private static Constant configLatchSolenoid = new Constant("catapult.latch.solenoid", 2);
     private static Constant configLatchSolenoidModule = new Constant("catapult.latch.solenoid.module", 1);
     private static Constant configLatchSensor = new Constant("catapult.latch.sensor", 11);
-    private static Constant configGoaliePoleModule = new Constant("catapult.goalie.module", 1);
-    private static Constant configGoaliePolePort = new Constant("catapult.goalie.solenoid", 9);
 
     private static Catapult instance;
 
@@ -61,7 +59,6 @@ public class Catapult extends Subsystem {
     private Solenoid latchSolenoid;
     private DigitalInput latchSensor;
     private Solenoid winchSolenoid;
-    private Solenoid goaliePole;
 
     private Catapult() {
         SpeedController[] motorArr = new SpeedController[configWinchMotors.getIntList().length];
@@ -79,8 +76,6 @@ public class Catapult extends Subsystem {
         latchSensor = new DigitalInput(configLatchSensor.getInt());
 
         winchSolenoid = new Solenoid(configWinchSolenoidModule.getInt(), configWinchSolenoid.getInt());
-
-        goaliePole = new Solenoid(configGoaliePoleModule.getInt(), configGoaliePolePort.getInt());
     }
 
     protected void initDefaultCommand() {
@@ -115,10 +110,6 @@ public class Catapult extends Subsystem {
 
     public void disengageWinch() {
         winchSolenoid.set(false);
-    }
-
-    public void dropGoaliePole() {
-        goaliePole.set(true);
     }
 
 }

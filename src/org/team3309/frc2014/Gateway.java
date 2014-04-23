@@ -29,7 +29,6 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.team3309.frc2014.commands.catapult.DropGoaliePole;
 import org.team3309.frc2014.commands.catapult.PrepShot;
 import org.team3309.frc2014.commands.catapult.Shoot;
 import org.team3309.frc2014.commands.catapult.ShootAndRetract;
@@ -69,7 +68,6 @@ public class Gateway extends IterativeRobot {
     private OperatorButton toggleIntakeButton;
     private OperatorButton togglePocketPistonButton;
     private OperatorButton autoShootButton;
-    private OperatorButton dropGoalieButton;
 
     private JoystickButton brakeButton;
     private JoystickButton tankButton;
@@ -101,7 +99,6 @@ public class Gateway extends IterativeRobot {
         toggleIntakeButton = new OperatorButton(operator, XboxController.BUTTON_B, guitar, Guitar.GREEN);
         togglePocketPistonButton = new OperatorButton(operator, XboxController.BUTTON_RIGHT_BUMPER, guitar, Guitar.GREEN_LOW);
         autoShootButton = new OperatorButton(operator, XboxController.BUTTON_LEFT_BUMPER, guitar, Guitar.BLUE_LOW);
-        dropGoalieButton = new OperatorButton(operator, XboxController.BUTTON_START, guitar, Guitar.START);
 
         //driver button mapping
         brakeButton = new JoystickButton(driver, XboxController.BUTTON_LEFT_BUMPER);
@@ -114,7 +111,6 @@ public class Gateway extends IterativeRobot {
         toggleIntakeButton.whenPressed(new ToggleIntake());
         togglePocketPistonButton.whenPressed(new TogglePocketPiston());
         autoShootButton.whenPressed(new ShootAndRetract());
-        dropGoalieButton.whenPressed(new DropGoaliePole());
 
         //driver button bindings
         brakeButton.whenPressed(new EngageBrake());
