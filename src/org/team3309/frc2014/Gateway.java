@@ -24,6 +24,7 @@
 package org.team3309.frc2014;
 
 
+import com.team254.lib.CheesyVisionServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStationLCD;
@@ -136,6 +137,8 @@ public class Gateway extends IterativeRobot {
         Drive.getInstance().enableMecanum();
 
         System.out.println(autoCommands.length + " auto modes loaded");
+
+        CheesyVisionServer.getInstance().start();
     }
 
     public void disabledPeriodic() {
