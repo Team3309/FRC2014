@@ -53,7 +53,8 @@ public class WaitForCheesy extends Command {
     }
 
     protected boolean isFinished() {
-        return (System.currentTimeMillis() - startTime > timeOutMs) || (!chezy.getLeftStatus() && !chezy.getRightStatus());
+        return (System.currentTimeMillis() - startTime > timeOutMs)
+                || (!chezy.getLeftStatus() || !chezy.getRightStatus());
     }
 
     protected void end() {
