@@ -35,6 +35,7 @@ import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.team3309.frc2014.commands.AutoCommand;
 import org.team3309.frc2014.commands.OneBallLayupCheesy;
+import org.team3309.frc2014.commands.auto.GoalieMode;
 import org.team3309.frc2014.commands.auto.MobilityBonus;
 import org.team3309.frc2014.commands.auto.OneBallHotFirstLayup;
 import org.team3309.frc2014.commands.catapult.PrepShot;
@@ -81,8 +82,9 @@ public class Gateway extends IterativeRobot {
 
     private AutoCommand[] autoCommands = new AutoCommand[]{
             new AutoCommand("Mobility Bonus", new MobilityBonus()),
-            new AutoCommand("One Ball Layup (no hot)", new OneBallHotFirstLayup()),
-            new AutoCommand("One Ball Layup (Cheesy)", new OneBallLayupCheesy()),
+            new AutoCommand("Cold Layup", new OneBallHotFirstLayup()),
+            new AutoCommand("Cheesy Layup", new OneBallLayupCheesy()),
+            new AutoCommand("Goalie", new GoalieMode()),
             new AutoCommand("Do nothing", new WaitCommand(8))
     };
 
@@ -230,6 +232,7 @@ public class Gateway extends IterativeRobot {
         if (guitar.getYellow())
             intake.set(-1);
 
+        //System.out.println(Sensors.gyro.getAngularVelocity());
     }
 
     public void disabledInit() {
