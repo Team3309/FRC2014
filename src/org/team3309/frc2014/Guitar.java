@@ -90,10 +90,10 @@ public class Guitar extends GenericHID {
 
     public boolean getRawButton(int i) {
         if (i < 9)
-            return mJoystick.getRawButton(i) && !isLow();
-            //for the low buttons
-        else
+            return mJoystick.getRawButton(i) && !mJoystick.getRawButton(9);
+        else if (i > 10) //for the low buttons
             return mJoystick.getRawButton(i - 10) && mJoystick.getRawButton(9);
+        return mJoystick.getRawButton(i);
     }
 
     public boolean getGreen() {
