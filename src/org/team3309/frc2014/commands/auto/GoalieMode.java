@@ -45,7 +45,7 @@ public class GoalieMode extends Command {
     }
 
     protected void initialize() {
-
+        drive.disableMecanum();
     }
 
     protected void execute() {
