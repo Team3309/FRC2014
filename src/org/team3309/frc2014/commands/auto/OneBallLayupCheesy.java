@@ -21,13 +21,11 @@
  * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.team3309.frc2014.commands;
+package org.team3309.frc2014.commands.auto;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.WaitCommand;
-import org.team3309.frc2014.commands.auto.MobilityBonus;
-import org.team3309.frc2014.commands.auto.WaitForCheesy;
 import org.team3309.frc2014.commands.catapult.ShootAndRetract;
 import org.team3309.frc2014.commands.drive.MecDriveForwardTime;
 import org.team3309.frc2014.commands.drive.SwitchMecanum;
@@ -72,6 +70,5 @@ public class OneBallLayupCheesy extends CommandGroup {
         addSequential(new ExtendPocketPiston());
         addSequential(new WaitForCheesy(4000));
         addSequential(new ShootAndRetract());
-        addSequential(new MobilityBonus());
     }
 }
