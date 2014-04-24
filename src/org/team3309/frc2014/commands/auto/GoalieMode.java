@@ -50,9 +50,9 @@ public class GoalieMode extends Command {
 
     protected void execute() {
         if (!cheesyVision.getRightStatus())
-            speedFilter.update(-.75);
+            speedFilter.update(-1);
         else if (!cheesyVision.getLeftStatus())
-            speedFilter.update(.75);
+            speedFilter.update(1);
         else
             speedFilter.update(0);
 
