@@ -132,11 +132,12 @@ public class Gateway extends IterativeRobot {
         tankButton.whenReleased(new SwitchMecanum(true));
 
         Drive.getInstance().enableMecanum();
+
+        System.out.println(autoCommands.length + " auto modes loaded");
     }
 
     public void disabledPeriodic() {
-        Drive.getInstance().printEncoders();
-
+        //Drive.getInstance().printEncoders();
         DriverStationLCD lcd = DriverStationLCD.getInstance();
         for (int i = 0; i < autoCommands.length; i++) {
             DriverStationLCD.Line line = null;
@@ -160,17 +161,21 @@ public class Gateway extends IterativeRobot {
                     line = DriverStationLCD.Line.kUser6;
                     break;
             }
-            lcd.println(line, 3, autoCommands[i].getName());
-            if (DriverStation.getInstance().getDigitalIn(i))
+            lcd.println(line, 1, "              ");
+            lcd.println(line, 2, "" + (i + 1));
+            lcd.println(line, 4, autoCommands[i].getName());
+            if (DriverStation.getInstance().getDigitalIn(i + 1))
                 lcd.println(line, 1, "*");
         }
+
+        lcd.updateLCD();
     }
 
     public void autonomousInit() {
         Sensors.gyro.reset();
 
         for (int i = 0; i < autoCommands.length; i++) {
-            if (DriverStation.getInstance().getDigitalIn(i)) {
+            if (DriverStation.getInstance().getDigitalIn(i + 1)) {
                 autoCommand = autoCommands[i].getCommand();
             }
         }
