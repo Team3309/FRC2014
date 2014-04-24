@@ -235,6 +235,7 @@ public class Gateway extends IterativeRobot {
         if (guitar.getYellow())
             intake.set(-1);
 
+        //System.out.println(Sensors.gyro.getAngle());
         //System.out.println(Sensors.gyro.getAngularVelocity());
     }
 
