@@ -45,16 +45,20 @@ public class GoalieMode extends Command {
     }
 
     protected void initialize() {
-        drive.disableMecanum();
+        drive.enableMecanum();
     }
 
     protected void execute() {
-        if (!cheesyVision.getRightStatus())
-            speedFilter.update(-1);
-        else if (!cheesyVision.getLeftStatus())
-            speedFilter.update(1);
-        else
+        if (!cheesyVision.getRightStatus()) {
+            speedFilter.update(-.5);
+            drive.enableMecanum();
+        } else if (!cheesyVision.getLeftStatus()) {
+            speedFilter.update(5);
+            drive.enableMecanum();
+        } else {
             speedFilter.update(0);
+            drive.disableMecanum();
+        }
 
         drive.driveTank(speedFilter.get(), 0);
     }
