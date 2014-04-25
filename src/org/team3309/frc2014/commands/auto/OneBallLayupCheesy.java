@@ -23,15 +23,15 @@
 
 package org.team3309.frc2014.commands.auto;
 
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.PrintCommand;
+import edu.wpi.first.wpilibj.command.StartCommand;
 import edu.wpi.first.wpilibj.command.WaitCommand;
 import org.team3309.frc2014.commands.catapult.ShootAndRetract;
 import org.team3309.frc2014.commands.drive.MecDriveForwardTime;
 import org.team3309.frc2014.commands.drive.SwitchMecanum;
 import org.team3309.frc2014.commands.intake.ExtendIntake;
 import org.team3309.frc2014.commands.intake.ExtendPocketPiston;
-import org.team3309.frc2014.subsystems.Drive;
 
 /**
  * Created by vmagro on 4/23/14.
@@ -41,34 +41,19 @@ public class OneBallLayupCheesy extends CommandGroup {
     public OneBallLayupCheesy() {
         addSequential(new SwitchMecanum(true));
         addSequential(new MecDriveForwardTime(2.25));
-        addParallel(new Command() {
-            private boolean finished = false;
 
-            protected void initialize() {
+        addSequential(new PrintCommand("Driving"));
+        addParallel(new StartCommand(new MecDriveForwardTime(5, .5)));
 
-            }
-
-            protected void execute() {
-                Drive.getInstance().driveTank(.5, 0);
-                finished = true;
-            }
-
-            protected boolean isFinished() {
-                return finished;
-            }
-
-            protected void end() {
-
-            }
-
-            protected void interrupted() {
-
-            }
-        });
         addSequential(new ExtendIntake());
+        addSequential(new PrintCommand("Extended Intake"));
         addSequential(new WaitCommand(1));
+        addSequential(new PrintCommand("Extending Pocket"));
         addSequential(new ExtendPocketPiston());
+        addSequential(new WaitCommand(.5));
+        addSequential(new PrintCommand("Waiting for Cheesy Vision"));
         addSequential(new WaitForCheesy(4000));
+        addSequential(new PrintCommand("Shooting"));
         addSequential(new ShootAndRetract());
     }
 }

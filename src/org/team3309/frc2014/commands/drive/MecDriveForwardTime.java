@@ -24,6 +24,7 @@
 package org.team3309.frc2014.commands.drive;
 
 import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.Sensors;
 import org.team3309.frc2014.subsystems.Drive;
 
 /**
@@ -33,10 +34,16 @@ public class MecDriveForwardTime extends Command {
 
     private long startTime = 0;
     private int timeoutMs = 0;
+    private double speed;
 
     public MecDriveForwardTime(double seconds) {
+        this(seconds, .7);
+    }
+
+    public MecDriveForwardTime(double seconds, double speed) {
         timeoutMs = (int) (seconds * 1000);
         requires(Drive.getInstance());
+        this.speed = speed;
     }
 
     protected void initialize() {
@@ -45,7 +52,9 @@ public class MecDriveForwardTime extends Command {
 
     protected void execute() {
         Drive.getInstance().enableMecanum();
-        Drive.getInstance().driveTank(.7, 0);
+
+        double turn = -.01 * Sensors.gyro.getAngle();
+        Drive.getInstance().driveTank(speed, turn);
     }
 
     protected boolean isFinished() {
