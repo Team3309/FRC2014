@@ -49,7 +49,7 @@ public class OneBallHotFirstLayup extends CommandGroup {
             }
 
             protected void execute() {
-                Drive.getInstance().driveTank(.25, 0);
+                Drive.getInstance().driveTank(.5, 0);
                 finished = true;
             }
 
