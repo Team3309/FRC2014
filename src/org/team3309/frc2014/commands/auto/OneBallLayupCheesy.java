@@ -23,37 +23,78 @@
 
 package org.team3309.frc2014.commands.auto;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
-import edu.wpi.first.wpilibj.command.PrintCommand;
-import edu.wpi.first.wpilibj.command.StartCommand;
-import edu.wpi.first.wpilibj.command.WaitCommand;
+import com.team254.lib.CheesyVisionServer;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 import org.team3309.frc2014.commands.catapult.ShootAndRetract;
-import org.team3309.frc2014.commands.drive.MecDriveForwardTime;
-import org.team3309.frc2014.commands.drive.SwitchMecanum;
-import org.team3309.frc2014.commands.intake.ExtendIntake;
-import org.team3309.frc2014.commands.intake.ExtendPocketPiston;
+import org.team3309.frc2014.subsystems.Drive;
+import org.team3309.frc2014.subsystems.Intake;
 
 /**
  * Created by vmagro on 4/23/14.
  */
-public class OneBallLayupCheesy extends CommandGroup {
+public class OneBallLayupCheesy extends Command {
+
+    private static final int STATE_DRIVING = 0;
+    private static final int STATE_DONE_DRIVING = 1;
+    private static final int STATE_WAITING_FOR_SHOT = 2;
+    private static final int STATE_DONE = 3;
+
+    private Drive drive;
+
+    private int state = 0;
+    private Timer stateTimer = new Timer();
+    private CheesyVisionServer cv;
 
     public OneBallLayupCheesy() {
-        addSequential(new SwitchMecanum(true));
-        addSequential(new MecDriveForwardTime(2.25));
+        drive = Drive.getInstance();
+        requires(drive);
+        cv = CheesyVisionServer.getInstance();
+    }
 
-        addSequential(new PrintCommand("Driving"));
-        addParallel(new StartCommand(new MecDriveForwardTime(5, .5)));
+    protected void initialize() {
+        state = STATE_DRIVING;
+        stateTimer.start();
+    }
 
-        addSequential(new ExtendIntake());
-        addSequential(new PrintCommand("Extended Intake"));
-        addSequential(new WaitCommand(1));
-        addSequential(new PrintCommand("Extending Pocket"));
-        addSequential(new ExtendPocketPiston());
-        addSequential(new WaitCommand(.5));
-        addSequential(new PrintCommand("Waiting for Cheesy Vision"));
-        addSequential(new WaitForCheesy(4000));
-        addSequential(new PrintCommand("Shooting"));
-        addSequential(new ShootAndRetract());
+    protected void execute() {
+        if (state == STATE_DRIVING) {
+            drive.enableMecanum();
+            drive.driveMecanum(0, .7, 0);
+            System.out.println("timer: " + stateTimer.get());
+            if (stateTimer.get() > 2.25) { //2.25 seconds
+                state = STATE_DONE_DRIVING;
+                stateTimer.reset();
+            }
+        } else if (state == STATE_DONE_DRIVING) {
+            drive.driveMecanum(0, .5, 0);
+            Intake.getInstance().extend();
+            Timer.delay(1);
+            Intake.getInstance().extendPocket();
+            Timer.delay(1);
+            state = STATE_WAITING_FOR_SHOT;
+            stateTimer.reset();
+        } else if (state == STATE_WAITING_FOR_SHOT) {
+            drive.driveMecanum(0, .5, 0);
+            if ((!cv.getLeftStatus() || !cv.getRightStatus()) || stateTimer.get() > 3) {
+                new ShootAndRetract().start();
+                state = STATE_DONE;
+            }
+        } else if (state == STATE_DONE) {
+            drive.driveTank(0, 0);
+        }
+    }
+
+    protected boolean isFinished() {
+        return !DriverStation.getInstance().isAutonomous();
+    }
+
+    protected void end() {
+
+    }
+
+    protected void interrupted() {
+
     }
 }
