@@ -28,7 +28,6 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import org.team3309.frc2014.MaxSonarEZ4;
 import org.team3309.frc2014.OctanumModule;
 import org.team3309.frc2014.Sensors;
 import org.team3309.frc2014.commands.drive.TeleopDrive;
@@ -66,8 +65,6 @@ public class Drive extends Subsystem {
     private Constant gyroKpTele = new Constant("drive.gyro.kp.tele", .01);
     private Constant maxAngularVelocity = new Constant("drive.gyro.max_angular_velocity", 720);
 
-    private Constant configSonarPort = new Constant("drive.sonar.port", 3);
-
     private static Drive instance;
 
     /**
@@ -96,8 +93,6 @@ public class Drive extends Subsystem {
     private boolean brake = false;
     private boolean gyroDisabled = false;
 
-    private MaxSonarEZ4 sonar;
-
     private Drive() {
         extender = new Solenoid(configMecanumSolenoidModule.getInt(), configMecanumSolenoidPort.getInt());
 
@@ -111,8 +106,6 @@ public class Drive extends Subsystem {
                 new Encoder(configRightBackEncoderA.getInt(), configRightBackEncoderB.getInt()), false);
 
         gyro = Sensors.gyro;
-
-        sonar = new MaxSonarEZ4(configSonarPort.getInt());
     }
 
     protected void initDefaultCommand() {
@@ -315,10 +308,6 @@ public class Drive extends Subsystem {
 
     public boolean isBrake() {
         return brake;
-    }
-
-    public double getUltrasonicInches() {
-        return sonar.getInches();
     }
 
     /**
