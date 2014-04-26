@@ -49,15 +49,20 @@ public class GoalieMode extends Command {
     }
 
     protected void execute() {
-        if (!cheesyVision.getRightStatus()) {
-            speedFilter.update(-1);
-        } else if (!cheesyVision.getLeftStatus()) {
-            speedFilter.update(1);
+        double power = 0;
+
+        boolean shouldGoLeft = !cheesyVision.getLeftStatus() && cheesyVision.getRightStatus();
+        boolean shouldGoRight = !cheesyVision.getRightStatus() && cheesyVision.getLeftStatus();
+        if (shouldGoRight) {
+            power = speedFilter.update(-1);
+        } else if (shouldGoLeft) {
+            power = speedFilter.update(1);
         } else {
+            power = 0;
             speedFilter.update(0);
         }
 
-        drive.driveTank(speedFilter.get(), 0);
+        drive.driveTank(power, 0);
     }
 
     protected boolean isFinished() {
