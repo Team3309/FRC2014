@@ -27,6 +27,7 @@ import com.team254.lib.CheesyVisionServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import org.team3309.frc2014.Sensors;
 import org.team3309.frc2014.commands.catapult.ShootAndRetract;
 import org.team3309.frc2014.subsystems.Drive;
 import org.team3309.frc2014.subsystems.Intake;
@@ -61,14 +62,16 @@ public class OneBallLayupCheesy extends Command {
     protected void execute() {
         if (state == STATE_DRIVING) {
             drive.enableMecanum();
-            drive.driveMecanum(0, .7, 0);
+            double turn = -.01 * Sensors.gyro.getAngle();
+            drive.driveMecanum(0, .7, turn);
             System.out.println("timer: " + stateTimer.get());
             if (stateTimer.get() > 2.25) { //2.25 seconds
                 state = STATE_DONE_DRIVING;
                 stateTimer.reset();
             }
         } else if (state == STATE_DONE_DRIVING) {
-            drive.driveMecanum(0, .5, 0);
+            double turn = -.01 * Sensors.gyro.getAngle();
+            drive.driveMecanum(0, .5, turn);
             Intake.getInstance().extend();
             Timer.delay(1);
             Intake.getInstance().extendPocket();
@@ -76,7 +79,8 @@ public class OneBallLayupCheesy extends Command {
             state = STATE_WAITING_FOR_SHOT;
             stateTimer.reset();
         } else if (state == STATE_WAITING_FOR_SHOT) {
-            drive.driveMecanum(0, .5, 0);
+            double turn = -.01 * Sensors.gyro.getAngle();
+            drive.driveMecanum(0, .5, turn);
             if ((!cv.getLeftStatus() || !cv.getRightStatus()) || stateTimer.get() > 3) {
                 new ShootAndRetract().start();
                 state = STATE_DONE;
