@@ -37,8 +37,10 @@ public class Sensors {
 
     static {
         gyro = new FriarGyro(configGyroPort.getInt());
+        leftSonar = new MaxSonarEZ4(3);
     }
 
     public static FriarGyro gyro;
+    public static MaxSonarEZ4 leftSonar;
 
 }

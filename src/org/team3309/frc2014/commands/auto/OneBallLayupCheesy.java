@@ -63,7 +63,8 @@ public class OneBallLayupCheesy extends Command {
         if (state == STATE_DRIVING) {
             drive.enableMecanum();
             double turn = -.01 * Sensors.gyro.getAngle();
-            drive.driveMecanum(0, .7, turn);
+            double right = .01 * (Sensors.leftSonar.getInches() - 8);
+            drive.driveMecanum(right, .7, turn);
             System.out.println("timer: " + stateTimer.get());
             if (stateTimer.get() > 2.25) { //2.25 seconds
                 state = STATE_DONE_DRIVING;
@@ -71,7 +72,8 @@ public class OneBallLayupCheesy extends Command {
             }
         } else if (state == STATE_DONE_DRIVING) {
             double turn = -.01 * Sensors.gyro.getAngle();
-            drive.driveMecanum(0, .5, turn);
+            double right = .01 * (Sensors.leftSonar.getInches() - 8);
+            drive.driveMecanum(right, .5, turn);
             Intake.getInstance().extend();
             Timer.delay(1);
             Intake.getInstance().extendPocket();

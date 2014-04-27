@@ -174,6 +174,8 @@ public class Gateway extends IterativeRobot {
         }
 
         lcd.updateLCD();
+
+        System.out.println("left sonar: " + Sensors.leftSonar.getInches());
     }
 
     public void autonomousInit() {
