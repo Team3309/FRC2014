@@ -53,6 +53,7 @@ Constant configMecanumOn = new Constant("drive.mecanum.on", false);
 The first argument is the name of the Constant (will be used to look up in the file) and the second argument is a default value in case a constant with that name wasn't found.
 
 
+Note: we did not actually use the autonomous scripting methods described below.  
 Autonomous Scripts
 ==================
 
