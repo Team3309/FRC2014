@@ -35,7 +35,7 @@ import org.team3309.frc2014.subsystems.Intake;
 /**
  * Created by vmagro on 4/23/14.
  */
-public class OneBallLayupCheesy extends Command {
+public class OneBallLayupCheesyNoRetract extends Command {
 
     private static final int STATE_DRIVING = 0;
     private static final int STATE_DONE_DRIVING = 1;
@@ -48,7 +48,7 @@ public class OneBallLayupCheesy extends Command {
     private Timer stateTimer = new Timer();
     private CheesyVisionServer cv;
 
-    public OneBallLayupCheesy() {
+    public OneBallLayupCheesyNoRetract() {
         drive = Drive.getInstance();
         requires(drive);
         cv = CheesyVisionServer.getInstance();
