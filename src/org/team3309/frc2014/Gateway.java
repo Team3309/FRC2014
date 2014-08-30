@@ -86,7 +86,8 @@ public class Gateway extends IterativeRobot {
             new AutoCommand("Cold Layup", new OneBallHotFirstLayup()),
             new AutoCommand("Cheesy Layup", new OneBallLayupCheesy()),
             new AutoCommand("Goalie", new GoalieMode()),
-            new AutoCommand("Do nothing", new WaitCommand(8))
+            new AutoCommand("Do nothing", new WaitCommand(8)),
+            new AutoCommand("Cheesy Layup, No Retract", new OneBallLayupCheesyNoRetract())
     };
 
     private Command autoCommand;
