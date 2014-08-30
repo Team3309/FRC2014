@@ -39,6 +39,7 @@ import org.team3309.frc2014.commands.auto.GoalieMode;
 import org.team3309.frc2014.commands.auto.MobilityBonus;
 import org.team3309.frc2014.commands.auto.OneBallHotFirstLayup;
 import org.team3309.frc2014.commands.auto.OneBallLayupCheesy;
+import org.team3309.frc2014.commands.auto.OneBallLayupCheesyNoRetract;
 import org.team3309.frc2014.commands.catapult.PrepShot;
 import org.team3309.frc2014.commands.catapult.Shoot;
 import org.team3309.frc2014.commands.catapult.ShootAndRetract;
