@@ -91,11 +91,6 @@ public class Intake extends Subsystem {
     }
 
     public void retract() {
-        if (!Catapult.getInstance().isFullBack()) {
-            System.out.println("Can't retract if catapult isn't winched back");
-            //don't allow retract unless the catapult is winched back
-            return;
-        }
         retractPocket();
         System.out.println("Retracting");
         if (configSolenoidOn.getBoolean())
